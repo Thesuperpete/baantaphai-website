@@ -7,6 +7,9 @@ export default async (req, context) => {
     "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Requested-With",
     "Access-Control-Max-Age": "86400",
     "Content-Type": "application/json; charset=utf-8",
+    "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+    "CDN-Cache-Control": "no-store",
+    "Netlify-CDN-Cache-Control": "no-store",
   };
 
   // 1. Handle CORS Preflight
@@ -18,7 +21,11 @@ export default async (req, context) => {
   }
 
   try {
-    const store = getStore("baantaphai_config");
+    // Enable strong consistency so writes are globally visible instantly
+    const store = getStore({
+      name: "baantaphai_config",
+      consistency: "strong",
+    });
 
     // 2. Handle POST / PUT (Save from Admin)
     if (req.method === "POST" || req.method === "PUT") {
@@ -59,7 +66,10 @@ export default async (req, context) => {
 
     // 3. Handle GET (Load site data for all visitors)
     if (req.method === "GET") {
-      const data = await store.get("site_data", { type: "json" });
+      const data = await store.get("site_data", {
+        type: "json",
+        consistency: "strong",
+      });
       return new Response(
         JSON.stringify({
           success: true,
