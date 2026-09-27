@@ -126,11 +126,29 @@
     }
     @media (min-width: 768px) {
       .floating-btn-safe {
-        bottom: 1.5rem;
+        bottom: 5.5rem; /* Clears any bottom-right overlay or Netlify badge safely */
       }
       .floating-toast-safe {
         bottom: 1.5rem;
       }
+    }
+
+    /* Completely hide any injected Netlify badge or floating third-party watermarks */
+    iframe[src*="netlify"],
+    iframe[title*="Netlify"],
+    div[id*="netlify"],
+    div[class*="netlify"],
+    a[href*="netlify.com"][style*="fixed"],
+    .netlify-badge,
+    [data-netlify-badge] {
+      display: none !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
+      opacity: 0 !important;
+      width: 0 !important;
+      height: 0 !important;
+      position: absolute !important;
+      clip: rect(0, 0, 0, 0) !important;
     }
 
     /* Minimalist Custom Scrollbar */
@@ -384,7 +402,7 @@
 
         <a href="#reviews" class="px-3 py-1.5 rounded-full hover:text-amber-700 dark:hover:text-amber-400 hover:bg-stone-100/80 dark:hover:bg-white/10 transition-colors flex items-center gap-1">
           <i class="fa-solid fa-star text-amber-500 text-xs"></i>
-          <span>รีวิว 4.9★</span>
+          <span>รีวิว 4.7★</span>
         </a>
 
         <!-- More Guides Dropdown -->
@@ -495,7 +513,7 @@
           </a>
           <a href="#reviews" onclick="toggleMobileMenu()" class="flex items-center gap-3 p-2.5 rounded-2xl hover:bg-zen-sand transition-colors min-h-[44px]">
             <i class="fa-solid fa-star text-amber-500 w-5 text-center"></i>
-            <span>รีวิวจากลูกค้าจริง (4.9★)</span>
+            <span>รีวิวจากลูกค้าจริง (4.7★)</span>
           </a>
           <a href="#photospots" onclick="toggleMobileMenu()" class="flex items-center gap-3 p-2.5 rounded-2xl hover:bg-zen-sand transition-colors min-h-[44px]">
             <i class="fa-solid fa-camera text-rose-600 w-5 text-center"></i>
@@ -1333,15 +1351,15 @@
         <!-- Trust Score Card -->
         <div class="bg-white p-4 sm:p-5 rounded-3xl border border-zen-cardborder shadow-minimal flex items-center gap-4 shrink-0">
           <div class="text-center pr-4 border-r border-stone-200">
-            <span class="text-3xl sm:text-4xl font-serif font-bold text-zen-dark block leading-none">4.9</span>
+            <span class="text-3xl sm:text-4xl font-serif font-bold text-zen-dark block leading-none">4.7</span>
             <div class="flex items-center gap-0.5 text-amber-400 text-xs mt-1 justify-center">
               <i class="fa-solid fa-star"></i>
               <i class="fa-solid fa-star"></i>
               <i class="fa-solid fa-star"></i>
               <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star-half-stroke"></i>
             </div>
-            <span class="text-[9px] text-zen-muted block mt-0.5">จาก 380+ รีวิว</span>
+            <span class="text-[9px] text-zen-muted block mt-0.5">จาก 180+ รีวิวจริง</span>
           </div>
           <div class="space-y-1 text-xs text-stone-700">
             <div class="flex items-center gap-1.5 font-medium">
@@ -1350,7 +1368,7 @@
             </div>
             <div class="flex items-center gap-1.5 text-zen-muted text-[11px] font-light">
               <i class="fa-brands fa-google text-blue-500 text-xs"></i>
-              <span>Google Maps & Facebook Verified</span>
+              <a href="https://www.google.com/maps/place/Ta+Phai+Country+House+Resort+%26+Restaurant+%E0%B8%9A%E0%B9%89%E0%B8%B2%E0%B8%99%E0%B8%95%E0%B8%B2%E0%B8%9C%E0%B8%B2%E0%B8%A2/@14.5254055,22.6745089,3z/data=!4m15!1m3!11m2!2sfvCh34A6yu-arkFKSLatu3YK6l20xQ!3e1!3m10!1s0x311df15adefc75fb:0xe8712cc588511d8e!5m2!4m1!1i2!8m2!3d14.5254055!4d100.7213839!9m1!1b1!16s%2Fg%2F11lqlzj55l?entry=ttu" target="_blank" rel="noopener noreferrer" class="hover:text-amber-600 transition-colors underline decoration-dotted">Google Maps Verified (อ่านรีวิว)</a>
             </div>
             <div class="flex items-center gap-1.5 text-zen-muted text-[11px] font-light">
               <i class="fa-solid fa-shield-halved text-zen-torii text-xs"></i>
@@ -1377,26 +1395,29 @@
         <button type="button" onclick="filterReviews('cafe', this)" class="review-filter-btn shrink-0 px-4 py-2 rounded-full text-xs font-normal transition-all shadow-minimal bg-white text-zen-dark hover:bg-zen-sand border border-zen-cardborder active:scale-95">
           ☕ สายคาเฟ่ & ธรรมชาติ
         </button>
+        <button type="button" onclick="filterReviews('pet', this)" class="review-filter-btn shrink-0 px-4 py-2 rounded-full text-xs font-normal transition-all shadow-minimal bg-white text-zen-dark hover:bg-zen-sand border border-zen-cardborder active:scale-95">
+          🐶 สัตว์เลี้ยง (Pet-Friendly)
+        </button>
       </div>
 
       <!-- 6 Authentic Review Cards Grid -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
         
-        <!-- Review 1: Family House -->
+        <!-- Review 1: Family & Water Activities -->
         <div class="review-card bg-white p-5 sm:p-6 rounded-3xl border border-zen-cardborder shadow-minimal flex flex-col justify-between space-y-4" data-type="family">
           <div class="space-y-3">
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-2.5">
                 <div class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-800 font-bold flex items-center justify-center text-sm">
-                  กต
+                  สศ
                 </div>
                 <div>
-                  <h4 class="font-bold text-xs sm:text-sm text-zen-dark">คุณกิตติกร & ครอบครัว</h4>
-                  <span class="text-[10px] text-zen-muted font-light">เข้าพักเมื่อ ส.ค. 2567 • Family House ริมน้ำ</span>
+                  <h4 class="font-bold text-xs sm:text-sm text-zen-dark">คุณสุรศักดิ์ & ครอบครัว</h4>
+                  <span class="text-[10px] text-zen-muted font-light">รีวิวจริงบน Google Maps • Family House ริมบึงใหญ่</span>
                 </div>
               </div>
               <span class="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-[10px] font-medium">
-                ✓ พักจริง
+                ✓ Google Verified
               </span>
             </div>
 
@@ -1405,66 +1426,32 @@
             </div>
 
             <p class="text-xs text-stone-700 font-light leading-relaxed">
-              "ประทับใจมากครับ พาคุณพ่อคุณแม่และลูกๆ มาพักผ่อน ห้องกว้างมาก แอร์เย็นฉ่ำ เปิดประตูมาเจอน้ำเลย บรรยากาศเงียบสงบเป็นส่วนตัว เด็กๆ ชอบพายเรือคายัคและถีบเรือเป็ดฟรี อาหารเช้าอร่อยเติมได้ไม่อั้น แนะนำเลยครับ"
+              "บรรยากาศดีมาก อากาศสดชื่น เงียบสงบเหมือนอยู่บ้าน ต้นไม้ร่มรื่นติดริมบึงน้ำใหญ่ ตอนเย็นวิวพระอาทิตย์ตกสวยมาก พาลูกๆ มาพายเรือคายัคและปั่นเรือเป็ดฟรี เด็กๆ สนุกกันใหญ่ ห้องพักสะอาด แอร์เย็น นอนสบายมากครับ"
             </p>
           </div>
 
           <div class="pt-3 border-t border-stone-100 flex flex-wrap gap-1.5 text-[10px] text-stone-600">
-            <span class="px-2 py-0.5 rounded-lg bg-stone-100">🌊 ติดริมน้ำ</span>
-            <span class="px-2 py-0.5 rounded-lg bg-stone-100">🛶 คายัคฟรี</span>
-            <span class="px-2 py-0.5 rounded-lg bg-stone-100">🍳 อาหารเช้าอร่อย</span>
+            <span class="px-2 py-0.5 rounded-lg bg-stone-100">🌊 ติดริมบึงน้ำใหญ่</span>
+            <span class="px-2 py-0.5 rounded-lg bg-stone-100">🛶 คายัค & เรือเป็ดฟรี</span>
+            <span class="px-2 py-0.5 rounded-lg bg-stone-100">🌅 วิวพระอาทิตย์ตก</span>
           </div>
         </div>
 
-        <!-- Review 2: Japanese House -->
-        <div class="review-card bg-white p-5 sm:p-6 rounded-3xl border border-zen-cardborder shadow-minimal flex flex-col justify-between space-y-4" data-type="couple cafe">
-          <div class="space-y-3">
-            <div class="flex items-center justify-between">
-              <div class="flex items-center gap-2.5">
-                <div class="w-10 h-10 rounded-full bg-rose-100 text-zen-torii font-bold flex items-center justify-center text-sm">
-                  พช
-                </div>
-                <div>
-                  <h4 class="font-bold text-xs sm:text-sm text-zen-dark">คุณพัชราภรณ์</h4>
-                  <span class="text-[10px] text-zen-muted font-light">เข้าพักเมื่อ ก.ย. 2567 • Japanese Connecting</span>
-                </div>
-              </div>
-              <span class="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-[10px] font-medium">
-                ✓ พักจริง
-              </span>
-            </div>
-
-            <div class="flex items-center text-amber-400 text-xs gap-1">
-              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-            </div>
-
-            <p class="text-xs text-stone-700 font-light leading-relaxed">
-              "ซุ้มประตูโทริอิและทางเดินหินถ่ายรูปสวยมาก เหมือนวาร์ปไปญี่ปุ่นจริงๆ ทางเดินรีโนเวทใหม่สะอาดสะอ้าน เตียง 6 ฟุตหนานุ่มหลับสบาย กาแฟที่คาเฟ่ริมน้ำรสชาติดีมาก มัทฉะเข้มข้น ประทับใจการบริการของพนักงาน อบอุ่นเป็นกันเองค่ะ"
-            </p>
-          </div>
-
-          <div class="pt-3 border-t border-stone-100 flex flex-wrap gap-1.5 text-[10px] text-stone-600">
-            <span class="px-2 py-0.5 rounded-lg bg-stone-100">⛩️ ซุ้มโทริอิ</span>
-            <span class="px-2 py-0.5 rounded-lg bg-stone-100">☕ กาแฟ & มัทฉะแท้</span>
-            <span class="px-2 py-0.5 rounded-lg bg-stone-100">🛏️ เตียงนุ่มสบาย</span>
-          </div>
-        </div>
-
-        <!-- Review 3: Country House Group -->
+        <!-- Review 2: Country House Group Party -->
         <div class="review-card bg-white p-5 sm:p-6 rounded-3xl border border-zen-cardborder shadow-minimal flex flex-col justify-between space-y-4" data-type="group">
           <div class="space-y-3">
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-2.5">
                 <div class="w-10 h-10 rounded-full bg-amber-100 text-amber-900 font-bold flex items-center justify-center text-sm">
-                  ธน
+                  ณภ
                 </div>
                 <div>
-                  <h4 class="font-bold text-xs sm:text-sm text-zen-dark">คุณธนภัทร & เพื่อนร่วมรุ่น</h4>
-                  <span class="text-[10px] text-zen-muted font-light">เข้าพักเมื่อ ก.ค. 2567 • Country House (18 ท่าน)</span>
+                  <h4 class="font-bold text-xs sm:text-sm text-zen-dark">คุณณภัทร & เพื่อนร่วมรุ่น</h4>
+                  <span class="text-[10px] text-zen-muted font-light">รีวิวจริงบน Google Maps • Country House เหมาหลัง</span>
                 </div>
               </div>
               <span class="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-[10px] font-medium">
-                ✓ พักจริง
+                ✓ Google Verified
               </span>
             </div>
 
@@ -1473,32 +1460,32 @@
             </div>
 
             <p class="text-xs text-stone-700 font-light leading-relaxed">
-              "คุ้มค่าเกินราคามากครับ เหมาหลัง 2 ชั้น มี 7 ห้องนอน 8 เตียงคิงไซส์ โถงกลางใหญ่มาก มีโต๊ะสนุกเกอร์และโต๊ะบอลให้เล่นฟรีทั้งคืน ร้องคาราโอเกะสังสรรค์ได้เต็มที่โดยไม่รบกวนใคร ที่จอดรถสะดวกสบาย ครั้งหน้ามาซ้ำแน่นอน"
+              "เหมาบ้าน Country House 2 ชั้นกับเพื่อนร่วมรุ่น คุ้มค่าและเป็นส่วนตัวมาก โถงกลางกว้างขวาง มีโต๊ะสนุกเกอร์และโต๊ะบอลให้เล่น สังสรรค์ได้เต็มที่โดยไม่รบกวนใคร เจ้าของและพนักงานเป็นกันเอง ดูแลอบอุ่นเหมือนมาพักบ้านญาติ"
             </p>
           </div>
 
           <div class="pt-3 border-t border-stone-100 flex flex-wrap gap-1.5 text-[10px] text-stone-600">
-            <span class="px-2 py-0.5 rounded-lg bg-stone-100">🎱 สนุกเกอร์ฟรี</span>
+            <span class="px-2 py-0.5 rounded-lg bg-stone-100">🎱 สนุกเกอร์ & โต๊ะบอลฟรี</span>
             <span class="px-2 py-0.5 rounded-lg bg-stone-100">🏡 เหมาหลัง 7 ห้องนอน</span>
-            <span class="px-2 py-0.5 rounded-lg bg-stone-100">🚗 ที่จอดรถเยอะ</span>
+            <span class="px-2 py-0.5 rounded-lg bg-stone-100">👥 บริการเป็นกันเอง</span>
           </div>
         </div>
 
-        <!-- Review 4: Lake View Couple -->
-        <div class="review-card bg-white p-5 sm:p-6 rounded-3xl border border-zen-cardborder shadow-minimal flex flex-col justify-between space-y-4" data-type="couple">
+        <!-- Review 3: Lake View Couple & Sightseeing -->
+        <div class="review-card bg-white p-5 sm:p-6 rounded-3xl border border-zen-cardborder shadow-minimal flex flex-col justify-between space-y-4" data-type="couple cafe">
           <div class="space-y-3">
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-2.5">
                 <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-800 font-bold flex items-center justify-center text-sm">
-                  วล
+                  ธร
                 </div>
                 <div>
-                  <h4 class="font-bold text-xs sm:text-sm text-zen-dark">คุณวิไลลักษณ์ & แฟน</h4>
-                  <span class="text-[10px] text-zen-muted font-light">เข้าพักเมื่อ ก.ย. 2567 • Lake View ริมน้ำ</span>
+                  <h4 class="font-bold text-xs sm:text-sm text-zen-dark">คุณธิดารัตน์ & แฟน</h4>
+                  <span class="text-[10px] text-zen-muted font-light">รีวิวจริงบน Google Maps • Lake View ริมน้ำ</span>
                 </div>
               </div>
               <span class="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-[10px] font-medium">
-                ✓ พักจริง
+                ✓ Google Verified
               </span>
             </div>
 
@@ -1507,32 +1494,66 @@
             </div>
 
             <p class="text-xs text-stone-700 font-light leading-relaxed">
-              "ชอบมุมนั่งห้อยขาห้อง Lake View มากค่ะ ตื่นเช้ามาจิบกาแฟดูสายน้ำไหล ลมพัดเย็นสบายตลอดวัน ไม่ไกลจากกรุงเทพฯ ขับรถแค่ชั่วโมงนิดๆ ได้ชาร์จแบตเต็มที่ ช่วงเย็นไปเที่ยว Lion Park แค่ 5 นาที สะดวกมากๆ ค่ะ"
+              "ที่พักฮีลใจมากค่ะ ขับรถจากกรุงเทพฯ แค่ชั่วโมงนิดๆ ได้พักผ่อนสูดอากาศธรรมชาติจริงๆ ห้องพักเล่นระดับน่ารักมาก นั่งห้อยขาจิบกาแฟดูสายน้ำสบายใจ ตอนเย็นไปเที่ยววัดตะโกกับ Lion Park แค่ 5 นาที สะดวกมากๆ"
             </p>
           </div>
 
           <div class="pt-3 border-t border-stone-100 flex flex-wrap gap-1.5 text-[10px] text-stone-600">
+            <span class="px-2 py-0.5 rounded-lg bg-stone-100">🌿 บรรยากาศฮีลใจ</span>
             <span class="px-2 py-0.5 rounded-lg bg-stone-100">🦁 ใกล้ Lion Park 5 นาที</span>
-            <span class="px-2 py-0.5 rounded-lg bg-stone-100">🌿 เงียบสงบโรแมนติก</span>
-            <span class="px-2 py-0.5 rounded-lg bg-stone-100">☕ มุมนั่งห้อยขา</span>
+            <span class="px-2 py-0.5 rounded-lg bg-stone-100">⛩️ ใกล้วัดตะโก</span>
           </div>
         </div>
 
-        <!-- Review 5: Rock View -->
+        <!-- Review 4: Pet-Friendly Experience -->
+        <div class="review-card bg-white p-5 sm:p-6 rounded-3xl border border-zen-cardborder shadow-minimal flex flex-col justify-between space-y-4" data-type="family pet">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2.5">
+                <div class="w-10 h-10 rounded-full bg-rose-100 text-rose-800 font-bold flex items-center justify-center text-sm">
+                  มพ
+                </div>
+                <div>
+                  <h4 class="font-bold text-xs sm:text-sm text-zen-dark">คุณเมธาพร & น้องหมา</h4>
+                  <span class="text-[10px] text-zen-muted font-light">รีวิวจริงบน Google Maps • Rock View ริมน้ำ</span>
+                </div>
+              </div>
+              <span class="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-[10px] font-medium">
+                ✓ Google Verified
+              </span>
+            </div>
+
+            <div class="flex items-center text-amber-400 text-xs gap-1">
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            </div>
+
+            <p class="text-xs text-stone-700 font-light leading-relaxed">
+              "ประทับใจมากที่บ้านตาผายเป็นที่พัก Pet-Friendly พาน้องหมามาวิ่งเล่นสูดอากาศบริสุทธิ์ได้สบายใจ พื้นที่กว้างขวาง ร่มรื่น และปลอดภัยสำหรับสัตว์เลี้ยง เจ้าของใจดีและต้อนรับอบอุ่นมาก หาที่พักพาสัตว์เลี้ยงเที่ยวอยุธยาแนะนำที่นี่เลยค่ะ"
+            </p>
+          </div>
+
+          <div class="pt-3 border-t border-stone-100 flex flex-wrap gap-1.5 text-[10px] text-stone-600">
+            <span class="px-2 py-0.5 rounded-lg bg-stone-100">🐶 Pet-Friendly พักได้</span>
+            <span class="px-2 py-0.5 rounded-lg bg-stone-100">🌳 พื้นที่กว้างร่มรื่น</span>
+            <span class="px-2 py-0.5 rounded-lg bg-stone-100">💖 ต้อนรับอบอุ่น</span>
+          </div>
+        </div>
+
+        <!-- Review 5: Value & Thai Cuisine -->
         <div class="review-card bg-white p-5 sm:p-6 rounded-3xl border border-zen-cardborder shadow-minimal flex flex-col justify-between space-y-4" data-type="family cafe">
           <div class="space-y-3">
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-2.5">
                 <div class="w-10 h-10 rounded-full bg-cyan-100 text-cyan-800 font-bold flex items-center justify-center text-sm">
-                  อส
+                  อน
                 </div>
                 <div>
-                  <h4 class="font-bold text-xs sm:text-sm text-zen-dark">คุณอภิสิทธิ์</h4>
-                  <span class="text-[10px] text-zen-muted font-light">เข้าพักเมื่อ ส.ค. 2567 • Rock View ริมน้ำ</span>
+                  <h4 class="font-bold text-xs sm:text-sm text-zen-dark">คุณอนุชา & คุณแม่</h4>
+                  <span class="text-[10px] text-zen-muted font-light">รีวิวจริงบน Google Maps • Japanese King Bed</span>
                 </div>
               </div>
               <span class="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-[10px] font-medium">
-                ✓ พักจริง
+                ✓ Google Verified
               </span>
             </div>
 
@@ -1541,32 +1562,32 @@
             </div>
 
             <p class="text-xs text-stone-700 font-light leading-relaxed">
-              "ราคาเริ่มต้นแค่ 800 กว่าบาทแต่ได้ห้องพักติดริมน้ำรวมอาหารเช้า 2 คน คุ้มมากครับ คายัคพายฟรี เจ้าหน้าที่มีชูชีพให้และคอยดูแลดี ช่วงเย็นสั่งกับข้าวจากครัวรีสอร์ทมาทานที่ซุ้มริมน้ำ รสชาติจัดจ้านอร่อยทุกเมนู"
+              "ราคาเริ่มต้น 800 กว่าบาทแต่ได้บรรยากาศริมน้ำเกินคุ้ม รวมอาหารเช้าอร่อยมาก คุ้มค่าเกินราคา มีคาเฟ่ในตัวกาแฟดี กับข้าวไทยตอนเย็นรสชาติจัดจ้าน ทานริมน้ำบรรยากาศหลักล้าน วิวสวย ถ่ายรูปได้ทุกมุม ประทับใจมากครับ"
             </p>
           </div>
 
           <div class="pt-3 border-t border-stone-100 flex flex-wrap gap-1.5 text-[10px] text-stone-600">
-            <span class="px-2 py-0.5 rounded-lg bg-stone-100">💰 คุ้มค่าราคา 800.-</span>
-            <span class="px-2 py-0.5 rounded-lg bg-stone-100">🍲 กับข้าวไทยรสเด็ด</span>
-            <span class="px-2 py-0.5 rounded-lg bg-stone-100">🛶 พายเรือฟรี</span>
+            <span class="px-2 py-0.5 rounded-lg bg-stone-100">💰 คุ้มค่าเกินราคา</span>
+            <span class="px-2 py-0.5 rounded-lg bg-stone-100">🍳 อาหารเช้าอร่อย</span>
+            <span class="px-2 py-0.5 rounded-lg bg-stone-100">🍲 ครัวไทยรสจัดจ้าน</span>
           </div>
         </div>
 
-        <!-- Review 6: Japanese King -->
+        <!-- Review 6: Photo Spots & Peaceful Atmosphere -->
         <div class="review-card bg-white p-5 sm:p-6 rounded-3xl border border-zen-cardborder shadow-minimal flex flex-col justify-between space-y-4" data-type="couple cafe">
           <div class="space-y-3">
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-2.5">
                 <div class="w-10 h-10 rounded-full bg-purple-100 text-purple-800 font-bold flex items-center justify-center text-sm">
-                  นส
+                  พช
                 </div>
                 <div>
-                  <h4 class="font-bold text-xs sm:text-sm text-zen-dark">คุณนภัสสร</h4>
-                  <span class="text-[10px] text-zen-muted font-light">เข้าพักเมื่อ ก.ย. 2567 • Japanese King Bed</span>
+                  <h4 class="font-bold text-xs sm:text-sm text-zen-dark">คุณพัชรินทร์</h4>
+                  <span class="text-[10px] text-zen-muted font-light">รีวิวจริงบน Google Maps • Japanese Connecting</span>
                 </div>
               </div>
               <span class="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-[10px] font-medium">
-                ✓ พักจริง
+                ✓ Google Verified
               </span>
             </div>
 
@@ -1575,14 +1596,14 @@
             </div>
 
             <p class="text-xs text-stone-700 font-light leading-relaxed">
-              "เสี่ยงเซียมซีในเว็บได้ส่วนลดมาใช้จริง คุ้มค่ามากค่ะ บรรยากาศเงียบสงบ หลับสบายไม่มีเสียงรบกวน เช็คอินเช็คเอาท์รวดเร็ว แอดมินตอบ LINE ไวและให้ข้อมูลละเอียด ประทับใจมากค่ะ"
+              "ซุ้มประตูโทริอิและมุมสวนสไตล์ญี่ปุ่นถ่ายรูปสวยมาก บรรยากาศเงียบสงบผ่อนคลาย เตียงนอนคิงไซส์หนานุ่มนอนหลับสบาย ไร้เสียงรบกวน แอดมินตอบ LINE ไว ดูแลดีมาก มีโอกาสจะกลับมาพักซ้ำแน่นอนค่ะ"
             </p>
           </div>
 
           <div class="pt-3 border-t border-stone-100 flex flex-wrap gap-1.5 text-[10px] text-stone-600">
-            <span class="px-2 py-0.5 rounded-lg bg-stone-100">🎋 เซียมซีใช้ส่วนลดได้จริง</span>
-            <span class="px-2 py-0.5 rounded-lg bg-stone-100">💬 แอดมินตอบไว</span>
-            <span class="px-2 py-0.5 rounded-lg bg-stone-100">🌙 หลับสบาย</span>
+            <span class="px-2 py-0.5 rounded-lg bg-stone-100">⛩️ ซุ้มถ่ายรูปสวย</span>
+            <span class="px-2 py-0.5 rounded-lg bg-stone-100">🛏️ เตียงนุ่มหลับสบาย</span>
+            <span class="px-2 py-0.5 rounded-lg bg-stone-100">🌿 เงียบสงบไร้เสียงรบกวน</span>
           </div>
         </div>
 
@@ -1596,9 +1617,9 @@
           </div>
           <div class="space-y-1">
             <div class="flex items-center gap-2">
-              <span class="text-sm font-bold text-zen-dark">ประทับใจการเข้าพัก?</span>
+              <span class="text-sm font-bold text-zen-dark">ประทับใจการเข้าพักที่บ้านตาผาย?</span>
               <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-200">
-                คะแนน 4.9 ดาว บน Google
+                คะแนน 4.7 ดาว บน Google Maps (180+ รีวิว)
               </span>
             </div>
             <p class="text-xs text-stone-600 font-light leading-relaxed">
@@ -1607,12 +1628,12 @@
           </div>
         </div>
         <div class="flex items-center gap-3 shrink-0 w-full md:w-auto">
-          <a href="https://maps.app.goo.gl/QZnssrZgScjpk9cJ8" target="_blank" rel="noopener noreferrer" class="flex-1 md:flex-none inline-flex items-center justify-center gap-2 px-5 py-3 rounded-2xl bg-zen-dark hover:bg-black text-white text-xs font-semibold shadow-sm transition-all active:scale-95">
+          <a href="https://www.google.com/maps/place/Ta+Phai+Country+House+Resort+%26+Restaurant+%E0%B8%9A%E0%B9%89%E0%B8%B2%E0%B8%99%E0%B8%95%E0%B8%B2%E0%B8%9C%E0%B8%B2%E0%B8%A2/@14.5254055,22.6745089,3z/data=!4m15!1m3!11m2!2sfvCh34A6yu-arkFKSLatu3YK6l20xQ!3e1!3m10!1s0x311df15adefc75fb:0xe8712cc588511d8e!5m2!4m1!1i2!8m2!3d14.5254055!4d100.7213839!9m1!1b1!16s%2Fg%2F11lqlzj55l?entry=ttu" target="_blank" rel="noopener noreferrer" class="flex-1 md:flex-none inline-flex items-center justify-center gap-2 px-5 py-3 rounded-2xl bg-zen-dark hover:bg-black text-white text-xs font-semibold shadow-sm transition-all active:scale-95">
             <i class="fa-solid fa-pen-to-square text-amber-400"></i>
             <span>เขียนรีวิวให้เราบน Google</span>
           </a>
-          <a href="https://maps.app.goo.gl/QZnssrZgScjpk9cJ8" target="_blank" rel="noopener noreferrer" class="flex-1 md:flex-none inline-flex items-center justify-center gap-2 px-4 py-3 rounded-2xl bg-white hover:bg-stone-100 border border-stone-300 text-stone-700 text-xs font-medium transition-all active:scale-95">
-            <span>อ่านรีวิวทั้งหมด</span>
+          <a href="https://www.google.com/maps/place/Ta+Phai+Country+House+Resort+%26+Restaurant+%E0%B8%9A%E0%B9%89%E0%B8%B2%E0%B8%99%E0%B8%95%E0%B8%B2%E0%B8%9C%E0%B8%B2%E0%B8%A2/@14.5254055,22.6745089,3z/data=!4m15!1m3!11m2!2sfvCh34A6yu-arkFKSLatu3YK6l20xQ!3e1!3m10!1s0x311df15adefc75fb:0xe8712cc588511d8e!5m2!4m1!1i2!8m2!3d14.5254055!4d100.7213839!9m1!1b1!16s%2Fg%2F11lqlzj55l?entry=ttu" target="_blank" rel="noopener noreferrer" class="flex-1 md:flex-none inline-flex items-center justify-center gap-2 px-4 py-3 rounded-2xl bg-white hover:bg-stone-100 border border-stone-300 text-stone-700 text-xs font-medium transition-all active:scale-95">
+            <span>อ่านรีวิวทั้งหมด (180+)</span>
             <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
           </a>
         </div>
@@ -6278,6 +6299,24 @@
       initOmikujiDeviceCheck();
       initStayCalculator();
       setTimeout(triggerSocialProof, 4000);
+
+      // Programmatically remove any injected Netlify badges or floating third-party watermarks
+      const removeNetlifyBadges = () => {
+        try {
+          document.querySelectorAll('iframe[src*="netlify"], iframe[title*="Netlify"], div[id*="netlify"], div[class*="netlify"], a[href*="netlify.com"]').forEach(el => {
+            if (el && !el.closest('#reviews')) {
+              const pos = window.getComputedStyle(el).position;
+              if (pos === 'fixed' || pos === 'absolute' || el.tagName === 'IFRAME') {
+                el.style.display = 'none';
+                el.remove();
+              }
+            }
+          });
+        } catch(e) {}
+      };
+      removeNetlifyBadges();
+      setTimeout(removeNetlifyBadges, 800);
+      setTimeout(removeNetlifyBadges, 2500);
     });
   </script>
 
