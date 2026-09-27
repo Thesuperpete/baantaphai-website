@@ -14,6 +14,40 @@
   <meta property="og:description" content="สัมผัสธรรมชาติริมน้ำและมนต์เสน่ห์สไตล์ญี่ปุ่น บรรยากาศเงียบสงบ เป็นส่วนตัว พร้อมกิจกรรมฟรีครบครัน ติดต่อเพจ Facebook @Baantaphai">
   <meta property="og:image" content="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1200&h=630&q=80">
   
+  <!-- ================= META PIXEL & FACEBOOK ADS CONVERSION TRACKING ================= -->
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+
+    // Dynamic Meta Pixel ID Resolution (URL param, LocalStorage, or Default)
+    (function() {
+      try {
+        var urlParams = new URLSearchParams(window.location.search);
+        var queryPixel = urlParams.get('pixel_id') || urlParams.get('meta_pixel_id');
+        if (queryPixel) {
+          localStorage.setItem('baantaphai_meta_pixel_id', queryPixel);
+        }
+        var savedPixel = localStorage.getItem('baantaphai_meta_pixel_id');
+        window.META_PIXEL_ID = window.META_PIXEL_ID || queryPixel || savedPixel || '985472106398412';
+        
+        fbq('init', window.META_PIXEL_ID);
+        fbq('track', 'PageView');
+      } catch(e) {
+        console.warn('[Meta Pixel] Init notice:', e);
+      }
+    })();
+  </script>
+  <noscript>
+    <img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=985472106398412&ev=PageView&noscript=1" />
+  </noscript>
+  <!-- End Meta Pixel Code -->
+  
   <!-- High-Speed Resource Hints for Zero-Latency Asset Delivery -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -5366,6 +5400,14 @@
           card.classList.add('hidden');
         }
       });
+
+      // Meta Pixel: Search event when filtering rooms
+      if (typeof window.trackMetaEvent === 'function' && currentFilter !== 'all') {
+        window.trackMetaEvent('Search', {
+          search_string: currentFilter,
+          content_category: 'Room Category Filter'
+        });
+      }
     }
 
     // 5. DETAIL MODAL & CAROUSEL
@@ -5410,6 +5452,18 @@
       const messengerBtn = document.getElementById('modalMessengerBtn');
       if (messengerBtn) {
         messengerBtn.href = 'https://m.me/Baantaphai';
+      }
+
+      // Meta Pixel: ViewContent tracking for specific room
+      if (typeof window.trackMetaEvent === 'function') {
+        const numericPrice = parseInt((data.price || '').replace(/[^0-9]/g, ''), 10) || 0;
+        window.trackMetaEvent('ViewContent', {
+          content_name: data.title,
+          content_category: 'Resort Room',
+          content_ids: [roomId],
+          value: numericPrice,
+          currency: 'THB'
+        });
       }
 
       document.getElementById('roomModal').classList.remove('hidden');
@@ -5677,6 +5731,13 @@
       document.body.classList.add('overflow-hidden');
       switchFortuneTab('omikuji');
       renderOmikujiState();
+
+      if (typeof window.trackMetaEvent === 'function') {
+        window.trackMetaEvent('DrawOmikujiFortune', {
+          content_name: 'Omikuji Digital Fortune & Voucher',
+          content_category: 'Gamification'
+        }, true);
+      }
     }
 
     function closeFortuneModal() {
@@ -6947,10 +7008,32 @@
       const submitBtn = document.getElementById('calcLineSubmitBtn');
       if (submitBtn) {
         submitBtn.href = `https://line.me/R/ti/p/@baantaphairesort?text=${encodeURIComponent(lineMsg)}`;
+        submitBtn.onclick = function() {
+          if (typeof window.trackMetaEvent === 'function') {
+            window.trackMetaEvent('InitiateCheckout', {
+              content_name: roomTitle,
+              content_category: 'Stay Calculator LINE Booking',
+              value: grandTotal,
+              currency: 'THB',
+              num_items: nights
+            });
+          }
+        };
       }
       const messengerSubmitBtn = document.getElementById('calcMessengerSubmitBtn');
       if (messengerSubmitBtn) {
         messengerSubmitBtn.href = 'https://m.me/Baantaphai';
+        messengerSubmitBtn.onclick = function() {
+          if (typeof window.trackMetaEvent === 'function') {
+            window.trackMetaEvent('InitiateCheckout', {
+              content_name: roomTitle,
+              content_category: 'Stay Calculator Messenger Booking',
+              value: grandTotal,
+              currency: 'THB',
+              num_items: nights
+            });
+          }
+        };
       }
     }
 
@@ -6970,6 +7053,13 @@
         const url = new URL(submitBtn.href);
         const text = url.searchParams.get('text');
         if (text) {
+          if (typeof window.trackMetaEvent === 'function') {
+            window.trackMetaEvent('Lead', {
+              content_name: 'Stay Summary Copied to Clipboard',
+              content_category: 'Booking Intent',
+              currency: 'THB'
+            });
+          }
           navigator.clipboard.writeText(text).then(() => {
             showToast('📋 คัดลอกรายละเอียดการคำนวณเรียบร้อย นำไปวางใน LINE หรือแชทได้ทันที');
           }).catch(() => {
@@ -7752,6 +7842,100 @@
       }
     });
 
+    // ==========================================
+    // 21. META PIXEL CONVERSION TRACKING ENGINE
+    // ==========================================
+    window.trackMetaEvent = function(eventName, eventParams, isCustom) {
+      try {
+        const params = eventParams || {};
+        if (typeof window.fbq === 'function') {
+          if (isCustom) {
+            window.fbq('trackCustom', eventName, params);
+          } else {
+            window.fbq('track', eventName, params);
+          }
+        }
+        
+        // Developer & Marketer console diagnostics
+        const isDebug = window.location.search.includes('debug_pixel=true') || window.location.hostname === 'localhost';
+        if (isDebug || window.__META_DEBUG) {
+          console.log(`%c[Meta Pixel ${isCustom ? 'Custom' : 'Standard'}] ${eventName}`, 'color: #1877F2; font-weight: bold; background: #E7F3FF; padding: 2px 6px; border-radius: 4px;', params);
+        }
+      } catch(err) {
+        console.warn('[Meta Pixel] Event tracking note:', err);
+      }
+    };
+
+    window.setMetaPixelId = function(newId) {
+      if (!newId) return;
+      try {
+        localStorage.setItem('baantaphai_meta_pixel_id', newId);
+        window.META_PIXEL_ID = newId;
+        if (typeof window.fbq === 'function') {
+          window.fbq('init', newId);
+          window.fbq('track', 'PageView');
+        }
+        console.log('%c[Meta Pixel] Pixel ID updated successfully to: ' + newId, 'color: green; font-weight: bold;');
+        showToast('🎯 ตั้งค่า Meta Pixel ID: ' + newId + ' เรียบร้อย');
+      } catch(e) {
+        console.error('[Meta Pixel] Failed to save Pixel ID:', e);
+      }
+    };
+
+    // Automated Event Delegation for Outbound & Conversion Clicks
+    function initMetaConversionListeners() {
+      document.addEventListener('click', function(e) {
+        const link = e.target.closest('a');
+        if (!link) return;
+        const href = link.getAttribute('href') || '';
+        
+        // 1. LINE Official Chat Contact
+        if (href.includes('line.me')) {
+          const btnText = (link.innerText || '').trim().replace(/\s+/g, ' ').substring(0, 40);
+          window.trackMetaEvent('Contact', {
+            channel: 'LINE',
+            method: 'line_official_chat',
+            content_name: btnText || 'LINE Official Booking',
+            target_url: href
+          });
+        }
+        // 2. Facebook Messenger Chat Contact
+        else if (href.includes('m.me/Baantaphai') || href.includes('messenger.com')) {
+          const btnText = (link.innerText || '').trim().replace(/\s+/g, ' ').substring(0, 40);
+          window.trackMetaEvent('Contact', {
+            channel: 'Facebook Messenger',
+            method: 'messenger_direct_chat',
+            content_name: btnText || 'Messenger Inquiry',
+            target_url: href
+          });
+        }
+        // 3. Direct Phone Call
+        else if (href.startsWith('tel:')) {
+          window.trackMetaEvent('Contact', {
+            channel: 'Phone',
+            method: 'direct_phone_call',
+            phone_number: href.replace('tel:', ''),
+            content_name: 'Direct Phone Inquiry'
+          });
+        }
+        // 4. Google Maps Directions / Wayfinding
+        else if (href.includes('maps.app.goo.gl') || href.includes('google.com/maps')) {
+          window.trackMetaEvent('FindLocation', {
+            content_name: 'Baan Ta Phai Google Maps Wayfinding',
+            content_category: 'Navigation',
+            target_url: href
+          });
+        }
+        // 5. Facebook Page & Album Views
+        else if (href.includes('facebook.com/Baantaphai')) {
+          window.trackMetaEvent('ViewContent', {
+            content_name: href.includes('photos') ? 'Facebook Photos Album' : 'Facebook Page Timeline',
+            content_category: 'Facebook Page Follow'
+          });
+        }
+      });
+    }
+
     // Initial load
     document.addEventListener('DOMContentLoaded', () => {
       renderHeroSection();
@@ -7760,6 +7944,7 @@
       renderMenuItems();
       initOmikujiDeviceCheck();
       initStayCalculator();
+      initMetaConversionListeners();
       setTimeout(triggerSocialProof, 4000);
 
       // Programmatically remove any injected Netlify badges or floating third-party watermarks
