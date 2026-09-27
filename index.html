@@ -418,6 +418,10 @@
           
           <div class="absolute left-0 top-full pt-1.5 w-52 hidden group-hover:block z-50">
             <div class="bg-white dark:bg-[#1A231E] rounded-2xl shadow-xl border border-zen-cardborder p-1.5 space-y-0.5">
+              <a href="#facebook-feed" class="flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-zen-sand dark:hover:bg-white/10 text-zen-dark text-xs transition-colors">
+                <i class="fa-brands fa-facebook text-[#1877F2] w-4 text-center"></i>
+                <span>ฟีดสดเพจ Facebook</span>
+              </a>
               <a href="#itinerary" class="flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-zen-sand dark:hover:bg-white/10 text-zen-dark text-xs transition-colors">
                 <i class="fa-solid fa-compass text-emerald-600 w-4 text-center"></i>
                 <span>แพลนเที่ยวอยุธยา</span>
@@ -523,6 +527,10 @@
           <a href="#reviews" onclick="toggleMobileMenu()" class="flex items-center gap-3 p-2.5 rounded-2xl hover:bg-zen-sand transition-colors min-h-[44px]">
             <i class="fa-solid fa-star text-amber-500 w-5 text-center"></i>
             <span>รีวิวจากลูกค้าจริง (4.7★)</span>
+          </a>
+          <a href="#facebook-feed" onclick="toggleMobileMenu()" class="flex items-center gap-3 p-2.5 rounded-2xl hover:bg-zen-sand transition-colors min-h-[44px]">
+            <i class="fa-brands fa-facebook text-[#1877F2] w-5 text-center"></i>
+            <span>ฟีดสดเพจ Facebook</span>
           </a>
           <a href="#photospots" onclick="toggleMobileMenu()" class="flex items-center gap-3 p-2.5 rounded-2xl hover:bg-zen-sand transition-colors min-h-[44px]">
             <i class="fa-solid fa-camera text-rose-600 w-5 text-center"></i>
@@ -1974,6 +1982,175 @@
           <p class="text-xs font-bold text-zen-dark">สะอาด ปลอดภัย 100%</p>
           <p class="text-[10px] text-stone-500 font-light">มาตรฐาน SHA Plus ทำความสะอาดทุกวัน</p>
         </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= LIVE FACEBOOK PAGE WIDGET & COMMUNITY FEED ================= -->
+  <section id="facebook-feed" class="py-12 sm:py-20 bg-zen-sand/30 border-b border-zen-cardborder/70 scroll-mt-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-2xl mx-auto mb-10 sm:mb-14 space-y-2">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-900 text-[10px] sm:text-[11px] font-medium tracking-widest uppercase border border-blue-200 shadow-2xs">
+          <i class="fa-brands fa-facebook text-[#1877F2]"></i>
+          <span>Live From Facebook Page</span>
+        </div>
+        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-zen-dark leading-tight">
+          อัปเดตบรรยากาศ & กิจกรรมล่าสุดจากเพจ Facebook
+        </h2>
+        <p class="text-xs sm:text-sm text-zen-muted font-light leading-relaxed">
+          เกาะติดภาพถ่ายสดใหม่ บรรยากาศคุ้งน้ำอยุธยาวันนี้ เมนูอาหารครัวบ้านตาผาย และกิจกรรมสนุกๆ ส่งตรงจากเพจทางการ <strong class="text-zen-dark font-medium">@Baantaphai</strong>
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+        
+        <!-- Left: Facebook Page Live Widget Frame (6 cols) -->
+        <div class="lg:col-span-6 flex flex-col items-center">
+          <div class="w-full max-w-[500px] bg-white rounded-3xl overflow-hidden shadow-minimal border border-zen-cardborder p-3.5 sm:p-4 space-y-3">
+            
+            <!-- Widget Header Bar -->
+            <div class="flex items-center justify-between pb-3 border-b border-stone-100">
+              <div class="flex items-center gap-2.5">
+                <span class="w-9 h-9 rounded-2xl bg-blue-50 text-[#1877F2] flex items-center justify-center text-lg shrink-0 shadow-2xs">
+                  <i class="fa-brands fa-facebook"></i>
+                </span>
+                <div>
+                  <div class="flex items-center gap-1.5">
+                    <h3 class="text-xs sm:text-sm font-bold text-zen-dark leading-tight">บ้านตาผาย Baan Ta Phai</h3>
+                    <i class="fa-solid fa-circle-check text-[#1877F2] text-[10px]" title="เพจทางการ"></i>
+                  </div>
+                  <p class="text-[10px] text-zen-muted font-light">@Baantaphai • ฟีดอัปเดตสดแบบเรียลไทม์</p>
+                </div>
+              </div>
+              <a href="https://www.facebook.com/Baantaphai" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-full bg-blue-50 hover:bg-blue-100 text-[#1877F2] text-[11px] font-semibold transition-colors flex items-center gap-1 shrink-0">
+                <span>เปิดในแอป</span>
+                <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+              </a>
+            </div>
+
+            <!-- Facebook Official Page Plugin iframe container -->
+            <div class="w-full rounded-2xl overflow-hidden bg-stone-50 border border-stone-100 min-h-[580px] flex items-center justify-center relative">
+              <iframe 
+                src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FBaantaphai&tabs=timeline&width=500&height=650&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true" 
+                width="100%" 
+                height="650" 
+                style="border:none;overflow:hidden;width:100%;max-width:500px;min-height:580px;" 
+                scrolling="no" 
+                frameborder="0" 
+                allowfullscreen="true" 
+                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                loading="lazy"
+                title="Facebook Page Feed บ้านตาผาย @Baantaphai">
+              </iframe>
+            </div>
+
+            <!-- Mobile Helper Caption -->
+            <div class="pt-1 text-center">
+              <p class="text-[10px] text-stone-400 font-light">
+                *หากใช้งานเบราว์เซอร์ที่บล็อกคุกกี้ภายนอก สามารถ <a href="https://www.facebook.com/Baantaphai" target="_blank" rel="noopener noreferrer" class="text-blue-600 underline hover:text-blue-800">คลิกเปิดเพจ Facebook ตรงนี้</a> ได้เลยครับ
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Right: Facebook Community Highlights & Social Engagement (6 cols) -->
+        <div class="lg:col-span-6 space-y-4 sm:space-y-5">
+          
+          <!-- Card 1: 4 Key Reasons to Follow -->
+          <div class="bg-white p-5 sm:p-7 rounded-3xl border border-zen-cardborder shadow-minimal space-y-4">
+            <div class="flex items-center gap-2.5">
+              <span class="w-8 h-8 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center text-sm shrink-0">
+                ✨
+              </span>
+              <h3 class="text-base sm:text-lg font-bold text-zen-dark">
+                ติดตามเพจบ้านตาผาย ได้อะไรบ้าง?
+              </h3>
+            </div>
+
+            <div class="space-y-3 text-xs sm:text-sm text-stone-700 font-light leading-relaxed">
+              <div class="flex items-start gap-3 p-3 rounded-2xl bg-stone-50/70 border border-stone-200/60">
+                <span class="text-base mt-0.5 shrink-0">🌅</span>
+                <div>
+                  <h4 class="font-bold text-zen-dark text-xs sm:text-sm">ภาพบรรยากาศและระดับน้ำจริงรายวัน</h4>
+                  <p class="text-[11px] sm:text-xs text-stone-500 font-light mt-0.5">ชมแสงอาทิตย์ตกดิน ทะเลหมอกยามเช้า และความสงบเงียบของธรรมชาติก่อนออกเดินทาง</p>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-3 p-3 rounded-2xl bg-stone-50/70 border border-stone-200/60">
+                <span class="text-base mt-0.5 shrink-0">🍲</span>
+                <div>
+                  <h4 class="font-bold text-zen-dark text-xs sm:text-sm">เมนูอาหารแนะนำ & กับข้าวไทยรสจัดจ้าน</h4>
+                  <p class="text-[11px] sm:text-xs text-stone-500 font-light mt-0.5">อัปเดตเมนูครัวบ้านตาผาย อาหารป่าพื้นบ้าน กาแฟสดอาราบิก้า และของหวานริมแม่น้ำ</p>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-3 p-3 rounded-2xl bg-stone-50/70 border border-stone-200/60">
+                <span class="text-base mt-0.5 shrink-0">🎟️</span>
+                <div>
+                  <h4 class="font-bold text-zen-dark text-xs sm:text-sm">โปรโมชั่นพิเศษ & ห้องพักว่างนาทีทอง</h4>
+                  <p class="text-[11px] sm:text-xs text-stone-500 font-light mt-0.5">รับแจ้งสิทธิพิเศษเฉพาะผู้ติดตามเพจ กิจกรรมแจกส่วนลด และดีลวันธรรมดาสุดคุ้ม</p>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-3 p-3 rounded-2xl bg-stone-50/70 border border-stone-200/60">
+                <span class="text-base mt-0.5 shrink-0">💬</span>
+                <div>
+                  <h4 class="font-bold text-zen-dark text-xs sm:text-sm">แชทคุยกับแอดมินใจดี ตอบไว</h4>
+                  <p class="text-[11px] sm:text-xs text-stone-500 font-light mt-0.5">ทักสอบถามเส้นทาง เช็คห้องว่าง หรือสั่งจองอาหารล่วงหน้าได้อย่างสะดวกสบาย</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2: Dual Verified Metrics Strip -->
+          <div class="p-4 sm:p-5 rounded-3xl bg-blue-50/70 border border-blue-200/80 flex items-center justify-between gap-3 flex-wrap">
+            <div class="flex items-center gap-3">
+              <span class="w-10 h-10 rounded-2xl bg-[#1877F2] text-white flex items-center justify-center text-lg shrink-0 shadow-sm">
+                <i class="fa-solid fa-thumbs-up"></i>
+              </span>
+              <div>
+                <p class="text-xs sm:text-sm font-bold text-blue-950">98% แขกแนะนำบน Facebook</p>
+                <p class="text-[10px] sm:text-[11px] text-blue-800/80 font-light">การันตีความพึงพอใจจากผู้เข้าพักจริงต่อเนื่อง</p>
+              </div>
+            </div>
+            <span class="text-xs font-bold text-blue-900 bg-white px-3 py-1.5 rounded-full border border-blue-200 shadow-2xs shrink-0">
+              ⭐ 4.7 / 5.0 Google Maps
+            </span>
+          </div>
+
+          <!-- Card 3: Action Buttons & Check-in Invitation -->
+          <div class="p-5 sm:p-6 rounded-3xl bg-white border border-zen-cardborder shadow-minimal space-y-3.5">
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="font-bold text-xs sm:text-sm text-zen-dark">ร่วมเป็นส่วนหนึ่งของครอบครัวบ้านตาผาย</h4>
+                <p class="text-[10px] sm:text-[11px] text-zen-muted font-light mt-0.5">กดติดตามเพจ หรือทักคุยกับเราได้ตลอดเวลา</p>
+              </div>
+              <span class="text-xl">🎋</span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+              <a href="https://www.facebook.com/Baantaphai" target="_blank" rel="noopener noreferrer" class="py-3 px-4 rounded-2xl bg-[#1877F2] hover:bg-blue-700 text-white font-semibold text-xs transition-all flex items-center justify-center gap-2 shadow-sm min-h-[44px] active:scale-95">
+                <i class="fa-brands fa-facebook text-base"></i>
+                <span>ติดตามเพจ Facebook</span>
+              </a>
+              <a href="https://m.me/Baantaphai" target="_blank" class="py-3 px-4 rounded-2xl bg-[#0084FF] hover:bg-[#0073E6] text-white font-semibold text-xs transition-all flex items-center justify-center gap-2 shadow-sm min-h-[44px] active:scale-95">
+                <i class="fa-brands fa-facebook-messenger text-base"></i>
+                <span>ทัก Messenger สอบถาม</span>
+              </a>
+            </div>
+
+            <div class="pt-2 border-t border-stone-100 flex items-center gap-2 text-[10px] sm:text-[11px] text-stone-500 font-light">
+              <i class="fa-solid fa-camera text-rose-500"></i>
+              <span>แวะมาพักแล้ว อย่าลืม Check-in & แท็ก <strong>@Baantaphai</strong> อวดรูปสวยกันนะครับ!</span>
+            </div>
+          </div>
+
+        </div>
+
       </div>
 
     </div>
