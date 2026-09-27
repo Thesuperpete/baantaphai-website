@@ -7,8 +7,12 @@
   
   <!-- SEO & Meta -->
   <meta name="description" content="บ้านตาผาย รีสอร์ท อำเภอท่าเรือ พระนครศรีอยุธยา สัมผัสความเงียบสงบในบรรยากาศริมน้ำ และโซนบ้านพักสไตล์ญี่ปุ่นซุ้มประตูโทริอิ">
+  <meta property="og:site_name" content="บ้านตาผาย รีสอร์ท อยุธยา (Baan Ta Phai Resort)">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://baantaphairesort.netlify.app/">
   <meta property="og:title" content="บ้านตาผาย รีสอร์ท อยุธยา | Baan Ta Phai Resort">
-  <meta property="og:description" content="สัมผัสธรรมชาติริมน้ำและมนต์เสน่ห์สไตล์ญี่ปุ่น บรรยากาศเงียบสงบ เป็นส่วนตัว พร้อมกิจกรรมฟรีครบครัน">
+  <meta property="og:description" content="สัมผัสธรรมชาติริมน้ำและมนต์เสน่ห์สไตล์ญี่ปุ่น บรรยากาศเงียบสงบ เป็นส่วนตัว พร้อมกิจกรรมฟรีครบครัน ติดต่อเพจ Facebook @Baantaphai">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1200&h=630&q=80">
   
   <!-- High-Speed Resource Hints for Zero-Latency Asset Delivery -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -450,6 +454,11 @@
           <span id="navPhoneText">062-460-5863</span>
         </a>
 
+        <a id="navMessengerBtn" href="https://m.me/Baantaphai" target="_blank" class="hidden sm:inline-flex items-center gap-1.5 sm:gap-2 bg-[#0084FF] hover:bg-[#0073E6] text-white text-xs sm:text-sm font-medium px-3 sm:px-3.5 py-2 sm:py-2.5 rounded-full shadow-sm hover:shadow transition-all transform active:scale-95" title="แชทผ่าน Facebook Messenger">
+          <i class="fa-brands fa-facebook-messenger text-base"></i>
+          <span>Messenger</span>
+        </a>
+
         <a id="navLineBtn" href="https://line.me/R/ti/p/@baantaphairesort" target="_blank" class="inline-flex items-center gap-1.5 sm:gap-2 bg-zen-line hover:bg-emerald-600 text-white text-xs sm:text-sm font-medium px-3 sm:px-4 py-2 sm:py-2.5 rounded-full shadow-sm hover:shadow transition-all transform active:scale-95">
           <i class="fa-brands fa-line text-base sm:text-lg"></i>
           <span>ทัก LINE</span>
@@ -547,6 +556,9 @@
         </a>
         <a href="https://line.me/R/ti/p/@baantaphairesort" target="_blank" class="w-full py-3 rounded-xl bg-zen-line text-white font-medium flex items-center justify-center gap-2 shadow-sm min-h-[44px] active:scale-98">
           <i class="fa-brands fa-line text-base"></i> จองผ่าน LINE Official
+        </a>
+        <a href="https://m.me/Baantaphai" target="_blank" class="w-full py-3 rounded-xl bg-[#0084FF] text-white font-medium flex items-center justify-center gap-2 shadow-sm min-h-[44px] active:scale-98">
+          <i class="fa-brands fa-facebook-messenger text-base"></i> ทักแชท Facebook Messenger
         </a>
         <button onclick="promptAdminLogin(); toggleMobileMenu();" class="w-full py-2 text-center text-[11px] text-zen-muted underline decoration-dotted min-h-[40px]">
           ⚙️ เข้าสู่โหมดแก้ไข (Admin)
@@ -975,16 +987,20 @@
             อยากดูรายการเมนู หรือสั่งอาหารเตรียมไว้ล่วงหน้าก่อนเข้าพัก?
           </h4>
           <p class="text-xs sm:text-sm text-zen-sand/80 font-light max-w-xl">
-            คลิกดูตัวอย่างเมนูแนะนำบนหน้าเว็บ หรือทัก LINE เพื่อรับเมนูฉบับเต็มและสั่งล่วงหน้ากับแอดมินได้ตลอดเวลา
+            คลิกดูตัวอย่างเมนูแนะนำบนหน้าเว็บ หรือทัก LINE / Facebook Messenger เพื่อรับเมนูฉบับเต็มและสั่งล่วงหน้ากับแอดมินได้ตลอดเวลา
           </p>
         </div>
 
-        <div class="flex flex-col sm:flex-row items-center gap-2.5 w-full md:w-auto shrink-0">
-          <button onclick="openMenuModal()" class="w-full sm:w-auto px-5 py-3 rounded-2xl bg-white text-zen-dark font-medium text-xs hover:bg-zen-sand transition-all flex items-center justify-center gap-2 shadow-sm active:scale-95">
+        <div class="flex flex-wrap items-center justify-center md:justify-end gap-2.5 w-full md:w-auto shrink-0">
+          <button onclick="openMenuModal()" class="w-full sm:w-auto px-4 py-3 rounded-2xl bg-white text-zen-dark font-medium text-xs hover:bg-zen-sand transition-all flex items-center justify-center gap-2 shadow-sm active:scale-95">
             <i class="fa-solid fa-book-open text-zen-torii"></i>
-            <span>เปิดดูเมนูอาหาร & เครื่องดื่ม</span>
+            <span>เปิดดูเมนูอาหาร</span>
           </button>
-          <a href="https://line.me/R/ti/p/@baantaphairesort" target="_blank" class="w-full sm:w-auto px-5 py-3 rounded-2xl bg-zen-line hover:bg-emerald-600 text-white font-medium text-xs transition-all flex items-center justify-center gap-2 shadow-sm active:scale-95">
+          <a href="https://m.me/Baantaphai" target="_blank" class="w-full sm:w-auto px-4 py-3 rounded-2xl bg-[#0084FF] hover:bg-[#0073E6] text-white font-medium text-xs transition-all flex items-center justify-center gap-2 shadow-sm active:scale-95">
+            <i class="fa-brands fa-facebook-messenger text-base"></i>
+            <span>ทัก Messenger</span>
+          </a>
+          <a href="https://line.me/R/ti/p/@baantaphairesort" target="_blank" class="w-full sm:w-auto px-4 py-3 rounded-2xl bg-zen-line hover:bg-emerald-600 text-white font-medium text-xs transition-all flex items-center justify-center gap-2 shadow-sm active:scale-95">
             <i class="fa-brands fa-line text-base"></i>
             <span>ทัก LINE สั่งอาหาร</span>
           </a>
@@ -2283,11 +2299,15 @@
               </div>
             </div>
 
-            <!-- Instant LINE Action Button -->
+            <!-- Instant Booking Action Buttons -->
             <div class="pt-2 space-y-2">
-              <a id="calcLineSubmitBtn" href="https://line.me/R/ti/p/@baantaphairesort" target="_blank" class="w-full py-3.5 px-4 rounded-2xl bg-zen-line hover:bg-emerald-600 font-semibold text-xs sm:text-sm text-white text-center flex items-center justify-center gap-2 shadow-lg transition-all active:scale-98">
-                <i class="fa-brands fa-line text-xl"></i>
-                <span>ทัก LINE จองห้องนี้พร้อมวันเวลาทันที</span>
+              <a id="calcLineSubmitBtn" href="https://line.me/R/ti/p/@baantaphairesort" target="_blank" class="w-full py-3 px-4 rounded-2xl bg-zen-line hover:bg-emerald-600 font-semibold text-xs sm:text-sm text-white text-center flex items-center justify-center gap-2 shadow-lg transition-all active:scale-98">
+                <i class="fa-brands fa-line text-lg sm:text-xl"></i>
+                <span>ทัก LINE จองห้องนี้พร้อมสรุปราคา</span>
+              </a>
+              <a id="calcMessengerSubmitBtn" href="https://m.me/Baantaphai" target="_blank" class="w-full py-2.5 px-4 rounded-2xl bg-[#0084FF] hover:bg-[#0073E6] font-semibold text-xs text-white text-center flex items-center justify-center gap-2 shadow-md transition-all active:scale-98">
+                <i class="fa-brands fa-facebook-messenger text-base"></i>
+                <span>หรือทักจองทาง Facebook Messenger</span>
               </a>
               <div class="grid grid-cols-2 gap-2">
                 <button type="button" onclick="previewCalcRoomModal()" class="py-2.5 px-3 rounded-xl bg-white/10 hover:bg-white/20 text-stone-200 text-xs font-medium text-center transition-colors truncate">
@@ -2492,12 +2512,18 @@
       <div class="mt-8 p-5 sm:p-6 rounded-3xl bg-zen-sand/60 border border-zen-cardborder flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
         <div class="space-y-1">
           <h4 class="font-bold text-sm sm:text-base text-zen-dark">ยังมีคำถามอื่นๆ หรือต้องการสอบถามเพิ่มเติม?</h4>
-          <p class="text-xs text-zen-muted font-light">เจ้าหน้าที่ของเราพร้อมให้คำแนะนำและช่วยเหลือคุณผ่าน LINE Official ตลอดเวลา</p>
+          <p class="text-xs text-zen-muted font-light">เจ้าหน้าที่ของเราพร้อมให้คำแนะนำและช่วยเหลือคุณผ่าน Facebook Messenger หรือ LINE Official ตลอดเวลา</p>
         </div>
-        <a href="https://line.me/R/ti/p/@baantaphairesort" target="_blank" class="px-5 py-3 rounded-2xl bg-zen-line hover:bg-emerald-600 text-white font-medium text-xs flex items-center gap-2 shadow-sm shrink-0 active:scale-95 transition-all">
-          <i class="fa-brands fa-line text-lg"></i>
-          <span>ทักถามทาง LINE</span>
-        </a>
+        <div class="flex flex-wrap items-center justify-center gap-2 shrink-0">
+          <a href="https://m.me/Baantaphai" target="_blank" class="px-4 py-3 rounded-2xl bg-[#0084FF] hover:bg-[#0073E6] text-white font-medium text-xs flex items-center gap-2 shadow-sm shrink-0 active:scale-95 transition-all">
+            <i class="fa-brands fa-facebook-messenger text-base"></i>
+            <span>ทัก Messenger</span>
+          </a>
+          <a href="https://line.me/R/ti/p/@baantaphairesort" target="_blank" class="px-4 py-3 rounded-2xl bg-zen-line hover:bg-emerald-600 text-white font-medium text-xs flex items-center gap-2 shadow-sm shrink-0 active:scale-95 transition-all">
+            <i class="fa-brands fa-line text-lg"></i>
+            <span>ทัก LINE</span>
+          </a>
+        </div>
       </div>
 
     </div>
@@ -2600,6 +2626,38 @@
                 <span>โทรออก</span>
               </span>
             </a>
+
+            <a id="contactMessenger" href="https://m.me/Baantaphai" target="_blank" class="flex items-center justify-between p-3 sm:p-3.5 rounded-2xl bg-zen-sand/40 hover:bg-zen-sand border border-zen-cardborder/70 transition-all active:scale-98 group">
+              <div class="flex items-center gap-3">
+                <span class="w-9 h-9 rounded-xl bg-[#0084FF]/15 text-[#0084FF] flex items-center justify-center shrink-0 text-base group-hover:scale-105 transition-transform">
+                  <i class="fa-brands fa-facebook-messenger"></i>
+                </span>
+                <div>
+                  <p class="text-[10px] sm:text-[11px] text-zen-muted mb-0.5">Facebook Messenger & เพจหลัก</p>
+                  <p class="text-xs sm:text-sm font-bold text-zen-dark group-hover:text-[#0084FF] transition-colors">บ้านตาผาย (@Baantaphai)</p>
+                </div>
+              </div>
+              <span class="text-[11px] font-medium text-[#0084FF] px-2.5 py-1 rounded-full bg-[#0084FF]/10 group-hover:bg-[#0084FF] group-hover:text-white transition-colors flex items-center gap-1">
+                <i class="fa-brands fa-facebook-messenger text-[10px]"></i>
+                <span>ทักแชท</span>
+              </span>
+            </a>
+
+            <a id="contactLine" href="https://line.me/R/ti/p/@baantaphairesort" target="_blank" class="flex items-center justify-between p-3 sm:p-3.5 rounded-2xl bg-zen-sand/40 hover:bg-zen-sand border border-zen-cardborder/70 transition-all active:scale-98 group">
+              <div class="flex items-center gap-3">
+                <span class="w-9 h-9 rounded-xl bg-zen-line/15 text-zen-line flex items-center justify-center shrink-0 text-base group-hover:scale-105 transition-transform">
+                  <i class="fa-brands fa-line"></i>
+                </span>
+                <div>
+                  <p class="text-[10px] sm:text-[11px] text-zen-muted mb-0.5">LINE Official Account</p>
+                  <p class="text-xs sm:text-sm font-bold text-zen-dark group-hover:text-emerald-700 transition-colors">@baantaphairesort</p>
+                </div>
+              </div>
+              <span class="text-[11px] font-medium text-emerald-700 px-2.5 py-1 rounded-full bg-zen-line/10 group-hover:bg-zen-line group-hover:text-white transition-colors flex items-center gap-1">
+                <i class="fa-brands fa-line text-[10px]"></i>
+                <span>คุย LINE</span>
+              </span>
+            </a>
           </div>
 
           <div class="pt-1">
@@ -2618,7 +2676,7 @@
 
   <!-- ================= FOOTER ================= -->
   <footer class="bg-zen-dark text-zen-sand/70 py-10 sm:py-12 border-t border-white/5 text-center text-xs font-light">
-    <div class="max-w-7xl mx-auto px-4 space-y-3">
+    <div class="max-w-7xl mx-auto px-4 space-y-4">
       <div class="flex items-center justify-center gap-2">
         <i class="fa-solid fa-torii-gate text-zen-torii text-base"></i>
         <span class="font-luxury text-lg font-bold text-white tracking-wide">Baan Ta Phai Resort</span>
@@ -2626,9 +2684,29 @@
       <p class="text-[11px] text-zen-sand/60 max-w-sm mx-auto">
         บ้านตาผาย รีสอร์ท อำเภอท่าเรือ พระนครศรีอยุธยา พักผ่อนท่ามกลางสายน้ำและบรรยากาศสไตล์ญี่ปุ่น
       </p>
+
+      <!-- Social & Contact Channels Row -->
+      <div class="flex flex-wrap items-center justify-center gap-2 pt-1 text-xs">
+        <a href="https://www.facebook.com/Baantaphai" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 hover:bg-[#1877F2]/20 text-zen-sand hover:text-white border border-white/10 transition-colors">
+          <i class="fa-brands fa-facebook text-[#1877F2]"></i>
+          <span>Facebook เพจหลัก</span>
+        </a>
+        <a href="https://m.me/Baantaphai" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 hover:bg-[#0084FF]/20 text-zen-sand hover:text-white border border-white/10 transition-colors">
+          <i class="fa-brands fa-facebook-messenger text-[#0084FF]"></i>
+          <span>Messenger</span>
+        </a>
+        <a href="https://line.me/R/ti/p/@baantaphairesort" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 hover:bg-emerald-500/20 text-zen-sand hover:text-white border border-white/10 transition-colors">
+          <i class="fa-brands fa-line text-emerald-400"></i>
+          <span>@baantaphairesort</span>
+        </a>
+        <a href="tel:0624605863" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 hover:bg-amber-500/20 text-zen-sand hover:text-white border border-white/10 transition-colors">
+          <i class="fa-solid fa-phone text-amber-400 text-[10px]"></i>
+          <span>062-460-5863</span>
+        </a>
+      </div>
       
       <!-- Secret Admin Edit Trigger in Footer -->
-      <div class="pt-3 flex items-center justify-center gap-3 text-[11px] text-zen-sand/40">
+      <div class="pt-2 flex items-center justify-center gap-3 text-[11px] text-zen-sand/40">
         <span>© 2026 Baan Ta Phai Resort</span>
         <span>•</span>
         <button onclick="promptAdminLogin()" class="hover:text-amber-400 transition-colors underline decoration-dotted">
@@ -2658,14 +2736,18 @@
   </div>
 
   <!-- ================= STICKY MOBILE BOTTOM BAR ================= -->
-  <div class="fixed bottom-0 left-0 right-0 z-40 md:hidden sticky-bottom-bar bg-white/95 backdrop-blur-lg border-t border-zen-cardborder/80 px-3.5 pt-2 safe-bottom-bar shadow-[0_-4px_25px_rgba(0,0,0,0.08)] flex items-center justify-between gap-2.5">
-    <a id="mobileCallBtn" href="tel:0624605863" class="flex-1 inline-flex items-center justify-center gap-1.5 py-3 px-3 rounded-2xl bg-zen-sand text-zen-dark font-medium text-xs border border-zen-cardborder active:scale-95 transition-transform min-h-[44px]">
+  <div class="fixed bottom-0 left-0 right-0 z-40 md:hidden sticky-bottom-bar bg-white/95 backdrop-blur-lg border-t border-zen-cardborder/80 px-2.5 pt-2 safe-bottom-bar shadow-[0_-4px_25px_rgba(0,0,0,0.08)] flex items-center justify-between gap-2">
+    <a id="mobileCallBtn" href="tel:0624605863" class="px-3 py-2.5 rounded-2xl bg-zen-sand text-zen-dark font-medium text-[11px] border border-zen-cardborder active:scale-95 transition-transform min-h-[44px] flex items-center justify-center gap-1 shrink-0">
       <i class="fa-solid fa-phone text-zen-torii text-xs"></i>
-      <span>โทรสอบถาม</span>
+      <span>โทร</span>
     </a>
-    <a id="mobileLineBtn" href="https://line.me/R/ti/p/@baantaphairesort" target="_blank" class="flex-[1.6] inline-flex items-center justify-center gap-2 py-3 px-3 rounded-2xl bg-zen-line text-white font-medium text-xs shadow-md active:scale-95 transition-transform min-h-[44px]">
-      <i class="fa-brands fa-line text-lg"></i>
-      <span>จองห้องผ่าน LINE</span>
+    <a id="mobileMessengerBtn" href="https://m.me/Baantaphai" target="_blank" class="flex-1 inline-flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-2xl bg-[#0084FF] text-white font-medium text-[11px] shadow-sm active:scale-95 transition-transform min-h-[44px]">
+      <i class="fa-brands fa-facebook-messenger text-sm"></i>
+      <span>แชท Messenger</span>
+    </a>
+    <a id="mobileLineBtn" href="https://line.me/R/ti/p/@baantaphairesort" target="_blank" class="flex-[1.2] inline-flex items-center justify-center gap-1.5 py-2.5 px-2.5 rounded-2xl bg-zen-line text-white font-medium text-[11px] shadow-md active:scale-95 transition-transform min-h-[44px]">
+      <i class="fa-brands fa-line text-base"></i>
+      <span>จองผ่าน LINE</span>
     </a>
   </div>
 
@@ -2825,6 +2907,10 @@
           <a id="claimLineBtn" href="https://line.me/R/ti/p/@baantaphairesort" target="_blank" class="hidden w-full py-3 rounded-2xl bg-zen-line hover:bg-emerald-600 text-white font-medium text-xs sm:text-sm shadow-md flex items-center justify-center gap-2 active:scale-95 transition-all">
             <i class="fa-brands fa-line text-lg"></i>
             <span id="claimLineBtnText">แจ้งรับสิทธิ์ทาง LINE Official</span>
+          </a>
+          <a id="claimMessengerBtn" href="https://m.me/Baantaphai" target="_blank" class="hidden w-full py-2.5 rounded-2xl bg-[#0084FF] hover:bg-[#0073E6] text-white font-medium text-xs sm:text-sm shadow-md flex items-center justify-center gap-2 active:scale-95 transition-all">
+            <i class="fa-brands fa-facebook-messenger text-base"></i>
+            <span>หรือแจ้งรับสิทธิ์ทาง Facebook Messenger</span>
           </a>
         </div>
 
@@ -3027,13 +3113,17 @@
       </div>
 
       <!-- Footer Buttons -->
-      <div class="p-3.5 sm:p-4 bg-stone-50 border-t border-stone-200 shrink-0 flex items-center justify-between gap-2.5 safe-bottom-bar">
-        <button onclick="closeActivityModal()" class="flex-1 py-2.5 px-4 rounded-xl bg-white border border-stone-300 text-stone-700 font-medium text-xs hover:bg-stone-100 min-h-[44px]">
-          ปิดหน้าต่าง
+      <div class="p-3.5 sm:p-4 bg-stone-50 border-t border-stone-200 shrink-0 flex items-center justify-between gap-2 safe-bottom-bar">
+        <button onclick="closeActivityModal()" class="px-3.5 py-2.5 rounded-xl bg-white border border-stone-300 text-stone-700 font-medium text-xs hover:bg-stone-100 min-h-[44px]">
+          ปิด
         </button>
-        <a id="actModalLineBtn" href="https://line.me/R/ti/p/@baantaphairesort" target="_blank" class="flex-[1.5] py-2.5 px-4 rounded-xl bg-zen-line hover:bg-emerald-600 text-white font-medium text-xs flex items-center justify-center gap-2 shadow-sm min-h-[44px] active:scale-98">
+        <a id="actModalMessengerBtn" href="https://m.me/Baantaphai" target="_blank" class="flex-1 py-2.5 px-3 rounded-xl bg-[#0084FF] hover:bg-[#0073E6] text-white font-medium text-xs flex items-center justify-center gap-1.5 shadow-sm min-h-[44px] active:scale-98">
+          <i class="fa-brands fa-facebook-messenger text-sm"></i>
+          <span>แชท Messenger</span>
+        </a>
+        <a id="actModalLineBtn" href="https://line.me/R/ti/p/@baantaphairesort" target="_blank" class="flex-1 py-2.5 px-3 rounded-xl bg-zen-line hover:bg-emerald-600 text-white font-medium text-xs flex items-center justify-center gap-1.5 shadow-sm min-h-[44px] active:scale-98">
           <i class="fa-brands fa-line text-base"></i>
-          <span>ทักสอบถามทาง LINE</span>
+          <span>ทักถาม LINE</span>
         </a>
       </div>
 
@@ -3255,12 +3345,16 @@
 
           <!-- Bottom Action Buttons in Right Column (Desktop sticky/docked) -->
           <div class="pt-3 border-t border-stone-200 flex items-center gap-2 mt-auto pb-6 sm:pb-0 safe-bottom-bar">
-            <button onclick="closeRoomModal()" class="flex-1 py-3 rounded-2xl bg-stone-100 hover:bg-stone-200 border border-stone-200 font-medium text-xs text-stone-700 transition-colors min-h-[44px]">
-              ปิดหน้าต่าง
+            <button onclick="closeRoomModal()" class="px-3 sm:px-4 py-3 rounded-2xl bg-stone-100 hover:bg-stone-200 border border-stone-200 font-medium text-xs text-stone-700 transition-colors min-h-[44px]">
+              ปิด
             </button>
-            <a id="modalBookingBtn" href="https://line.me/R/ti/p/@baantaphairesort" target="_blank" class="flex-[2] py-3 rounded-2xl bg-zen-line hover:bg-emerald-600 font-medium text-xs text-white text-center flex items-center justify-center gap-2 shadow-sm transition-all min-h-[44px] active:scale-98">
+            <a id="modalMessengerBtn" href="https://m.me/Baantaphai" target="_blank" class="flex-1 py-3 rounded-2xl bg-[#0084FF] hover:bg-[#0073E6] font-medium text-xs text-white text-center flex items-center justify-center gap-1.5 shadow-sm transition-all min-h-[44px] active:scale-98">
+              <i class="fa-brands fa-facebook-messenger text-base"></i>
+              <span>ทัก Messenger</span>
+            </a>
+            <a id="modalBookingBtn" href="https://line.me/R/ti/p/@baantaphairesort" target="_blank" class="flex-1 py-3 rounded-2xl bg-zen-line hover:bg-emerald-600 font-medium text-xs text-white text-center flex items-center justify-center gap-1.5 shadow-sm transition-all min-h-[44px] active:scale-98">
               <i class="fa-brands fa-line text-lg"></i>
-              <span>ทัก LINE เพื่อเช็คห้องว่าง</span>
+              <span>จองผ่าน LINE</span>
             </a>
           </div>
 
@@ -3352,12 +3446,16 @@
 
       <!-- Modal Footer -->
       <div class="p-3 sm:p-4 bg-stone-50 border-t border-zen-cardborder shrink-0 flex items-center gap-2 safe-bottom-bar sm:pb-4">
-        <button onclick="closeMenuModal()" class="flex-1 py-3 rounded-2xl bg-white border border-zen-cardborder font-medium text-xs text-zen-dark hover:bg-zen-sand transition-colors min-h-[44px]">
-          ปิดหน้าต่าง
+        <button onclick="closeMenuModal()" class="px-3.5 sm:px-4 py-3 rounded-2xl bg-white border border-zen-cardborder font-medium text-xs text-zen-dark hover:bg-zen-sand transition-colors min-h-[44px]">
+          ปิด
         </button>
-        <a href="https://line.me/R/ti/p/@baantaphairesort" target="_blank" class="flex-[2] py-3 rounded-2xl bg-zen-line hover:bg-emerald-600 font-medium text-xs text-white text-center flex items-center justify-center gap-2 shadow-sm transition-colors min-h-[44px] active:scale-98">
+        <a href="https://m.me/Baantaphai" target="_blank" class="flex-1 py-3 rounded-2xl bg-[#0084FF] hover:bg-[#0073E6] font-medium text-xs text-white text-center flex items-center justify-center gap-1.5 shadow-sm transition-colors min-h-[44px] active:scale-98">
+          <i class="fa-brands fa-facebook-messenger text-base"></i>
+          <span>ทัก Messenger</span>
+        </a>
+        <a href="https://line.me/R/ti/p/@baantaphairesort" target="_blank" class="flex-1 py-3 rounded-2xl bg-zen-line hover:bg-emerald-600 font-medium text-xs text-white text-center flex items-center justify-center gap-1.5 shadow-sm transition-colors min-h-[44px] active:scale-98">
           <i class="fa-brands fa-line text-lg"></i>
-          <span>ทัก LINE สั่งอาหาร / สอบถาม</span>
+          <span>ทัก LINE สั่งอาหาร</span>
         </a>
       </div>
 
@@ -3580,12 +3678,16 @@
           *ทุกห้องพักรวมอาหารเช้าฟรี และสิทธิ์เล่นเรือคายัค จักรยานฟรีตลอดการเข้าพัก
         </span>
         <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
-          <button onclick="closeComparisonModal()" class="flex-1 sm:flex-none px-4 py-2.5 rounded-xl bg-white border border-zen-cardborder font-medium text-xs text-zen-dark hover:bg-zen-sand transition-colors min-h-[44px]">
-            ปิดหน้าต่าง
+          <button onclick="closeComparisonModal()" class="px-3.5 py-2.5 rounded-xl bg-white border border-zen-cardborder font-medium text-xs text-zen-dark hover:bg-zen-sand transition-colors min-h-[44px]">
+            ปิด
           </button>
-          <a href="https://line.me/R/ti/p/@baantaphairesort" target="_blank" class="flex-1 sm:flex-none px-5 py-2.5 rounded-xl bg-zen-line hover:bg-emerald-600 font-medium text-xs text-white text-center flex items-center justify-center gap-2 shadow-sm transition-colors min-h-[44px] active:scale-98">
+          <a href="https://m.me/Baantaphai" target="_blank" class="flex-1 sm:flex-none px-4 py-2.5 rounded-xl bg-[#0084FF] hover:bg-[#0073E6] font-medium text-xs text-white text-center flex items-center justify-center gap-1.5 shadow-sm transition-colors min-h-[44px] active:scale-98">
+            <i class="fa-brands fa-facebook-messenger text-base"></i>
+            <span>แชท Messenger</span>
+          </a>
+          <a href="https://line.me/R/ti/p/@baantaphairesort" target="_blank" class="flex-1 sm:flex-none px-4 py-2.5 rounded-xl bg-zen-line hover:bg-emerald-600 font-medium text-xs text-white text-center flex items-center justify-center gap-1.5 shadow-sm transition-colors min-h-[44px] active:scale-98">
             <i class="fa-brands fa-line text-lg"></i>
-            <span>ทัก LINE สอบถาม</span>
+            <span>ทัก LINE</span>
           </a>
         </div>
       </div>
@@ -4492,6 +4594,10 @@
         const msg = encodeURIComponent(`สวัสดีครับ/ค่ะ สนใจสอบถาม/จองห้อง "${data.title}" (${data.price}${data.unit || '/คืน'}) ครับ/ค่ะ`);
         bookingBtn.href = `https://line.me/R/oaMessage/@baantaphairesort/?${msg}`;
       }
+      const messengerBtn = document.getElementById('modalMessengerBtn');
+      if (messengerBtn) {
+        messengerBtn.href = 'https://m.me/Baantaphai';
+      }
 
       document.getElementById('roomModal').classList.remove('hidden');
       document.body.classList.add('overflow-hidden');
@@ -4814,6 +4920,8 @@
         alreadyPlayedNotice.classList.add('hidden');
         fortuneResult.classList.add('hidden');
         claimLineBtn.classList.add('hidden');
+        const claimMessengerBtn = document.getElementById('claimMessengerBtn');
+        if (claimMessengerBtn) claimMessengerBtn.classList.add('hidden');
       }
     }
 
@@ -4910,10 +5018,18 @@
         );
         claimLineBtn.href = `https://line.me/R/ti/p/@baantaphairesort?text=${encodedText}`;
         document.getElementById('claimLineBtnText').textContent = 'แจ้งรับสิทธิ์ทาง LINE Official';
+
+        const claimMessengerBtn = document.getElementById('claimMessengerBtn');
+        if (claimMessengerBtn) {
+          claimMessengerBtn.classList.remove('hidden');
+          claimMessengerBtn.href = 'https://m.me/Baantaphai';
+        }
       } else {
         prizeSection.classList.add('hidden');
         noPrizeSection.classList.remove('hidden');
         claimLineBtn.classList.add('hidden');
+        const claimMessengerBtn = document.getElementById('claimMessengerBtn');
+        if (claimMessengerBtn) claimMessengerBtn.classList.add('hidden');
       }
     }
 
@@ -5972,6 +6088,10 @@
       if (submitBtn) {
         submitBtn.href = `https://line.me/R/ti/p/@baantaphairesort?text=${encodeURIComponent(lineMsg)}`;
       }
+      const messengerSubmitBtn = document.getElementById('calcMessengerSubmitBtn');
+      if (messengerSubmitBtn) {
+        messengerSubmitBtn.href = 'https://m.me/Baantaphai';
+      }
     }
 
     function previewCalcRoomModal() {
@@ -6364,6 +6484,11 @@
 
       if (lineBtn && data.lineMsg) {
         lineBtn.href = `https://line.me/R/ti/p/@baantaphairesort?text=${encodeURIComponent(data.lineMsg)}`;
+      }
+
+      const messengerBtn = document.getElementById('actModalMessengerBtn');
+      if (messengerBtn) {
+        messengerBtn.href = 'https://m.me/Baantaphai';
       }
 
       if (modal) {
