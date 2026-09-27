@@ -223,7 +223,6 @@
     #dining,
     #photospots,
     #reviews,
-    #itinerary,
     #attractions,
     #calculator,
     #faq,
@@ -451,10 +450,6 @@
                 <i class="fa-brands fa-facebook text-[#1877F2] w-4 text-center"></i>
                 <span>ฟีดสดเพจ Facebook</span>
               </a>
-              <a href="#itinerary" class="flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-zen-sand dark:hover:bg-white/10 text-zen-dark text-xs transition-colors">
-                <i class="fa-solid fa-compass text-emerald-600 w-4 text-center"></i>
-                <span>แพลนเที่ยวอยุธยา</span>
-              </a>
               <a href="#photospots" class="flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-zen-sand dark:hover:bg-white/10 text-zen-dark text-xs transition-colors">
                 <i class="fa-solid fa-camera text-rose-500 w-4 text-center"></i>
                 <span>6 จุดถ่ายรูปยอดฮิต</span>
@@ -560,10 +555,6 @@
           <a href="#photospots" onclick="toggleMobileMenu()" class="flex items-center gap-3 p-2.5 rounded-2xl hover:bg-zen-sand transition-colors min-h-[44px]">
             <i class="fa-solid fa-camera text-rose-600 w-5 text-center"></i>
             <span>6 จุดถ่ายรูปยอดฮิต</span>
-          </a>
-          <a href="#itinerary" onclick="toggleMobileMenu()" class="flex items-center gap-3 p-2.5 rounded-2xl hover:bg-zen-sand transition-colors min-h-[44px]">
-            <i class="fa-solid fa-compass text-emerald-600 w-5 text-center"></i>
-            <span>แพลนเที่ยวอยุธยา 1-2 วัน</span>
           </a>
           <a href="#highlights" onclick="toggleMobileMenu()" class="flex items-center gap-3 p-2.5 rounded-2xl hover:bg-zen-sand transition-colors min-h-[44px]">
             <i class="fa-solid fa-water text-cyan-600 w-5 text-center"></i>
@@ -2021,155 +2012,6 @@
 
         </div>
 
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ================= CURATED AYUTTHAYA ITINERARY & TRAVEL GUIDES ================= -->
-  <section id="itinerary" class="py-12 sm:py-20 bg-white border-t border-zen-cardborder/70 scroll-mt-16">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      
-      <!-- Section Header -->
-      <div class="text-center max-w-2xl mx-auto mb-8 sm:mb-12 space-y-2">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 text-[10px] sm:text-[11px] font-medium tracking-widest uppercase border border-emerald-200">
-          <i class="fa-solid fa-compass text-emerald-600"></i>
-          <span>Curated Travel Guide</span>
-        </div>
-        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-zen-dark leading-tight">
-          3 แพลนเที่ยวอยุธยา 1–2 วัน รอบบ้านตาผาย
-        </h2>
-        <p class="text-xs sm:text-sm text-zen-muted font-light leading-relaxed">
-          พักที่เดียว เที่ยวครบทั้งไหว้พระศักดิ์สิทธิ์ สวนสัตว์ ไลออน ปาร์ค คาเฟ่ริมน้ำ และชิมกุ้งแม่น้ำเผา เดินทางสะดวกมีพิกัด GPS นำทางพร้อม
-        </p>
-      </div>
-
-      <!-- Plan Switcher Tabs -->
-      <div class="flex items-center justify-start sm:justify-center gap-2 overflow-x-auto no-scrollbar pb-3 mb-8 px-1 -mx-4 sm:mx-0 px-4 sm:px-0">
-        <button type="button" onclick="switchItinerary('plan1', this)" class="itinerary-tab active shrink-0 px-4 py-2.5 rounded-full text-xs font-medium transition-all shadow-minimal bg-zen-dark text-white border border-zen-dark active:scale-95 flex items-center gap-1.5">
-          <span>🦁</span><span>ทริปที่ 1: One Day Chill (สายบุญ & สวนสัตว์)</span>
-        </button>
-        <button type="button" onclick="switchItinerary('plan2', this)" class="itinerary-tab shrink-0 px-4 py-2.5 rounded-full text-xs font-normal transition-all shadow-minimal bg-white text-zen-dark hover:bg-zen-sand border border-zen-cardborder active:scale-95 flex items-center gap-1.5">
-          <span>🛶</span><span>ทริปที่ 2: 2 วัน 1 คืน (พักผ่อนริมน้ำ & กรุงเก่า)</span>
-        </button>
-        <button type="button" onclick="switchItinerary('plan3', this)" class="itinerary-tab shrink-0 px-4 py-2.5 rounded-full text-xs font-normal transition-all shadow-minimal bg-white text-zen-dark hover:bg-zen-sand border border-zen-cardborder active:scale-95 flex items-center gap-1.5">
-          <span>🦐</span><span>ทริปที่ 3: Secret Gourmet (ชิมกุ้งเผา & ตลาดโบราณ)</span>
-        </button>
-      </div>
-
-      <!-- Plan 1 Container -->
-      <div id="itineraryPlan1" class="itinerary-panel bg-zen-sand/50 rounded-3xl p-5 sm:p-8 border border-zen-cardborder shadow-minimal space-y-6">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-zen-cardborder">
-          <div>
-            <h3 class="font-bold text-lg sm:text-xl text-zen-dark">ทริปที่ 1: วันเดียวเที่ยวชิลล์ ไหว้พระหลวงพ่อรวย & ดูสิงโต Lion Park</h3>
-            <p class="text-xs text-zen-muted font-light mt-0.5">เหมาะสำหรับครอบครัวและผู้ที่ต้องการเที่ยวสบายๆ ในระยะไม่เกิน 15 นาทีรอบรีสอร์ท</p>
-          </div>
-          <span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-medium shrink-0 self-start sm:self-auto">
-            ระยะทางรวม < 20 กม.
-          </span>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-          
-          <div class="bg-white p-4 rounded-2xl border border-zen-cardborder space-y-2 relative">
-            <span class="text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full">09:30 น. • จุดที่ 1</span>
-            <h4 class="font-bold text-xs sm:text-sm text-zen-dark">วัดตะโก (หลวงพ่อรวย)</h4>
-            <p class="text-[11px] text-zen-muted font-light leading-relaxed">กราบสักการะพระมหาธาตุเจดีย์ ขอพรโชคลาภ ค้าขายร่ำรวย ห่างรีสอร์ทเพียง 8 นาที</p>
-            <a href="https://maps.google.com/?q=Wat+Tako+Ayutthaya" target="_blank" class="inline-flex items-center gap-1 text-[11px] text-zen-torii font-medium pt-1">
-              <span>เปิดนำทาง GPS</span> <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
-            </a>
-          </div>
-
-          <div class="bg-white p-4 rounded-2xl border border-zen-cardborder space-y-2 relative">
-            <span class="text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full">11:30 น. • จุดที่ 2</span>
-            <h4 class="font-bold text-xs sm:text-sm text-zen-dark">ศรีอยุธยา ไลออน ปาร์ค</h4>
-            <p class="text-[11px] text-zen-muted font-light leading-relaxed">ชมโชว์สิงโต ป้อนอาหารยีราฟ สวนสัตว์ทันสมัย ขับรถจากรีสอร์ทเพียง 5 นาที</p>
-            <a href="https://maps.google.com/?q=Sriayuthaya+Lion+Park" target="_blank" class="inline-flex items-center gap-1 text-[11px] text-zen-torii font-medium pt-1">
-              <span>เปิดนำทาง GPS</span> <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
-            </a>
-          </div>
-
-          <div class="bg-white p-4 rounded-2xl border border-zen-cardborder space-y-2 relative">
-            <span class="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full">14:00 น. • จุดที่ 3</span>
-            <h4 class="font-bold text-xs sm:text-sm text-zen-dark">เช็คอินบ้านตาผาย รีสอร์ท</h4>
-            <p class="text-[11px] text-zen-muted font-light leading-relaxed">เข้าห้องพักริมน้ำ แอร์เย็นฉ่ำ จิบกาแฟสดอาราบิก้าที่คาเฟ่ และถ่ายรูปซุ้มโทริอิ</p>
-            <span class="text-[11px] text-emerald-700 font-medium pt-1 block">✓ จุดหมายปลายทาง</span>
-          </div>
-
-          <div class="bg-white p-4 rounded-2xl border border-zen-cardborder space-y-2 relative">
-            <span class="text-[10px] font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded-full">16:45 น. • จุดที่ 4</span>
-            <h4 class="font-bold text-xs sm:text-sm text-zen-dark">พายคายัค & ดินเนอร์ริมน้ำ</h4>
-            <p class="text-[11px] text-zen-muted font-light leading-relaxed">พายเรือคายัคฟรีชม Golden Hour และสั่งต้มยำกุ้งแม่น้ำเสิร์ฟถึงซุ้มไม้ริมน้ำ</p>
-            <span class="text-[11px] text-blue-700 font-medium pt-1 block">✓ กิจกรรมฟรีในรีสอร์ท</span>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- Plan 2 Container (Hidden by default) -->
-      <div id="itineraryPlan2" class="itinerary-panel hidden bg-zen-sand/50 rounded-3xl p-5 sm:p-8 border border-zen-cardborder shadow-minimal space-y-6">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-zen-cardborder">
-          <div>
-            <h3 class="font-bold text-lg sm:text-xl text-zen-dark">ทริปที่ 2: 2 วัน 1 คืน พักผ่อนธรรมชาติริมน้ำ & ย้อนรอยกรุงเก่า</h3>
-            <p class="text-xs text-zen-muted font-light mt-0.5">แผนเที่ยวสำหรับวันหยุดสุดสัปดาห์ ได้ทั้งการพักใจริมน้ำและการท่องเที่ยวเชิงประวัติศาสตร์</p>
-          </div>
-          <span class="px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-xs font-medium shrink-0 self-start sm:self-auto">
-            โปรแกรม 2 วัน 1 คืน
-          </span>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div class="bg-white p-5 rounded-2xl border border-zen-cardborder space-y-2">
-            <span class="text-xs font-bold text-zen-torii">📅 วันที่ 1: ชะลอจังหวะชีวิตริมน้ำ</span>
-            <ul class="text-xs text-stone-700 space-y-1.5 font-light list-disc list-inside">
-              <li>14:00 น. เช็คอินที่บ้านตาผาย รับเวลคัมดริ๊งก์และชาอุ่น</li>
-              <li>15:30 น. ปั่นจักรยานชมสวน และให้อาหารปลาคาร์ปธรรมชาติ</li>
-              <li>17:00 น. พายเรือคายัครับลมเย็นและถ่ายรูปซุ้มประตูโทริอิญี่ปุ่น</li>
-              <li>19:00 น. อิ่มอร่อยกับอาหารไทยรสจัดจ้านและหมูกระทะริมน้ำ</li>
-            </ul>
-          </div>
-
-          <div class="bg-white p-5 rounded-2xl border border-zen-cardborder space-y-2">
-            <span class="text-xs font-bold text-zen-torii">📅 วันที่ 2: ตะลุยกรุงเก่า & ของฝาก</span>
-            <ul class="text-xs text-stone-700 space-y-1.5 font-light list-disc list-inside">
-              <li>08:00 น. ทานอาหารเช้าริมสวน American Breakfast & ข้าวต้มร้อนๆ</li>
-              <li>10:30 น. ไหว้พระนอนองค์ใหญ่ วัดสะตือพุทธไสยาสน์ (15 นาที)</li>
-              <li>12:00 น. เช็คเอาท์ แวะชิมโรตีสายไหมเจ้าดังเกาะเมืองอยุธยา</li>
-              <li>14:00 น. เยี่ยมชมโบราณสถานวัดมหาธาตุ และวัดไชยวัฒนาราม</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <!-- Plan 3 Container (Hidden by default) -->
-      <div id="itineraryPlan3" class="itinerary-panel hidden bg-zen-sand/50 rounded-3xl p-5 sm:p-8 border border-zen-cardborder shadow-minimal space-y-6">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-zen-cardborder">
-          <div>
-            <h3 class="font-bold text-lg sm:text-xl text-zen-dark">ทริปที่ 3: ตะลุยกินกุ้งแม่น้ำเผา & ช้อปของกินตลาดโบราณท่าเรือ</h3>
-            <p class="text-xs text-zen-muted font-light mt-0.5">เจาะลึกของอร่อยเจ้าเด็ดเมืองอยุธยาและวิถีชุมชนริมน้ำรอบ อ.ท่าเรือ</p>
-          </div>
-          <span class="px-3 py-1 rounded-full bg-amber-100 text-amber-900 text-xs font-medium shrink-0 self-start sm:self-auto">
-            สายกินห้ามพลาด
-          </span>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div class="bg-white p-4 rounded-2xl border border-zen-cardborder space-y-2">
-            <span class="text-[10px] font-bold text-amber-800 bg-amber-50 px-2 py-0.5 rounded-full">ร้านเด็ดที่ 1</span>
-            <h4 class="font-bold text-xs sm:text-sm text-zen-dark">กุ้งแม่น้ำเผาตัวโต & ปลาน้ำเงิน</h4>
-            <p class="text-[11px] text-zen-muted font-light leading-relaxed">แวะชิมกุ้งแม่น้ำอยุธยาเผาเตาถ่านมันเยิ้ม น้ำจิ้มซีฟู้ดรสเด็ด ริมแม่น้ำป่าสัก</p>
-          </div>
-          <div class="bg-white p-4 rounded-2xl border border-zen-cardborder space-y-2">
-            <span class="text-[10px] font-bold text-amber-800 bg-amber-50 px-2 py-0.5 rounded-full">ร้านเด็ดที่ 2</span>
-            <h4 class="font-bold text-xs sm:text-sm text-zen-dark">ตลาดโบราณท่าเรือ & ขนมไทย</h4>
-            <p class="text-[11px] text-zen-muted font-light leading-relaxed">สัมผัสตลาดเช้าชุมชนเก่าแก่ ลิ้มลองกาแฟโบราณ ขนมครกโบราณ และทองหยอดสูตรดั้งเดิม</p>
-          </div>
-          <div class="bg-white p-4 rounded-2xl border border-zen-cardborder space-y-2">
-            <span class="text-[10px] font-bold text-amber-800 bg-amber-50 px-2 py-0.5 rounded-full">ร้านเด็ดที่ 3</span>
-            <h4 class="font-bold text-xs sm:text-sm text-zen-dark">ครัวบ้านตาผาย & Ta Phai Café</h4>
-            <p class="text-[11px] text-zen-muted font-light leading-relaxed">ต้มยำกุ้งน้ำข้น กะเพราโบราณ ปีกไก่ทอดน้ำปลา และเครื่องดื่มสดชื่นริมน้ำ</p>
-          </div>
-        </div>
       </div>
 
     </div>
@@ -6380,24 +6222,6 @@
           }
         }
       });
-    }
-
-    // 15. ITINERARY SWITCHER ENGINE
-    function switchItinerary(planId, btnEl) {
-      const tabs = document.querySelectorAll('.itinerary-tab');
-      tabs.forEach(t => {
-        t.classList.remove('active', 'bg-zen-dark', 'text-white', 'border-zen-dark');
-        t.classList.add('bg-white', 'text-zen-dark', 'border-zen-cardborder');
-      });
-      if (btnEl) {
-        btnEl.classList.add('active', 'bg-zen-dark', 'text-white', 'border-zen-dark');
-        btnEl.classList.remove('bg-white', 'text-zen-dark', 'border-zen-cardborder');
-      }
-
-      document.querySelectorAll('.itinerary-panel').forEach(p => p.classList.add('hidden'));
-      if (planId === 'plan1') document.getElementById('itineraryPlan1').classList.remove('hidden');
-      else if (planId === 'plan2') document.getElementById('itineraryPlan2').classList.remove('hidden');
-      else if (planId === 'plan3') document.getElementById('itineraryPlan3').classList.remove('hidden');
     }
 
     // 16. FAQ ACCORDION & SEARCH ENGINE
