@@ -371,17 +371,22 @@
     <div class="flex items-center gap-2">
       <span class="w-2.5 h-2.5 rounded-full bg-emerald-800 animate-ping"></span>
       <span class="font-bold text-xs sm:text-sm">🛠️ โหมดแก้ไขหน้าเว็บ</span>
-      <span class="hidden lg:inline text-stone-850">| แก้ไขข้อความธรรมชาติ รูปหน้าแรก และห้องพัก (บันทึกในเครื่องทันที)</span>
+      <span id="cloudSyncStatusBadge" class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-900/15 text-emerald-950 border border-emerald-800/30 text-[11px] font-semibold">
+        <i class="fa-solid fa-cloud-check text-emerald-800"></i> คลาวด์ซิงค์เรียลไทม์ (ทุกเครื่องเห็นพร้อมกัน)
+      </span>
     </div>
     <div class="flex items-center gap-1.5 flex-wrap justify-end">
+      <button onclick="forceSyncWithCloud()" class="px-2.5 sm:px-3 py-1.5 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white font-semibold text-xs shadow-sm transition-all flex items-center gap-1.5" title="รีเฟรชข้อมูลล่าสุดจากระบบคลาวด์">
+        <i class="fa-solid fa-arrows-rotate"></i> <span class="hidden sm:inline">ดึงข้อมูลล่าสุด</span><span class="sm:hidden">ดึงคลาวด์</span>
+      </button>
       <button onclick="openMenuModal()" class="px-2.5 sm:px-3 py-1.5 rounded-lg bg-stone-900 hover:bg-black text-amber-300 font-semibold text-xs shadow-sm transition-all flex items-center gap-1.5" title="แก้ไขเมนูคาเฟ่ & ครัวบ้านตาผาย">
         <i class="fa-solid fa-utensils"></i> <span class="hidden sm:inline">แก้ไขเมนูอาหาร & คาเฟ่</span><span class="sm:hidden">แก้เมนู</span>
       </button>
       <button onclick="openHeroEditModal()" class="px-2.5 sm:px-3 py-1.5 rounded-lg bg-stone-900 hover:bg-black text-amber-300 font-semibold text-xs shadow-sm transition-all flex items-center gap-1.5" title="แก้ไขข้อความธรรมชาติและรูปภาพหน้าแรก">
         <i class="fa-solid fa-pen-to-square"></i> <span class="hidden sm:inline">แก้ไขข้อความ & รูปหน้าแรก</span><span class="sm:hidden">แก้หน้าแรก</span>
       </button>
-      <button onclick="downloadUpdatedHTML()" class="px-2.5 sm:px-3 py-1.5 rounded-lg bg-stone-900 text-white hover:bg-black font-semibold text-xs shadow-sm transition-all flex items-center gap-1.5" title="ดาวน์โหลดไฟล์ HTML พร้อมข้อมูลใหม่ล่าสุดเพื่อนำไปใช้งานถาวร">
-        <i class="fa-solid fa-download"></i> <span class="hidden sm:inline">บันทึก & ดาวน์โหลดไฟล์ HTML</span><span class="sm:hidden">บันทึก & ดาวน์โหลด</span>
+      <button onclick="downloadUpdatedHTML()" class="px-2.5 sm:px-3 py-1.5 rounded-lg bg-stone-900 text-white hover:bg-black font-semibold text-xs shadow-sm transition-all flex items-center gap-1.5" title="ดาวน์โหลดไฟล์ HTML พร้อมข้อมูลใหม่ล่าสุดเพื่อนำไปใช้งานสำรอง">
+        <i class="fa-solid fa-download"></i> <span class="hidden md:inline">สำรองไฟล์ HTML</span>
       </button>
       <button onclick="resetToDefaultData()" class="p-1.5 sm:px-2.5 sm:py-1.5 rounded-lg bg-amber-200 hover:bg-amber-300 text-stone-900 transition-colors text-xs flex items-center gap-1" title="คืนค่าเริ่มต้น">
         <i class="fa-solid fa-rotate-left"></i> <span class="hidden md:inline">คืนค่าเริ่มต้น</span>
@@ -4430,7 +4435,7 @@
       { id: "m18", category: "breakfast", name: "Garden Buffet อาหารเช้าริมสวน", badge: "🌿 วันผู้เข้าพักหนาแน่น", desc: "บุฟเฟต์อาหารเช้าครบวงจร ข้าวผัด กับข้าวพิเศษ ขนมปังปิ้ง ชากาแฟ และผลไม้ตามฤดูกาล", price: "ฟรีทุกห้อง" }
     ];
 
-    // 2. ACTIVE ENGINE & LOCALSTORAGE
+    // 2. ACTIVE ENGINE & LOCALSTORAGE (Cache-First + Cloud-Synchronized)
     let SITE_ROOMS = JSON.parse(localStorage.getItem('baantaphai_rooms_v3') || 'null');
     if (!SITE_ROOMS) {
       SITE_ROOMS = JSON.parse(JSON.stringify(DEFAULT_ROOMS_DATA));
@@ -4444,6 +4449,148 @@
     let SITE_MENU = JSON.parse(localStorage.getItem('baantaphai_menu_v3') || 'null');
     if (!SITE_MENU) {
       SITE_MENU = JSON.parse(JSON.stringify(DEFAULT_MENU_ITEMS));
+    }
+
+    // ========================================================
+    // ☁️ BAAN TA PHAI REALTIME CLOUD SYNC ENGINE
+    // Synchronizes admin edits across all devices, phones & visitors
+    // ========================================================
+    const CLOUD_SYNC_ENDPOINT = (window.location.origin && window.location.origin.includes('baantaphairesort.netlify.app'))
+      ? '/.netlify/functions/sync'
+      : 'https://baantaphairesort.netlify.app/.netlify/functions/sync';
+
+    let isCloudSyncing = false;
+    let lastCloudSyncTime = null;
+
+    function updateCloudSyncStatusIndicator(state, detail) {
+      const badge = document.getElementById('cloudSyncStatusBadge');
+      if (!badge) return;
+
+      if (state === 'syncing') {
+        badge.className = 'inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-600/20 text-amber-950 border border-amber-700/30 text-[11px] font-semibold';
+        badge.innerHTML = '<i class="fa-solid fa-arrows-rotate fa-spin text-amber-800"></i> กำลังซิงค์ขึ้นคลาวด์...';
+      } else if (state === 'synced') {
+        const timeStr = detail ? new Date(detail).toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' }) : '';
+        badge.className = 'inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-600/20 text-emerald-950 border border-emerald-700/30 text-[11px] font-semibold';
+        badge.innerHTML = `<i class="fa-solid fa-cloud-check text-emerald-800"></i> คลาวด์ซิงค์เรียลไทม์ (ออนไลน์${timeStr ? ' ' + timeStr : ''})`;
+      } else if (state === 'error' || state === 'offline') {
+        badge.className = 'inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-rose-600/20 text-rose-950 border border-rose-700/30 text-[11px] font-semibold';
+        badge.innerHTML = '<i class="fa-solid fa-triangle-exclamation text-rose-800"></i> ซิงค์คลาวด์ไม่สำเร็จ (ใช้ข้อมูลในเครื่อง)';
+      }
+    }
+
+    async function fetchCloudData(silent = true) {
+      if (isCloudSyncing) return;
+      isCloudSyncing = true;
+      try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 7000);
+        const res = await fetch(CLOUD_SYNC_ENDPOINT, {
+          method: 'GET',
+          headers: { 'Accept': 'application/json' },
+          cache: 'no-cache',
+          signal: controller.signal
+        });
+        clearTimeout(timeoutId);
+
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const result = await res.json();
+
+        if (result && result.success && result.data) {
+          const d = result.data;
+          let changed = false;
+
+          if (d.rooms && typeof d.rooms === 'object' && Object.keys(d.rooms).length > 0) {
+            SITE_ROOMS = { ...DEFAULT_ROOMS_DATA, ...d.rooms };
+            try { localStorage.setItem('baantaphai_rooms_v3', JSON.stringify(SITE_ROOMS)); } catch(e){}
+            changed = true;
+          }
+          if (d.hero && typeof d.hero === 'object' && Object.keys(d.hero).length > 0) {
+            SITE_HERO = { ...DEFAULT_HERO_DATA, ...d.hero };
+            try { localStorage.setItem('baantaphai_hero_v3', JSON.stringify(SITE_HERO)); } catch(e){}
+            changed = true;
+          }
+          if (Array.isArray(d.dining) && d.dining.length > 0) {
+            SITE_DINING = d.dining;
+            try { localStorage.setItem('baantaphai_dining_v3', JSON.stringify(SITE_DINING)); } catch(e){}
+            changed = true;
+          }
+          if (Array.isArray(d.menu) && d.menu.length > 0) {
+            SITE_MENU = d.menu;
+            try { localStorage.setItem('baantaphai_menu_v3', JSON.stringify(SITE_MENU)); } catch(e){}
+            changed = true;
+          }
+
+          lastCloudSyncTime = d.updatedAt || new Date().toISOString();
+          updateCloudSyncStatusIndicator('synced', lastCloudSyncTime);
+
+          if (changed) {
+            renderHeroSection();
+            renderRoomCards();
+            renderDiningCards();
+            renderMenuItems();
+          }
+
+          if (!silent) {
+            showToast('☁️ ดึงข้อมูลล่าสุดจากคลาวด์สำเร็จ!');
+          }
+        }
+      } catch (err) {
+        console.warn('[BaanTaPhai CloudSync] Fetch notice:', err.message);
+        updateCloudSyncStatusIndicator('offline');
+        if (!silent) {
+          showToast('⚠️ ไม่สามารถเชื่อมต่อคลาวด์ได้ในขณะนี้ กำลังใช้ข้อมูลในเครื่อง');
+        }
+      } finally {
+        isCloudSyncing = false;
+      }
+    }
+
+    async function pushCloudData(reason = 'update') {
+      updateCloudSyncStatusIndicator('syncing');
+      const payload = {
+        rooms: SITE_ROOMS,
+        hero: SITE_HERO,
+        dining: SITE_DINING,
+        menu: SITE_MENU,
+        updatedAt: new Date().toISOString(),
+        updatedReason: reason
+      };
+
+      try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 10000);
+        const res = await fetch(CLOUD_SYNC_ENDPOINT, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload),
+          signal: controller.signal
+        });
+        clearTimeout(timeoutId);
+
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const result = await res.json();
+
+        if (result && result.success) {
+          lastCloudSyncTime = result.updatedAt || new Date().toISOString();
+          updateCloudSyncStatusIndicator('synced', lastCloudSyncTime);
+          showToast('☁️ บันทึกและซิงค์ขึ้นระบบคลาวด์สำเร็จ! (ทุกอุปกรณ์และลูกค้าทุกคนจะเห็นข้อมูลนี้ทันที)');
+          return true;
+        } else {
+          throw new Error(result.error || 'Server returned failure');
+        }
+      } catch (err) {
+        console.error('[BaanTaPhai CloudSync] Save error:', err);
+        updateCloudSyncStatusIndicator('error');
+        showToast('⚠️ ข้อมูลถูกบันทึกลงในเครื่องแล้ว แต่การซิงค์ขึ้นคลาวด์ขัดข้อง: ' + err.message);
+        return false;
+      }
+    }
+
+    function forceSyncWithCloud() {
+      fetchCloudData(false);
     }
 
     let isAdminMode = false;
@@ -5364,6 +5511,7 @@
       closeEditModal();
       renderRoomCards();
       showToast('✅ บันทึกข้อมูลห้องพักเรียบร้อยแล้ว!');
+      pushCloudData('แก้ไขห้องพัก: ' + (SITE_ROOMS[key] ? SITE_ROOMS[key].title : key));
     }
 
     // Dynamic Hero & Homepage Edit Handlers
@@ -5426,6 +5574,7 @@
       renderHeroSection();
       closeHeroEditModal();
       showToast('✅ บันทึกข้อความธรรมชาติและรูปภาพหน้าแรกเรียบร้อยแล้ว!');
+      pushCloudData('แก้ไขหน้าแรกและรูปภาพ');
     }
 
     // Dining Showcase Edit Handlers
@@ -5482,6 +5631,7 @@
       closeDiningEditModal();
       renderDiningCards();
       showToast('✅ บันทึกข้อมูลการ์ดโซนอาหารเรียบร้อยแล้ว!');
+      pushCloudData('แก้ไขโซนอาหาร: ' + (item ? item.title : key));
     }
 
     // Recommended Menu Edit Handlers
@@ -5570,6 +5720,7 @@
       closeMenuItemEditModal();
       renderMenuItems();
       showToast(id ? '✅ บันทึกข้อมูลเมนูเรียบร้อยแล้ว!' : '🎉 เพิ่มเมนูใหม่เรียบร้อยแล้ว!');
+      pushCloudData((id ? 'แก้ไขเมนู: ' : 'เพิ่มเมนูใหม่: ') + name);
     }
 
     function deleteMenuItem() {
@@ -5588,6 +5739,7 @@
         closeMenuItemEditModal();
         renderMenuItems();
         showToast('🗑️ ลบรายการเมนูเรียบร้อยแล้ว');
+        pushCloudData('ลบรายการเมนู: ' + name);
       }
     }
 
@@ -5780,7 +5932,7 @@
     }
 
     function resetToDefaultData() {
-      if (confirm('คุณต้องการรีเซ็ตข้อมูลทั้งหมด (รวมข้อความธรรมชาติ รูปหน้าแรก ห้องพัก โซนอาหาร และเมนู) กลับเป็นค่าเริ่มต้นใช่หรือไม่?')) {
+      if (confirm('คุณต้องการรีเซ็ตข้อมูลทั้งหมด (รวมข้อความธรรมชาติ รูปหน้าแรก ห้องพัก โซนอาหาร และเมนู) กลับเป็นค่าเริ่มต้นใช่หรือไม่?\n\n(ข้อมูลจะถูกรีเซ็ตและซิงค์ไปยังทุกอุปกรณ์และลูกค้าทุกคนทันที)')) {
         localStorage.removeItem('baantaphai_rooms_v3');
         localStorage.removeItem('baantaphai_hero_v3');
         localStorage.removeItem('baantaphai_dining_v3');
@@ -5794,6 +5946,7 @@
         renderDiningCards();
         renderMenuItems();
         showToast('🔄 คืนค่าเริ่มต้นเรียบร้อยแล้ว');
+        pushCloudData('รีเซ็ตข้อมูลทั้งหมดกลับเป็นค่าเริ่มต้น');
       }
     }
 
@@ -6788,6 +6941,16 @@
       initStayCalculator();
       initMetaConversionListeners();
       setTimeout(triggerSocialProof, 4000);
+
+      // ☁️ Background Cloud Data Sync (Auto-fetches latest edits made on any device)
+      fetchCloudData(true);
+
+      // Auto-refresh when user switches back to this browser tab
+      document.addEventListener('visibilitychange', () => {
+        if (!document.hidden) {
+          fetchCloudData(true);
+        }
+      });
 
       // Programmatically remove any injected Netlify badges or floating third-party watermarks
       const removeNetlifyBadges = () => {
