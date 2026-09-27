@@ -583,9 +583,19 @@
             </button>
           </div>
 
-          <div class="inline-flex items-center gap-2 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-zen-sand text-zen-torii text-[11px] sm:text-xs tracking-wider border border-zen-cardborder">
-            <span class="w-1.5 h-1.5 rounded-full bg-zen-torii"></span>
-            <span id="heroTopBadge" class="font-normal uppercase">Boutique Nature & Japanese Warmth</span>
+          <div class="flex flex-wrap items-center justify-center lg:justify-start gap-2">
+            <div class="inline-flex items-center gap-2 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-zen-sand text-zen-torii text-[11px] sm:text-xs tracking-wider border border-zen-cardborder">
+              <span class="w-1.5 h-1.5 rounded-full bg-zen-torii"></span>
+              <span id="heroTopBadge" class="font-normal uppercase">Boutique Nature & Japanese Warmth</span>
+            </div>
+            <a href="#reviews" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 hover:bg-blue-100 text-blue-900 text-[11px] sm:text-xs font-medium border border-blue-200 shadow-2xs transition-all active:scale-95 group">
+              <i class="fa-brands fa-facebook text-[#1877F2]"></i>
+              <span><strong>98%</strong> แขกแนะนำ</span>
+              <span class="text-stone-300">•</span>
+              <i class="fa-solid fa-star text-amber-500 text-[10px]"></i>
+              <span class="text-stone-700 font-semibold">4.7</span>
+              <span class="text-blue-600 group-hover:translate-x-0.5 transition-transform text-[10px]">→</span>
+            </a>
           </div>
 
           <h1 id="heroHeading" class="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-medium text-zen-dark leading-[1.26] tracking-tight">
@@ -664,6 +674,20 @@
               <p class="text-xl sm:text-2xl font-semibold text-zen-torii font-serif leading-tight"><span id="heroStartPrice">฿800</span> <span class="text-[10px] sm:text-xs font-sans font-normal text-zen-muted">/ คืน</span></p>
               <p id="heroStartPriceNote" class="text-[10px] sm:text-[11px] text-emerald-700 font-medium mt-0.5">✓ รวมอาหารเช้าฟรี</p>
             </div>
+
+            <!-- Floating Social Proof Badge: 98% Facebook Recommendation -->
+            <a href="#reviews" class="absolute -bottom-4 left-2 sm:-left-4 bg-white/95 backdrop-blur-md px-3 py-2 sm:px-3.5 sm:py-2.5 rounded-2xl shadow-xl border border-zen-cardborder flex items-center gap-2.5 hover:scale-105 active:scale-95 transition-all group z-10">
+              <div class="w-8 h-8 rounded-xl bg-blue-50 text-[#1877F2] flex items-center justify-center text-sm shrink-0 group-hover:scale-110 transition-transform">
+                <i class="fa-brands fa-facebook"></i>
+              </div>
+              <div class="text-left leading-tight">
+                <div class="flex items-center gap-1">
+                  <span class="text-[11px] sm:text-xs font-bold text-zen-dark">98% แขกแนะนำ</span>
+                  <i class="fa-solid fa-thumbs-up text-blue-600 text-[10px]"></i>
+                </div>
+                <p class="text-[9px] text-zen-muted">บนเพจ Facebook</p>
+              </div>
+            </a>
 
             <!-- Floating Minimal Badge: Nearby Lion Park -->
             <div class="absolute -bottom-4 right-2 sm:-right-4 bg-white/95 backdrop-blur-md px-3 py-2 sm:px-4 sm:py-3 rounded-2xl shadow-xl border border-zen-cardborder flex items-center gap-2.5">
@@ -1364,9 +1388,11 @@
           </p>
         </div>
 
-        <!-- Trust Score Card -->
-        <div class="bg-white p-4 sm:p-5 rounded-3xl border border-zen-cardborder shadow-minimal flex items-center gap-4 shrink-0">
-          <div class="text-center pr-4 border-r border-stone-200">
+        <!-- Dual Platform Trust Score Card -->
+        <div class="bg-white p-4 sm:p-5 rounded-3xl border border-zen-cardborder shadow-minimal flex flex-col sm:flex-row items-center sm:items-stretch gap-4 shrink-0">
+          
+          <!-- Pillar 1: Google Maps Score -->
+          <div class="text-center px-2 sm:pr-4 sm:border-r border-stone-200 shrink-0">
             <span class="text-3xl sm:text-4xl font-serif font-bold text-zen-dark block leading-none">4.7</span>
             <div class="flex items-center gap-0.5 text-amber-400 text-xs mt-1 justify-center">
               <i class="fa-solid fa-star"></i>
@@ -1375,22 +1401,38 @@
               <i class="fa-solid fa-star"></i>
               <i class="fa-solid fa-star-half-stroke"></i>
             </div>
-            <span class="text-[9px] text-zen-muted block mt-0.5">จาก 180+ รีวิวจริง</span>
+            <span class="text-[9px] text-zen-muted block mt-0.5">Google Maps (180+)</span>
           </div>
-          <div class="space-y-1 text-xs text-stone-700">
-            <div class="flex items-center gap-1.5 font-medium">
+
+          <!-- Pillar 2: Facebook Recommendation Rate -->
+          <div class="text-center px-2 sm:px-4 sm:border-r border-stone-200 shrink-0">
+            <div class="flex items-center justify-center gap-1.5 leading-none">
+              <span class="text-3xl sm:text-4xl font-serif font-bold text-[#1877F2] leading-none">98%</span>
+              <i class="fa-solid fa-thumbs-up text-blue-600 text-lg"></i>
+            </div>
+            <div class="flex items-center gap-1 text-[#1877F2] text-xs mt-1 justify-center font-medium">
+              <i class="fa-brands fa-facebook"></i>
+              <span>แนะนำบอกต่อ</span>
+            </div>
+            <span class="text-[9px] text-zen-muted block mt-0.5">Facebook Page</span>
+          </div>
+
+          <!-- Trust Badges & Direct Links -->
+          <div class="space-y-1.5 text-xs text-stone-700 flex flex-col justify-center pt-2 sm:pt-0 border-t sm:border-t-0 border-stone-100">
+            <div class="flex items-center gap-1.5 text-[11px] text-stone-700 font-medium">
               <i class="fa-solid fa-circle-check text-emerald-600 text-xs"></i>
-              <span>98% แขกแนะนำให้บอกต่อ</span>
+              <span>การันตีความพึงพอใจจากแขกจริง</span>
+            </div>
+            <div class="flex items-center gap-1.5 text-zen-muted text-[11px] font-light">
+              <i class="fa-brands fa-facebook text-[#1877F2] text-xs"></i>
+              <a href="https://www.facebook.com/Baantaphai/reviews" target="_blank" rel="noopener noreferrer" class="hover:text-[#1877F2] transition-colors underline decoration-dotted">คำแนะนำบน Facebook (@Baantaphai)</a>
             </div>
             <div class="flex items-center gap-1.5 text-zen-muted text-[11px] font-light">
               <i class="fa-brands fa-google text-blue-500 text-xs"></i>
-              <a href="https://www.google.com/maps/place/Ta+Phai+Country+House+Resort+%26+Restaurant+%E0%B8%9A%E0%B9%89%E0%B8%B2%E0%B8%99%E0%B8%95%E0%B8%B2%E0%B8%9C%E0%B8%B2%E0%B8%A2/@14.5254055,22.6745089,3z/data=!4m15!1m3!11m2!2sfvCh34A6yu-arkFKSLatu3YK6l20xQ!3e1!3m10!1s0x311df15adefc75fb:0xe8712cc588511d8e!5m2!4m1!1i2!8m2!3d14.5254055!4d100.7213839!9m1!1b1!16s%2Fg%2F11lqlzj55l?entry=ttu" target="_blank" rel="noopener noreferrer" class="hover:text-amber-600 transition-colors underline decoration-dotted">Google Maps Verified (อ่านรีวิว)</a>
-            </div>
-            <div class="flex items-center gap-1.5 text-zen-muted text-[11px] font-light">
-              <i class="fa-solid fa-shield-halved text-zen-torii text-xs"></i>
-              <span>SHA Plus Standard Clean & Safe</span>
+              <a href="https://www.google.com/maps/place/Ta+Phai+Country+House+Resort+%26+Restaurant+%E0%B8%9A%E0%B9%89%E0%B8%B2%E0%B8%99%E0%B8%95%E0%B8%B2%E0%B8%9C%E0%B8%B2%E0%B8%A2/@14.5254055,22.6745089,3z/data=!4m15!1m3!11m2!2sfvCh34A6yu-arkFKSLatu3YK6l20xQ!3e1!3m10!1s0x311df15adefc75fb:0xe8712cc588511d8e!5m2!4m1!1i2!8m2!3d14.5254055!4d100.7213839!9m1!1b1!16s%2Fg%2F11lqlzj55l?entry=ttu" target="_blank" rel="noopener noreferrer" class="hover:text-amber-600 transition-colors underline decoration-dotted">Google Maps 180+ รีวิว (อ่านรีวิว)</a>
             </div>
           </div>
+
         </div>
       </div>
 
@@ -1833,21 +1875,24 @@
         <div class="review-card lg:col-span-2 bg-gradient-to-br from-stone-50 via-white to-amber-50/60 p-6 sm:p-7 rounded-3xl border-2 border-dashed border-amber-200 shadow-minimal flex flex-col justify-between space-y-4" data-type="all family couple group cafe pet">
           <div class="space-y-3">
             <div class="flex items-center justify-between flex-wrap gap-2">
-              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-100/80 text-amber-900 text-xs font-semibold border border-amber-300">
-                <i class="fa-brands fa-google text-blue-500"></i>
-                <span>Google Maps Verified Reviews</span>
+              <div class="flex items-center gap-2 flex-wrap">
+                <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 text-blue-900 text-xs font-semibold border border-blue-200">
+                  <i class="fa-brands fa-facebook text-[#1877F2]"></i>
+                  <span>98% แขกแนะนำบน Facebook</span>
+                </div>
+                <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100/80 text-amber-900 text-xs font-semibold border border-amber-300">
+                  <i class="fa-brands fa-google text-blue-500"></i>
+                  <span>4.7 ดาว บน Google Maps</span>
+                </div>
               </div>
-              <div class="flex items-center gap-1 text-amber-400 text-xs">
-                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
-                <span class="text-xs font-bold text-zen-dark ml-1">4.7 / 5.0</span>
-              </div>
+              <span class="text-xs text-stone-500 font-light">ความพึงพอใจ 2 แพลตฟอร์ม</span>
             </div>
 
             <h3 class="text-base sm:text-lg font-bold text-zen-dark leading-snug">
-              ยังมีรีวิวและความประทับใจจากลูกค้าจริงอีกกว่า 180+ รายการ
+              รีวิวจริงจาก 2 ช่องทางชั้นนำ ยืนยันความประทับใจระดับ 98%
             </h3>
             <p class="text-xs text-stone-600 font-light leading-relaxed">
-              สัมผัสเสียงตอบรับจริงจากผู้เข้าพักที่ได้มาสัมผัสความสุขริมสายน้ำอยุธยากับบ้านตาผาย ทั้งทริปครอบครัว คู่รัก สายธรรมชาติ และคนรักสัตว์เลี้ยง ตรวจสอบความประทับใจแบบเรียลไทม์ได้บน Google Maps
+              สัมผัสเสียงตอบรับจริงจากผู้เข้าพักที่ได้มาสัมผัสความสุขริมสายน้ำอยุธยากับบ้านตาผาย ทั้งบนเพจ Facebook ทางการ (@Baantaphai) และ Google Maps ตรวจสอบความประทับใจแบบเรียลไทม์ได้ทั้ง 2 ช่องทาง
             </p>
           </div>
 
@@ -1855,27 +1900,37 @@
             <span class="text-[11px] text-zen-muted font-light">
               <i class="fa-solid fa-check-circle text-emerald-600 mr-1"></i>อัปเดตต่อเนื่องจากผู้เข้าพักจริง
             </span>
-            <a href="https://www.google.com/maps/place/Ta+Phai+Country+House+Resort+%26+Restaurant+%E0%B8%9A%E0%B9%89%E0%B8%B2%E0%B8%99%E0%B8%95%E0%B8%B2%E0%B8%9C%E0%B8%B2%E0%B8%A2/@14.5254055,22.6745089,3z/data=!4m15!1m3!11m2!2sfvCh34A6yu-arkFKSLatu3YK6l20xQ!3e1!3m10!1s0x311df15adefc75fb:0xe8712cc588511d8e!5m2!4m1!1i2!8m2!3d14.5254055!4d100.7213839!9m1!1b1!16s%2Fg%2F11lqlzj55l?entry=ttu" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-2xl bg-zen-dark hover:bg-black text-white text-xs sm:text-sm font-semibold shadow-md transition-all active:scale-95 group">
-              <i class="fa-brands fa-google text-amber-400"></i>
-              <span>อ่านรีวิวต่อได้ที่ Google Maps</span>
-              <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-amber-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"></i>
-            </a>
+            <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+              <a href="https://www.facebook.com/Baantaphai/reviews" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-2xl bg-[#1877F2] hover:bg-blue-700 text-white text-xs font-semibold shadow-md transition-all active:scale-95 group">
+                <i class="fa-brands fa-facebook"></i>
+                <span>คำแนะนำบน Facebook (98%)</span>
+                <i class="fa-solid fa-arrow-up-right-from-square text-[9px] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"></i>
+              </a>
+              <a href="https://www.google.com/maps/place/Ta+Phai+Country+House+Resort+%26+Restaurant+%E0%B8%9A%E0%B9%89%E0%B8%B2%E0%B8%99%E0%B8%95%E0%B8%B2%E0%B8%9C%E0%B8%B2%E0%B8%A2/@14.5254055,22.6745089,3z/data=!4m15!1m3!11m2!2sfvCh34A6yu-arkFKSLatu3YK6l20xQ!3e1!3m10!1s0x311df15adefc75fb:0xe8712cc588511d8e!5m2!4m1!1i2!8m2!3d14.5254055!4d100.7213839!9m1!1b1!16s%2Fg%2F11lqlzj55l?entry=ttu" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-2xl bg-zen-dark hover:bg-black text-white text-xs font-semibold shadow-md transition-all active:scale-95 group">
+                <i class="fa-brands fa-google text-amber-400"></i>
+                <span>Google Maps (4.7★)</span>
+                <i class="fa-solid fa-arrow-up-right-from-square text-[9px] text-amber-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"></i>
+              </a>
+            </div>
           </div>
         </div>
 
       </div>
 
-      <!-- Trust & Google Reviews Callout Banner -->
+      <!-- Trust & Verified Social Proof Callout Banner -->
       <div class="mt-10 p-6 sm:p-8 rounded-3xl bg-zen-sand/60 border border-zen-cardborder flex flex-col md:flex-row items-center justify-between gap-6">
         <div class="flex items-center gap-4 text-left">
-          <div class="w-14 h-14 rounded-2xl bg-white border border-stone-200 shadow-sm flex items-center justify-center shrink-0">
-            <i class="fa-brands fa-google text-2xl text-blue-500"></i>
+          <div class="w-14 h-14 rounded-2xl bg-white border border-stone-200 shadow-sm flex items-center justify-center shrink-0 text-2xl text-blue-600">
+            <i class="fa-solid fa-thumbs-up"></i>
           </div>
           <div class="space-y-1">
-            <div class="flex items-center gap-2">
-              <span class="text-sm font-bold text-zen-dark">ประทับใจการเข้าพักที่บ้านตาผาย?</span>
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="text-sm sm:text-base font-bold text-zen-dark">การันตีความมั่นใจจากผู้เข้าพักจริง</span>
+              <span class="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-900 border border-blue-200 flex items-center gap-1">
+                <i class="fa-brands fa-facebook text-[#1877F2]"></i> 98% แขกแนะนำบน Facebook
+              </span>
               <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-200">
-                คะแนน 4.7 ดาว บน Google Maps (180+ รีวิว)
+                4.7 ดาว Google Maps
               </span>
             </div>
             <p class="text-xs text-stone-600 font-light leading-relaxed">
@@ -1883,15 +1938,16 @@
             </p>
           </div>
         </div>
-        <div class="flex items-center gap-3 shrink-0 w-full md:w-auto">
-          <a href="https://www.google.com/maps/place/Ta+Phai+Country+House+Resort+%26+Restaurant+%E0%B8%9A%E0%B9%89%E0%B8%B2%E0%B8%99%E0%B8%95%E0%B8%B2%E0%B8%9C%E0%B8%B2%E0%B8%A2/@14.5254055,22.6745089,3z/data=!4m15!1m3!11m2!2sfvCh34A6yu-arkFKSLatu3YK6l20xQ!3e1!3m10!1s0x311df15adefc75fb:0xe8712cc588511d8e!5m2!4m1!1i2!8m2!3d14.5254055!4d100.7213839!9m1!1b1!16s%2Fg%2F11lqlzj55l?entry=ttu" target="_blank" rel="noopener noreferrer" class="flex-1 md:flex-none inline-flex items-center justify-center gap-2 px-5 py-3 rounded-2xl bg-zen-dark hover:bg-black text-white text-xs font-semibold shadow-sm transition-all active:scale-95">
-            <i class="fa-brands fa-google text-amber-400"></i>
-            <span>อ่านรีวิวต่อได้ที่ Google Maps (180+)</span>
+        <div class="flex items-center gap-2.5 shrink-0 w-full md:w-auto flex-wrap">
+          <a href="https://www.facebook.com/Baantaphai/reviews" target="_blank" rel="noopener noreferrer" class="flex-1 md:flex-none inline-flex items-center justify-center gap-2 px-5 py-3 rounded-2xl bg-[#1877F2] hover:bg-blue-700 text-white text-xs font-semibold shadow-sm transition-all active:scale-95">
+            <i class="fa-brands fa-facebook"></i>
+            <span>รีวิวบน Facebook (98%)</span>
             <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
           </a>
           <a href="https://www.google.com/maps/place/Ta+Phai+Country+House+Resort+%26+Restaurant+%E0%B8%9A%E0%B9%89%E0%B8%B2%E0%B8%99%E0%B8%95%E0%B8%B2%E0%B8%9C%E0%B8%B2%E0%B8%A2/@14.5254055,22.6745089,3z/data=!4m15!1m3!11m2!2sfvCh34A6yu-arkFKSLatu3YK6l20xQ!3e1!3m10!1s0x311df15adefc75fb:0xe8712cc588511d8e!5m2!4m1!1i2!8m2!3d14.5254055!4d100.7213839!9m1!1b1!16s%2Fg%2F11lqlzj55l?entry=ttu" target="_blank" rel="noopener noreferrer" class="flex-1 md:flex-none inline-flex items-center justify-center gap-2 px-4 py-3 rounded-2xl bg-white hover:bg-stone-100 border border-stone-300 text-stone-700 text-xs font-medium transition-all active:scale-95">
-            <i class="fa-solid fa-pen-to-square text-amber-500"></i>
-            <span>เขียนรีวิวให้เรา</span>
+            <i class="fa-brands fa-google text-blue-500"></i>
+            <span>Google Maps (4.7★)</span>
+            <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
           </a>
         </div>
       </div>
@@ -1899,14 +1955,14 @@
       <!-- 4 Core Stay Commitments -->
       <div class="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 text-center">
         <div class="p-3.5 rounded-2xl bg-stone-50 border border-stone-200/80 space-y-1">
+          <i class="fa-solid fa-thumbs-up text-[#1877F2] text-base"></i>
+          <p class="text-xs font-bold text-zen-dark">98% แขกแนะนำ</p>
+          <p class="text-[10px] text-stone-500 font-light">การันตีความพึงพอใจบน Facebook</p>
+        </div>
+        <div class="p-3.5 rounded-2xl bg-stone-50 border border-stone-200/80 space-y-1">
           <i class="fa-solid fa-shield-heart text-zen-torii text-base"></i>
           <p class="text-xs font-bold text-zen-dark">การันตีจองตรง</p>
           <p class="text-[10px] text-stone-500 font-light">ราคาจริง ไม่มีบวกค่าคอมมิชชั่น</p>
-        </div>
-        <div class="p-3.5 rounded-2xl bg-stone-50 border border-stone-200/80 space-y-1">
-          <i class="fa-brands fa-line text-emerald-600 text-base"></i>
-          <p class="text-xs font-bold text-zen-dark">ดูแลดุจคนในครอบครัว</p>
-          <p class="text-[10px] text-stone-500 font-light">แอดมินตอบแชทไว ประสานงานรวดเร็ว</p>
         </div>
         <div class="p-3.5 rounded-2xl bg-stone-50 border border-stone-200/80 space-y-1">
           <i class="fa-solid fa-utensils text-amber-600 text-base"></i>
@@ -2317,6 +2373,19 @@
                   <i class="fa-regular fa-copy text-xs"></i> <span>คัดลอกสรุป</span>
                 </button>
               </div>
+
+              <!-- Social Proof Trust Reassurance -->
+              <div class="pt-2.5 border-t border-white/10 flex items-center justify-between text-[11px] text-stone-300">
+                <div class="flex items-center gap-1.5">
+                  <i class="fa-solid fa-thumbs-up text-blue-400"></i>
+                  <span><strong class="text-white">98% แขกแนะนำ</strong> บน Facebook</span>
+                </div>
+                <div class="flex items-center gap-1 text-amber-300">
+                  <i class="fa-solid fa-star text-[10px]"></i>
+                  <span class="font-bold">4.7 / 5</span>
+                  <span class="text-[9px] text-stone-400 font-light">(Google Maps)</span>
+                </div>
+              </div>
             </div>
 
           </div>
@@ -2723,14 +2792,14 @@
   </button>
 
   <!-- ================= SOCIAL PROOF LIVE INQUIRY TOAST ================= -->
-  <div id="socialProofToast" class="fixed floating-toast-safe left-3 sm:left-4 z-40 hidden max-w-[210px] sm:max-w-xs bg-white dark:bg-[#1A231E] border border-zen-cardborder p-2.5 sm:p-3 rounded-2xl shadow-xl pointer-events-none">
+  <div id="socialProofToast" class="fixed floating-toast-safe left-3 sm:left-4 z-40 hidden max-w-[230px] sm:max-w-xs bg-white dark:bg-[#1A231E] border border-zen-cardborder p-2.5 sm:p-3 rounded-2xl shadow-xl pointer-events-none transition-all">
     <div class="flex items-center gap-2 sm:gap-2.5">
-      <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs shrink-0 font-bold">
-        <i class="fa-solid fa-fire text-amber-500"></i>
+      <div id="socialProofIconWrap" class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xs shrink-0 font-bold">
+        <i id="socialProofIcon" class="fa-solid fa-thumbs-up text-[#1877F2]"></i>
       </div>
       <div class="text-[10px] sm:text-[11px] leading-tight">
-        <p id="socialProofMsg" class="font-medium text-zen-dark line-clamp-1">คุณ กิตติกร เพิ่งสอบถามห้อง Lake View</p>
-        <p class="text-[8px] sm:text-[9px] text-zen-muted mt-0.5">เมื่อสักครู่ที่ผ่านมา</p>
+        <p id="socialProofMsg" class="font-medium text-zen-dark line-clamp-1">98% แขกแนะนำบน Facebook</p>
+        <p id="socialProofSub" class="text-[8px] sm:text-[9px] text-zen-muted mt-0.5">การันตีความพึงพอใจ</p>
       </div>
     </div>
   </div>
@@ -3290,6 +3359,21 @@
               <span id="modalCap" class="text-xs sm:text-sm font-semibold text-zen-dark bg-white px-2.5 py-1 rounded-full border border-stone-200 mt-1 inline-block">
                 2 ท่าน
               </span>
+            </div>
+          </div>
+
+          <!-- Social Proof Guarantee Badge inside Modal -->
+          <div class="px-3 py-2 rounded-xl bg-blue-50/80 border border-blue-200/70 flex items-center justify-between text-xs">
+            <div class="flex items-center gap-2">
+              <span class="w-6 h-6 rounded-lg bg-[#1877F2] text-white flex items-center justify-center text-xs shrink-0">
+                <i class="fa-solid fa-thumbs-up"></i>
+              </span>
+              <span class="text-[11px] text-blue-950 font-medium"><strong>98% แขกแนะนำ</strong> บนเพจ Facebook (@Baantaphai)</span>
+            </div>
+            <div class="flex items-center gap-1 text-[11px] text-stone-600 font-medium">
+              <i class="fa-solid fa-star text-amber-500 text-[10px]"></i>
+              <span class="font-bold text-zen-dark">4.7 / 5</span>
+              <span class="text-[9px] text-stone-400 font-light">(รีวิวจริง)</span>
             </div>
           </div>
 
@@ -5125,17 +5209,64 @@
       }, 2500);
     }
 
-    // 10. SOCIAL PROOF LIVE NOTIFICATIONS (Runs every 16 seconds)
-    const SOCIAL_PROOF_NAMES = ['คุณ กิตติกร', 'คุณ พัชราภรณ์', 'คุณ ธนภัทร', 'คุณ วิไลลักษณ์', 'คุณ อภิสิทธิ์', 'คุณ นภัสสร'];
-    const SOCIAL_PROOF_ROOMS = ['Family House (ริมน้ำ)', 'Lake View (ริมน้ำ)', 'Japanese House (Full Set)', 'Sky View (ริมน้ำ)', 'Country House (เหมาหลัง)'];
-    
+    // 10. SOCIAL PROOF LIVE NOTIFICATIONS (Runs periodically)
+    const SOCIAL_PROOF_EVENTS = [
+      {
+        msg: '98% แขกแนะนำบนเพจ Facebook 👍',
+        sub: 'ความพึงพอใจการันตี @Baantaphai',
+        icon: 'fa-solid fa-thumbs-up text-[#1877F2]',
+        bg: 'bg-blue-100 text-blue-600'
+      },
+      {
+        msg: 'คุณ กิตติกร เพิ่งสอบถามห้อง Lake View (ริมน้ำ)',
+        sub: 'เมื่อสักครู่ที่ผ่านมา',
+        icon: 'fa-solid fa-fire text-amber-500',
+        bg: 'bg-amber-100 text-amber-700'
+      },
+      {
+        msg: 'คุณ พัชราภรณ์ เพิ่งแนะนำบ้านตาผาย ⭐⭐⭐⭐⭐',
+        sub: 'รีวิวบนเพจ Facebook',
+        icon: 'fa-brands fa-facebook text-[#1877F2]',
+        bg: 'bg-blue-100 text-blue-600'
+      },
+      {
+        msg: 'คะแนน 4.7 ดาว บน Google Maps (180+ รีวิว)',
+        sub: 'รีวิวจริงจากผู้เข้าพัก',
+        icon: 'fa-brands fa-google text-blue-500',
+        bg: 'bg-rose-100 text-rose-600'
+      },
+      {
+        msg: 'คุณ ธนภัทร เพิ่งสอบถาม Family House ริมน้ำ',
+        sub: 'เมื่อ 2 นาทีที่แล้ว',
+        icon: 'fa-solid fa-water text-cyan-600',
+        bg: 'bg-cyan-100 text-cyan-700'
+      },
+      {
+        msg: 'คุณ วิไลลักษณ์: "บรรยากาศดี บริการเป็นกันเอง 10/10"',
+        sub: 'แขกแนะนำบอกต่อ',
+        icon: 'fa-solid fa-heart text-rose-500',
+        bg: 'bg-rose-100 text-rose-700'
+      }
+    ];
+    let socialProofIdx = 0;
+
     function triggerSocialProof() {
-      const name = SOCIAL_PROOF_NAMES[Math.floor(Math.random() * SOCIAL_PROOF_NAMES.length)];
-      const room = SOCIAL_PROOF_ROOMS[Math.floor(Math.random() * SOCIAL_PROOF_ROOMS.length)];
+      const evt = SOCIAL_PROOF_EVENTS[socialProofIdx % SOCIAL_PROOF_EVENTS.length];
+      socialProofIdx++;
 
       const toast = document.getElementById('socialProofToast');
       if (!toast) return;
-      document.getElementById('socialProofMsg').textContent = `${name} เพิ่งสอบถามห้อง ${room}`;
+
+      const iconWrap = document.getElementById('socialProofIconWrap');
+      const icon = document.getElementById('socialProofIcon');
+      const msgEl = document.getElementById('socialProofMsg');
+      const subEl = document.getElementById('socialProofSub');
+
+      if (msgEl) msgEl.textContent = evt.msg;
+      if (subEl) subEl.textContent = evt.sub;
+      if (iconWrap && evt.bg) iconWrap.className = `w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-xs shrink-0 font-bold ${evt.bg}`;
+      if (icon && evt.icon) icon.className = evt.icon;
+
       toast.classList.remove('hidden');
       requestAnimationFrame(() => {
         toast.classList.add('toast-visible');
