@@ -222,7 +222,6 @@
     #matcher,
     #dining,
     #photospots,
-    #map,
     #reviews,
     #itinerary,
     #attractions,
@@ -434,10 +433,6 @@
           <span>คาเฟ่ & อาหาร</span>
         </a>
 
-        <a href="#map" class="px-3 py-1.5 rounded-full hover:text-blue-800 dark:hover:text-blue-400 hover:bg-stone-100/80 dark:hover:bg-white/10 transition-colors">
-          แผนผังรีสอร์ท
-        </a>
-
         <a href="#reviews" class="px-3 py-1.5 rounded-full hover:text-amber-700 dark:hover:text-amber-400 hover:bg-stone-100/80 dark:hover:bg-white/10 transition-colors flex items-center gap-1">
           <i class="fa-solid fa-star text-amber-500 text-xs"></i>
           <span>รีวิว 4.7★</span>
@@ -557,10 +552,6 @@
           <a href="#dining" onclick="toggleMobileMenu()" class="flex items-center gap-3 p-2.5 rounded-2xl bg-amber-50/70 text-amber-950 font-medium hover:bg-amber-100/70 transition-colors min-h-[44px]">
             <i class="fa-solid fa-mug-saucer text-amber-700 w-5 text-center"></i>
             <span>☕ คาเฟ่ & อาหารริมน้ำ</span>
-          </a>
-          <a href="#map" onclick="toggleMobileMenu()" class="flex items-center gap-3 p-2.5 rounded-2xl hover:bg-zen-sand transition-colors min-h-[44px]">
-            <i class="fa-solid fa-map text-blue-600 w-5 text-center"></i>
-            <span>แผนผังรีสอร์ท & ไฮไลท์แต่ละโซน</span>
           </a>
           <a href="#reviews" onclick="toggleMobileMenu()" class="flex items-center gap-3 p-2.5 rounded-2xl hover:bg-zen-sand transition-colors min-h-[44px]">
             <i class="fa-solid fa-star text-amber-500 w-5 text-center"></i>
@@ -1265,153 +1256,6 @@
               <span class="text-[10px] text-zen-muted group-hover:text-emerald-700 transition-colors shrink-0">ดูภาพเต็ม <i class="fa-solid fa-expand text-[9px] ml-0.5"></i></span>
             </div>
           </div>
-        </div>
-
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ================= INTERACTIVE RESORT MAP & WAYFINDING ================= -->
-  <section id="map" class="py-12 sm:py-20 bg-zen-sand/40 border-b border-zen-cardborder/70 scroll-mt-16 relative">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      
-      <!-- Section Header -->
-      <div class="text-center max-w-2xl mx-auto mb-8 sm:mb-12 space-y-2">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-800 text-[10px] sm:text-[11px] font-medium tracking-widest uppercase border border-blue-200">
-          <i class="fa-solid fa-map-location-dot text-blue-600"></i>
-          <span>Resort Layout & Wayfinding</span>
-        </div>
-        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-zen-dark leading-tight">
-          แผนผังรีสอร์ท & สำรวจบรรยากาศแต่ละโซน
-        </h2>
-        <p class="text-xs sm:text-sm text-zen-muted font-light leading-relaxed">
-          บ้านตาผาย รีสอร์ท จัดสรรพื้นที่ริมแม่น้ำอยุธยาอย่างเป็นสัดส่วน เงียบสงบ ร่มรื่น และมีเสน่ห์เฉพาะตัวในทุกมุม คลิกเลือกโซนเพื่อดูรายละเอียดและมุมถ่ายรูป
-        </p>
-      </div>
-
-      <!-- Zone Selector Tabs -->
-      <div class="flex items-center justify-start sm:justify-center gap-2 overflow-x-auto no-scrollbar pb-3 mb-8 px-1 -mx-4 sm:mx-0 px-4 sm:px-0">
-        <button type="button" onclick="switchMapZone('riverside', this)" class="map-zone-tab active shrink-0 px-4 py-2.5 rounded-full text-xs font-medium transition-all shadow-minimal bg-zen-dark text-white border border-zen-dark active:scale-95 flex items-center gap-1.5">
-          <span>🌊</span><span>1. โซนริมแม่น้ำ</span>
-        </button>
-        <button type="button" onclick="switchMapZone('japanese', this)" class="map-zone-tab shrink-0 px-4 py-2.5 rounded-full text-xs font-normal transition-all shadow-minimal bg-white text-zen-dark hover:bg-zen-sand border border-zen-cardborder active:scale-95 flex items-center gap-1.5">
-          <span>⛩️</span><span>2. โซนหมู่บ้านญี่ปุ่น</span>
-        </button>
-        <button type="button" onclick="switchMapZone('country', this)" class="map-zone-tab shrink-0 px-4 py-2.5 rounded-full text-xs font-normal transition-all shadow-minimal bg-white text-zen-dark hover:bg-zen-sand border border-zen-cardborder active:scale-95 flex items-center gap-1.5">
-          <span>🏡</span><span>3. โซนบ้านเหมาหลัง 2 ชั้น</span>
-        </button>
-        <button type="button" onclick="switchMapZone('cafe', this)" class="map-zone-tab shrink-0 px-4 py-2.5 rounded-full text-xs font-normal transition-all shadow-minimal bg-white text-zen-dark hover:bg-zen-sand border border-zen-cardborder active:scale-95 flex items-center gap-1.5">
-          <span>☕</span><span>4. โซนคาเฟ่ & ล็อบบี้</span>
-        </button>
-        <button type="button" onclick="switchMapZone('pier', this)" class="map-zone-tab shrink-0 px-4 py-2.5 rounded-full text-xs font-normal transition-all shadow-minimal bg-white text-zen-dark hover:bg-zen-sand border border-zen-cardborder active:scale-95 flex items-center gap-1.5">
-          <span>🛶</span><span>5. ท่าเรือ & กิจกรรมฟรี</span>
-        </button>
-      </div>
-
-      <!-- Dynamic Active Zone Feature Spotlight -->
-      <div id="mapZoneContent" class="bg-white rounded-3xl p-5 sm:p-8 border border-zen-cardborder shadow-minimal grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-center mb-8">
-        
-        <!-- Left: High-Res Zone Visual Frame -->
-        <div class="lg:col-span-6 relative rounded-2xl overflow-hidden aspect-[16/10] bg-stone-100 shadow-sm border border-stone-200">
-          <img id="mapZoneImg" src="https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=1200&q=80" alt="Resort Zone" loading="lazy" decoding="async" class="w-full h-full object-cover transition-transform duration-700 hover:scale-105">
-          <div class="absolute top-3 left-3">
-            <span id="mapZoneBadge" class="px-3 py-1 rounded-full text-[10px] font-semibold bg-zen-dark/95 text-white">
-              🌊 โซนติดริมแม่น้ำอยุธยา
-            </span>
-          </div>
-          <div class="absolute bottom-3 right-3 px-2.5 py-1 rounded-full text-[10px] font-medium bg-white/95 text-zen-dark shadow-xs border border-stone-200">
-            <i class="fa-solid fa-person-walking text-zen-torii"></i> เดิน 10 วินาทีถึงริมน้ำ
-          </div>
-        </div>
-
-        <!-- Right: Zone Story & Key Rooms -->
-        <div class="lg:col-span-6 space-y-4">
-          <div class="space-y-1">
-            <span id="mapZoneSub" class="text-[11px] font-semibold text-zen-torii uppercase tracking-widest block">Signature Riverfront Living</span>
-            <h3 id="mapZoneTitle" class="text-xl sm:text-2xl font-bold text-zen-dark">โซนบ้านริมน้ำ (Riverside Zone)</h3>
-            <p id="mapZoneDesc" class="text-xs sm:text-sm text-zen-muted font-light leading-relaxed">
-              โซนยอดนิยมอันดับ 1 ของรีสอร์ท ตั้งอยู่ติดแนวโค้งแม่น้ำอยุธยา เปิดประตูรับลมธรรมชาติเย็นสบายทั้งวัน พร้อมระเบียงส่วนตัวสำหรับนั่งห้อยขาชมวิวพระอาทิตย์ตกดิน
-            </p>
-          </div>
-
-          <!-- Zone Features List -->
-          <div id="mapZoneFeatures" class="grid grid-cols-2 gap-2 text-xs text-stone-700 font-light pt-1 border-t border-stone-100">
-            <div class="flex items-center gap-2 p-2 rounded-xl bg-stone-50 border border-stone-200/60">
-              <i class="fa-solid fa-water text-cyan-600 text-xs"></i> <span>ระเบียงยื่นเหนือน้ำ</span>
-            </div>
-            <div class="flex items-center gap-2 p-2 rounded-xl bg-stone-50 border border-stone-200/60">
-              <i class="fa-solid fa-utensils text-amber-600 text-xs"></i> <span>มีซุ้มอาหารส่วนตัว</span>
-            </div>
-            <div class="flex items-center gap-2 p-2 rounded-xl bg-stone-50 border border-stone-200/60">
-              <i class="fa-solid fa-car text-emerald-600 text-xs"></i> <span>ที่จอดรถใกล้ห้อง</span>
-            </div>
-            <div class="flex items-center gap-2 p-2 rounded-xl bg-stone-50 border border-stone-200/60">
-              <i class="fa-solid fa-bed text-zen-torii text-xs"></i> <span>Family & Lake View</span>
-            </div>
-          </div>
-
-          <!-- Zone Action Links -->
-          <div class="pt-2 flex items-center gap-2.5">
-            <a id="mapZoneBtn" href="#rooms" class="px-5 py-2.5 rounded-xl bg-zen-dark hover:bg-black text-white text-xs font-medium transition-colors flex items-center gap-1.5 active:scale-95">
-              <span>ดูห้องพักในโซนนี้</span>
-              <i class="fa-solid fa-arrow-right text-[10px]"></i>
-            </a>
-            <a href="https://line.me/R/ti/p/@baantaphairesort" target="_blank" class="px-4 py-2.5 rounded-xl bg-zen-sand hover:bg-stone-200 text-zen-dark text-xs font-medium border border-zen-cardborder transition-colors">
-              สอบถามห้องว่างโซนนี้
-            </a>
-          </div>
-
-        </div>
-
-      </div>
-
-      <!-- 5 Mini Quick Wayfinding Cards Grid -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5 sm:gap-4 text-xs">
-        
-        <div onclick="switchMapZone('riverside')" class="cursor-pointer bg-white p-3.5 rounded-2xl border border-zen-cardborder hover:border-zen-torii transition-all shadow-2xs hover:shadow-minimal">
-          <div class="flex items-center gap-2 mb-1.5">
-            <span class="w-6 h-6 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center text-xs">🌊</span>
-            <span class="font-bold text-zen-dark">โซนบ้านริมน้ำ</span>
-          </div>
-          <p class="text-[11px] text-zen-muted font-light leading-snug line-clamp-2">4 รูปแบบห้องพัก วิวแม่น้ำพาโนรามา ลมพัดเย็นสบาย</p>
-          <span class="text-[10px] text-zen-torii font-medium mt-2 block">ดูรายละเอียด →</span>
-        </div>
-
-        <div onclick="switchMapZone('japanese')" class="cursor-pointer bg-white p-3.5 rounded-2xl border border-zen-cardborder hover:border-zen-torii transition-all shadow-2xs hover:shadow-minimal">
-          <div class="flex items-center gap-2 mb-1.5">
-            <span class="w-6 h-6 rounded-lg bg-rose-100 text-zen-torii flex items-center justify-center text-xs">⛩️</span>
-            <span class="font-bold text-zen-dark">โซนหมู่บ้านญี่ปุ่น</span>
-          </div>
-          <p class="text-[11px] text-zen-muted font-light leading-snug line-clamp-2">ซุ้มประตูโทริอิ ทางเดินหินเกียวโต ห้องเดี่ยว & เหมาหลัง</p>
-          <span class="text-[10px] text-zen-torii font-medium mt-2 block">ดูรายละเอียด →</span>
-        </div>
-
-        <div onclick="switchMapZone('country')" class="cursor-pointer bg-white p-3.5 rounded-2xl border border-zen-cardborder hover:border-zen-torii transition-all shadow-2xs hover:shadow-minimal">
-          <div class="flex items-center gap-2 mb-1.5">
-            <span class="w-6 h-6 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center text-xs">🏡</span>
-            <span class="font-bold text-zen-dark">Country House</span>
-          </div>
-          <p class="text-[11px] text-zen-muted font-light leading-snug line-clamp-2">เหมาหลัง 2 ชั้น 7 ห้องนอน โต๊ะสนุกเกอร์ & โต๊ะบอล</p>
-          <span class="text-[10px] text-zen-torii font-medium mt-2 block">ดูรายละเอียด →</span>
-        </div>
-
-        <div onclick="switchMapZone('cafe')" class="cursor-pointer bg-white p-3.5 rounded-2xl border border-zen-cardborder hover:border-zen-torii transition-all shadow-2xs hover:shadow-minimal">
-          <div class="flex items-center gap-2 mb-1.5">
-            <span class="w-6 h-6 rounded-lg bg-amber-100 text-amber-800 flex items-center justify-center text-xs">☕</span>
-            <span class="font-bold text-zen-dark">คาเฟ่ & ล็อบบี้</span>
-          </div>
-          <p class="text-[11px] text-zen-muted font-light leading-snug line-clamp-2">กาแฟสด เบเกอรี่ อาหารไทยรสเด็ด ลานอาหารเช้าฟรี</p>
-          <span class="text-[10px] text-zen-torii font-medium mt-2 block">ดูรายละเอียด →</span>
-        </div>
-
-        <div onclick="switchMapZone('pier')" class="cursor-pointer bg-white p-3.5 rounded-2xl border border-zen-cardborder hover:border-zen-torii transition-all shadow-2xs hover:shadow-minimal">
-          <div class="flex items-center gap-2 mb-1.5">
-            <span class="w-6 h-6 rounded-lg bg-cyan-100 text-cyan-800 flex items-center justify-center text-xs">🛶</span>
-            <span class="font-bold text-zen-dark">ท่าเรือ & กิจกรรม</span>
-          </div>
-          <p class="text-[11px] text-zen-muted font-light leading-snug line-clamp-2">คายัคฟรี เรือเป็ด ให้อาหารปลาคาร์ป ยืมจักรยานฟรี</p>
-          <span class="text-[10px] text-zen-torii font-medium mt-2 block">ดูรายละเอียด →</span>
         </div>
 
       </div>
@@ -7068,154 +6912,6 @@
         }
       } catch (e) {
         showToast('📋 คัดลอกเรียบร้อย');
-      }
-    }
-
-    // 13. INTERACTIVE RESORT MAP ENGINE
-    const RESORT_ZONES = {
-      riverside: {
-        title: 'โซนบ้านริมน้ำ (Riverside Zone)',
-        sub: 'Signature Riverfront Living',
-        badge: '🌊 โซนติดริมแม่น้ำอยุธยา',
-        walk: 'เดิน 10 วินาทีถึงริมน้ำ',
-        img: 'https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=1200&q=80',
-        desc: 'โซนยอดนิยมอันดับ 1 ของรีสอร์ท ตั้งอยู่ติดแนวโค้งแม่น้ำอยุธยา เปิดประตูรับลมธรรมชาติเย็นสบายทั้งวัน พร้อมระเบียงส่วนตัวสำหรับนั่งห้อยขาชมวิวพระอาทิตย์ตกดิน',
-        features: [
-          { icon: 'fa-solid fa-water', text: 'ระเบียงยื่นเหนือน้ำ', color: 'text-cyan-600' },
-          { icon: 'fa-solid fa-utensils', text: 'มีซุ้มอาหารส่วนตัว', color: 'text-amber-600' },
-          { icon: 'fa-solid fa-car', text: 'ที่จอดรถใกล้ห้อง', color: 'text-emerald-600' },
-          { icon: 'fa-solid fa-bed', text: 'Family & Lake View', color: 'text-zen-torii' }
-        ],
-        btnFilter: 'riverside',
-        btnText: 'ดูห้องพักโซนริมน้ำ (4 แบบ)'
-      },
-      japanese: {
-        title: 'โซนหมู่บ้านญี่ปุ่น (Japanese Village)',
-        sub: 'Kyoto Aesthetic & Zen Garden',
-        badge: '⛩️ โซนญี่ปุ่น ซุ้มโทริอิ & สวนหิน',
-        walk: 'เดิน 30 วินาทีถึงริมน้ำ',
-        img: 'https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=1200&q=80',
-        desc: 'ดื่มด่ำกับมนต์เสน่ห์แดนอาทิตย์อุทัย ท่ามกลางซุ้มประตูโทริอิสีแดงสด สวนหินเซน และทางเดินหินสไตล์เกียวโตที่เพิ่งรีโนเวทใหม่ บรรยากาศเงียบสงบ อบอุ่น และเป็นส่วนตัว',
-        features: [
-          { icon: 'fa-solid fa-torii-gate', text: 'ซุ้มประตูโทริอิถ่ายรูป', color: 'text-zen-torii' },
-          { icon: 'fa-solid fa-door-open', text: 'มีห้อง Connecting', color: 'text-blue-600' },
-          { icon: 'fa-solid fa-leaf', text: 'สวนหินสไตล์ญี่ปุ่น', color: 'text-emerald-600' },
-          { icon: 'fa-solid fa-tags', text: 'ราคาเริ่มเพียง ฿800', color: 'text-amber-600' }
-        ],
-        btnFilter: 'japanese',
-        btnText: 'ดูห้องพักโซนญี่ปุ่น (5 แบบ)'
-      },
-      country: {
-        title: 'Country House (บ้านเหมาหลัง 2 ชั้น)',
-        sub: 'Private Group & Party Clubhouse',
-        badge: '🏡 บ้านพักเหมาหลังส่วนตัว 2 ชั้น',
-        walk: 'โถงสนุกเกอร์ & โต๊ะบอลฟรี',
-        img: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=80',
-        desc: 'บ้านพักหลังใหญ่ 2 ชั้น ให้บริการแบบเหมาหลังส่วนตัวเท่านั้น รองรับได้ 16-20 ท่าน มี 7 ห้องนอน 8 เตียงคิงไซส์ 6 ห้องน้ำ โถงกลางติดแอร์ขนาดใหญ่ โต๊ะสนุกเกอร์ และโต๊ะฟุตบอลมือหมุน เล่นฟรีตลอดการเข้าพัก',
-        features: [
-          { icon: 'fa-solid fa-users', text: 'พักได้ 16 - 20 ท่าน', color: 'text-amber-600' },
-          { icon: 'fa-solid fa-circle-dot', text: 'โต๊ะสนุกเกอร์มาตรฐาน', color: 'text-emerald-600' },
-          { icon: 'fa-solid fa-gamepad', text: 'โต๊ะบอลมือหมุนฟรี', color: 'text-blue-600' },
-          { icon: 'fa-solid fa-bread-slice', text: 'รวมอาหารเช้า 16 ท่าน', color: 'text-zen-torii' }
-        ],
-        btnFilter: 'whole',
-        btnText: 'ดูข้อมูล Country House'
-      },
-      cafe: {
-        title: 'คาเฟ่ริมน้ำ & ล็อบบี้ (Café & Dining)',
-        sub: 'Fresh Roast Arabica & Thai Kitchen',
-        badge: '☕ คาเฟ่ริมน้ำ & ครัวอาหารไทย',
-        walk: 'เปิดบริการ 10:00 - 20:00 น.',
-        img: 'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1200&q=80',
-        desc: 'จุดนัดพบและจุดเช็คอิน ลิ้มลองกาแฟสดอาราบิก้าคั่วหอม ชาเขียวมัทฉะแท้ อิตาเลียนโซดา และอาหารไทยรสจัดจ้าน ปรุงสดใหม่จานต่อจาน มีซุ้มไม้ไผ่ริมน้ำและบริการเสิร์ฟถึงห้องพัก',
-        features: [
-          { icon: 'fa-solid fa-mug-saucer', text: 'กาแฟสด เริ่ม ฿55.-', color: 'text-amber-600' },
-          { icon: 'fa-solid fa-bowl-food', text: 'กับข้าวไทยรสจัดจ้าน', color: 'text-zen-torii' },
-          { icon: 'fa-solid fa-bell-concierge', text: 'ส่งถึงซุ้ม & ระเบียงห้อง', color: 'text-emerald-600' },
-          { icon: 'fa-solid fa-egg', text: 'ลานอาหารเช้าฟรี', color: 'text-cyan-600' }
-        ],
-        btnFilter: 'dining',
-        btnText: 'ดูเมนูอาหาร & คาเฟ่'
-      },
-      pier: {
-        title: 'ท่าเรือ & กิจกรรมทางน้ำ (Activity Pier)',
-        sub: 'Complimentary Nature Activities',
-        badge: '🛶 พายเรือคายัค & จักรยานฟรี',
-        walk: 'เปิด 07:00 - 18:00 น.',
-        img: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80',
-        desc: 'ท่าเรือส่วนตัวริมคุ้งน้ำอยุธยา ให้บริการเรือคายัคและเรือเป็ดถีบฟรีสำหรับผู้เข้าพักทุกท่าน พร้อมเสื้อชูชีพได้มาตรฐาน มีจักรยานสำหรับปั่นรับลมรอบรีสอร์ท และมุมให้อาหารปลาธรรมชาติ',
-        features: [
-          { icon: 'fa-solid fa-water', text: 'เรือคายัค & เรือเป็ดฟรี', color: 'text-cyan-600' },
-          { icon: 'fa-solid fa-vest', text: 'ชูชีพเด็ก & ผู้ใหญ่ครบ', color: 'text-emerald-600' },
-          { icon: 'fa-solid fa-bicycle', text: 'ยืมจักรยานปั่นฟรี', color: 'text-amber-600' },
-          { icon: 'fa-solid fa-fish', text: 'จุดให้อาหารปลาธรรมชาติ', color: 'text-blue-600' }
-        ],
-        btnFilter: 'highlights',
-        btnText: 'ดูกิจกรรมฟรีทั้งหมด'
-      }
-    };
-
-    function switchMapZone(zoneId, btnEl) {
-      const data = RESORT_ZONES[zoneId];
-      if (!data) return;
-
-      const tabs = document.querySelectorAll('.map-zone-tab');
-      tabs.forEach(t => {
-        t.classList.remove('active', 'bg-zen-dark', 'text-white', 'border-zen-dark');
-        t.classList.add('bg-white', 'text-zen-dark', 'border-zen-cardborder');
-      });
-      const activeTab = btnEl || document.querySelector(`.map-zone-tab[onclick*="'${zoneId}'"]`);
-      if (activeTab) {
-        activeTab.classList.add('active', 'bg-zen-dark', 'text-white', 'border-zen-dark');
-        activeTab.classList.remove('bg-white', 'text-zen-dark', 'border-zen-cardborder');
-      }
-
-      const imgEl = document.getElementById('mapZoneImg');
-      const badgeEl = document.getElementById('mapZoneBadge');
-      const titleEl = document.getElementById('mapZoneTitle');
-      const subEl = document.getElementById('mapZoneSub');
-      const descEl = document.getElementById('mapZoneDesc');
-      const featuresEl = document.getElementById('mapZoneFeatures');
-      const btnElLink = document.getElementById('mapZoneBtn');
-
-      if (imgEl) imgEl.src = data.img;
-      if (badgeEl) badgeEl.textContent = data.badge;
-      if (titleEl) titleEl.textContent = data.title;
-      if (subEl) subEl.textContent = data.sub;
-      if (descEl) descEl.textContent = data.desc;
-
-      if (featuresEl) {
-        featuresEl.innerHTML = data.features.map(f => `
-          <div class="flex items-center gap-2 p-2 rounded-xl bg-stone-50 border border-stone-200/60">
-            <i class="${f.icon} ${f.color} text-xs"></i> <span>${f.text}</span>
-          </div>
-        `).join('');
-      }
-
-      if (btnElLink) {
-        if (data.btnFilter === 'dining') {
-          btnElLink.href = '#dining';
-          btnElLink.onclick = null;
-          btnElLink.innerHTML = `<span>${data.btnText}</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>`;
-        } else if (data.btnFilter === 'highlights') {
-          btnElLink.href = '#highlights';
-          btnElLink.onclick = null;
-          btnElLink.innerHTML = `<span>${data.btnText}</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>`;
-        } else {
-          btnElLink.href = '#rooms';
-          btnElLink.onclick = () => {
-            const pill = document.querySelector(`.filter-pill[onclick*="${data.btnFilter}"]`);
-            if (pill) filterRooms(data.btnFilter, pill);
-          };
-          btnElLink.innerHTML = `<span>${data.btnText}</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>`;
-        }
-      }
-
-      if (!btnEl) {
-        const spotLight = document.getElementById('mapZoneContent');
-        if (spotLight) {
-          spotLight.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }
       }
     }
 
