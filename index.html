@@ -1887,7 +1887,7 @@
           อัปเดตบรรยากาศ & กิจกรรมล่าสุดจากเพจ Facebook
         </h2>
         <p class="text-xs sm:text-sm text-zen-muted font-light leading-relaxed">
-          เกาะติดภาพถ่ายสดใหม่ บรรยากาศคุ้งน้ำอยุธยาวันนี้ เมนูอาหารครัวบ้านตาผาย และกิจกรรมสนุกๆ ส่งตรงจากเพจทางการ <strong class="text-zen-dark font-medium">@Baantaphai</strong>
+          เกาะติดภาพถ่ายสดใหม่ ภาพบรรยากาศบ้านพัก โปรโมชั่นพิเศษ และกิจกรรมสนุกๆ ส่งตรงจากเพจทางการ <strong class="text-zen-dark font-medium">@Baantaphai</strong>
         </p>
       </div>
 
@@ -1918,13 +1918,13 @@
             </div>
 
             <!-- Facebook Official Page Plugin iframe container -->
-            <div class="w-full rounded-2xl overflow-hidden bg-stone-50 border border-stone-100 min-h-[580px] flex items-center justify-center relative">
+            <div class="w-full rounded-2xl overflow-y-auto overflow-x-hidden bg-stone-50 border border-stone-200/80 h-[480px] sm:h-[500px] flex flex-col items-center relative scroll-smooth shadow-inner" style="scrollbar-width: thin; scrollbar-color: #cbd5e1 transparent; -webkit-overflow-scrolling: touch;">
               <iframe 
-                src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FBaantaphai&tabs=timeline&width=500&height=650&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true" 
+                src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FBaantaphai&tabs=timeline&width=500&height=800&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true" 
                 width="100%" 
-                height="650" 
-                style="border:none;overflow:hidden;width:100%;max-width:500px;min-height:580px;" 
-                scrolling="no" 
+                height="800" 
+                style="border:none;width:100%;min-height:800px;display:block;" 
+                scrolling="yes" 
                 frameborder="0" 
                 allowfullscreen="true" 
                 allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
@@ -1946,7 +1946,7 @@
         <!-- Right: Facebook Community Highlights & Social Engagement (6 cols) -->
         <div class="lg:col-span-6 space-y-4 sm:space-y-5">
           
-          <!-- Card 1: 4 Key Reasons to Follow -->
+          <!-- Card 1: 3 Key Reasons to Follow -->
           <div class="bg-white p-5 sm:p-7 rounded-3xl border border-zen-cardborder shadow-minimal space-y-4">
             <div class="flex items-center gap-2.5">
               <span class="w-8 h-8 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center text-sm shrink-0">
@@ -1958,35 +1958,27 @@
             </div>
 
             <div class="space-y-3 text-xs sm:text-sm text-stone-700 font-light leading-relaxed">
-              <div class="flex items-start gap-3 p-3 rounded-2xl bg-stone-50/70 border border-stone-200/60">
-                <span class="text-base mt-0.5 shrink-0">🌅</span>
+              <div class="flex items-start gap-3 p-3.5 rounded-2xl bg-stone-50/70 border border-stone-200/60 transition-all hover:bg-white hover:shadow-xs">
+                <span class="text-lg mt-0.5 shrink-0">🏡</span>
                 <div>
-                  <h4 class="font-bold text-zen-dark text-xs sm:text-sm">ภาพบรรยากาศและระดับน้ำจริงรายวัน</h4>
-                  <p class="text-[11px] sm:text-xs text-stone-500 font-light mt-0.5">ชมแสงอาทิตย์ตกดิน ทะเลหมอกยามเช้า และความสงบเงียบของธรรมชาติก่อนออกเดินทาง</p>
+                  <h4 class="font-bold text-zen-dark text-xs sm:text-sm">ภาพบรรยากาศบ้านพัก ห้องพัก</h4>
+                  <p class="text-[11px] sm:text-xs text-stone-500 font-light mt-0.5">ชมภาพห้องพักจริง บรรยากาศคุ้งน้ำ และมุมพักผ่อนสไตล์ญี่ปุ่นก่อนเดินทางมาเช็คอิน</p>
                 </div>
               </div>
 
-              <div class="flex items-start gap-3 p-3 rounded-2xl bg-stone-50/70 border border-stone-200/60">
-                <span class="text-base mt-0.5 shrink-0">🍲</span>
+              <div class="flex items-start gap-3 p-3.5 rounded-2xl bg-stone-50/70 border border-stone-200/60 transition-all hover:bg-white hover:shadow-xs">
+                <span class="text-lg mt-0.5 shrink-0">🎟️</span>
                 <div>
-                  <h4 class="font-bold text-zen-dark text-xs sm:text-sm">เมนูอาหารแนะนำ & กับข้าวไทยรสจัดจ้าน</h4>
-                  <p class="text-[11px] sm:text-xs text-stone-500 font-light mt-0.5">อัปเดตเมนูครัวบ้านตาผาย อาหารป่าพื้นบ้าน กาแฟสดอาราบิก้า และของหวานริมแม่น้ำ</p>
+                  <h4 class="font-bold text-zen-dark text-xs sm:text-sm">โปรโมชั่นพิเศษ</h4>
+                  <p class="text-[11px] sm:text-xs text-stone-500 font-light mt-0.5">รับแจ้งสิทธิพิเศษเฉพาะผู้ติดตามเพจ กิจกรรมแจกส่วนลด และดีลห้องพักสุดคุ้ม</p>
                 </div>
               </div>
 
-              <div class="flex items-start gap-3 p-3 rounded-2xl bg-stone-50/70 border border-stone-200/60">
-                <span class="text-base mt-0.5 shrink-0">🎟️</span>
-                <div>
-                  <h4 class="font-bold text-zen-dark text-xs sm:text-sm">โปรโมชั่นพิเศษ & ห้องพักว่างนาทีทอง</h4>
-                  <p class="text-[11px] sm:text-xs text-stone-500 font-light mt-0.5">รับแจ้งสิทธิพิเศษเฉพาะผู้ติดตามเพจ กิจกรรมแจกส่วนลด และดีลวันธรรมดาสุดคุ้ม</p>
-                </div>
-              </div>
-
-              <div class="flex items-start gap-3 p-3 rounded-2xl bg-stone-50/70 border border-stone-200/60">
-                <span class="text-base mt-0.5 shrink-0">💬</span>
+              <div class="flex items-start gap-3 p-3.5 rounded-2xl bg-stone-50/70 border border-stone-200/60 transition-all hover:bg-white hover:shadow-xs">
+                <span class="text-lg mt-0.5 shrink-0">💬</span>
                 <div>
                   <h4 class="font-bold text-zen-dark text-xs sm:text-sm">แชทคุยกับแอดมินใจดี ตอบไว</h4>
-                  <p class="text-[11px] sm:text-xs text-stone-500 font-light mt-0.5">ทักสอบถามเส้นทาง เช็คห้องว่าง หรือสั่งจองอาหารล่วงหน้าได้อย่างสะดวกสบาย</p>
+                  <p class="text-[11px] sm:text-xs text-stone-500 font-light mt-0.5">ทักสอบถามเส้นทาง เช็คห้องว่าง หรือจองห้องพักได้อย่างสะดวกรวดเร็ว</p>
                 </div>
               </div>
             </div>
