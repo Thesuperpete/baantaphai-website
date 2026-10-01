@@ -66,13 +66,33 @@ export default async (req, context) => {
 
     // 3. Handle GET (Load site data for all visitors)
     if (req.method === "GET") {
+      let since = null;
+      try {
+        const url = new URL(req.url);
+        since = url.searchParams.get("since");
+      } catch (urlErr) {}
+
       const data = await store.get("site_data", {
         type: "json",
         consistency: "strong",
       });
+
+      // If client provided a 'since' timestamp and server data matches, return notModified
+      if (since && data && data.updatedAt && String(data.updatedAt) === String(since)) {
+        return new Response(
+          JSON.stringify({
+            success: true,
+            notModified: true,
+            updatedAt: data.updatedAt,
+          }),
+          { status: 200, headers: corsHeaders }
+        );
+      }
+
       return new Response(
         JSON.stringify({
           success: true,
+          notModified: false,
           data: data || null,
         }),
         { status: 200, headers: corsHeaders }
