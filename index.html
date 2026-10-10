@@ -1171,6 +1171,51 @@
       .top-promo > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     }
 
+
+    /* ---------- Remaining modals & drawer: same premium finish ---------- */
+    body .bg-amber-100, body .bg-amber-100\/70, body .bg-amber-50\/80, body .bg-yellow-50, body .bg-yellow-100 { background-color: #E6EFFC !important; }
+    body .border-amber-100, body .border-amber-300\/80, body .border-amber-200\/90, body .border-yellow-200, body .border-yellow-300 { border-color: #CFE0F8 !important; }
+    body .text-amber-600, body .text-amber-950\/80, body .text-yellow-700, body .text-yellow-800 { color: #2563EB !important; }
+    body .text-amber-200\/80 { color: #BFDBFE !important; }
+
+    #fortuneModal > div, #activityModal > div, #photoSpotModal > div, #menuModal > div {
+      border: 1px solid rgba(255, 255, 255, .7) !important; border-radius: 28px; box-shadow: 0 50px 100px -34px rgba(11, 37, 69, .7);
+    }
+    @media (max-width: 639px) { #fortuneModal > div, #activityModal > div, #photoSpotModal > div, #menuModal > div { border-radius: 26px 26px 0 0; } }
+    #fortuneModal, #activityModal, #menuModal { background-color: rgba(6, 18, 38, .62) !important; }
+    #photoSpotModal { background-color: rgba(4, 12, 28, .88) !important; }
+    #fortuneModal button[onclick="closeFortuneModal()"], #activityModal button[onclick^="closeActivityModal"], #photoSpotModal button[onclick^="closePhotoSpotModal"], #menuModal button[onclick^="closeMenuModal"] {
+      width: 38px; height: 38px; background: rgba(255, 255, 255, .95) !important; color: #0B2545 !important; box-shadow: 0 8px 20px -8px rgba(11, 37, 69, .55);
+      transition: transform .2s ease;
+    }
+    #fortuneModal button[onclick="closeFortuneModal()"]:hover, #activityModal button[onclick^="closeActivityModal"]:hover, #photoSpotModal button[onclick^="closePhotoSpotModal"]:hover, #menuModal button[onclick^="closeMenuModal"]:hover { transform: rotate(90deg); }
+
+    /* omikuji */
+    #fortuneModal #omikujiHeaderTitle { font-weight: 600; color: #0B2545; }
+    #fortuneModal #omikujiToriiIcon { background: #EAF1FB !important; color: #1D4ED8 !important; }
+    #cylinderGraphic {
+      background: linear-gradient(180deg, #3B82F6 0%, #1D4ED8 55%, #0B2545 100%) !important; border-color: #93C5FD !important; border-radius: 18px 18px 22px 22px !important;
+      box-shadow: 0 30px 50px -24px rgba(37, 99, 235, .9) !important;
+    }
+    #fortuneModal #omikujiBox { margin: 1.6rem 0 !important; }
+    #fortuneModal #shakeBtn { border-radius: 9999px !important; box-shadow: 0 20px 36px -18px rgba(37, 99, 235, .9) !important; }
+    #fortuneModal #tabOmikujiBtn, #fortuneModal #tabOddsBtn { border-radius: 9999px !important; }
+    #fortuneModal #claimLineBtn { background: #06C755 !important; border-radius: 9999px !important; }
+    #fortuneModal #claimMessengerBtn { background: #2563EB !important; border-radius: 9999px !important; }
+
+    /* activity + photo-spot detail */
+    #activityModal span.bg-amber-500, #psModalTime { background: rgba(255, 255, 255, .22) !important; color: #fff !important; border: 1px solid rgba(255, 255, 255, .42); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+    #psModalZone, #activityModal .bg-zen-dark\/90 { background: rgba(255, 255, 255, .22) !important; border: 1px solid rgba(255, 255, 255, .42); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+    #photoSpotModal .bg-zen-dark, #activityModal .bg-zen-dark, #menuModal .bg-zen-dark { background: linear-gradient(135deg, #3B82F6, #1D4ED8) !important; border-radius: 9999px !important; box-shadow: 0 16px 30px -18px rgba(37, 99, 235, .9); }
+    #photoSpotModal .bg-zen-dark:hover, #activityModal .bg-zen-dark:hover { filter: brightness(1.06); }
+    #photoSpotModal a, #photoSpotModal button.rounded-xl, #activityModal a.rounded-xl, #activityModal button.rounded-xl { border-radius: 9999px; }
+    #activityModal .p-3.5.rounded-2xl, #activityModal .p-3.rounded-xl, #photoSpotModal .p-3.5.rounded-2xl, #photoSpotModal .p-3.rounded-xl { border-radius: 16px !important; }
+
+    /* mobile drawer */
+    #mobileMenuDrawer > div { border-radius: 28px 0 0 28px; box-shadow: -30px 0 80px -30px rgba(11, 37, 69, .6); }
+    #mobileMenuDrawer nav a { border-radius: 14px; transition: background .2s ease, transform .2s ease; }
+    #mobileMenuDrawer nav a:hover { background: #EAF1FB; transform: translateX(3px); }
+
     /* ---------- Story ---------- */
     #story .story-tagline { font-style: italic; font-weight: 500; color: var(--bt-brown); }
     body.night-mode #story .story-tagline { color: #E6EEF9; }
