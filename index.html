@@ -2,7 +2,7 @@
 <html lang="th" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
@@ -15,8 +15,79 @@
   <meta property="og:url" content="https://baantaphairesort.netlify.app/">
   <meta property="og:title" content="บ้านตาผายรีสอร์ท | Ta Phai Country House Resort & Restaurant">
   <meta property="og:description" content="สัมผัสธรรมชาติริมน้ำและมนต์เสน่ห์สไตล์ญี่ปุ่น บรรยากาศเงียบสงบ เป็นส่วนตัว พร้อมกิจกรรมฟรีครบครัน ติดต่อเพจ Facebook @Baantaphai">
-  <meta property="og:image" content="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1200&h=630&q=80">
+  <meta property="og:image" content="https://lh3.googleusercontent.com/d/1hkSO5TYVRJPvDsuqNCfLrOeiMNcYTD9V=w1200-h630-c">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="บรรยากาศบ้านตาผายรีสอร์ท อำเภอท่าเรือ พระนครศรีอยุธยา">
+  <meta property="og:locale" content="th_TH">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="บ้านตาผายรีสอร์ท | Ta Phai Country House Resort &amp; Restaurant">
+  <meta name="twitter:image" content="https://lh3.googleusercontent.com/d/1hkSO5TYVRJPvDsuqNCfLrOeiMNcYTD9V=w1200-h630-c">
+  <meta name="theme-color" content="#0B2545">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": [
+    "Resort",
+    "LodgingBusiness"
+  ],
+  "name": "บ้านตาผายรีสอร์ท",
+  "alternateName": "Ta Phai Country House Resort & Restaurant",
+  "url": "https://baantaphairesort.netlify.app/",
+  "description": "ที่พักแนวชนบทริมน้ำ อำเภอท่าเรือ พระนครศรีอยุธยา มีทั้งบ้านพักและห้องพักหลากหลายรูปแบบ โซนบ้านสไตล์ญี่ปุ่น คาเฟ่และร้านอาหาร พร้อมกิจกรรมฟรี คายัคและจักรยาน",
+  "image": [
+    "https://lh3.googleusercontent.com/d/1hkSO5TYVRJPvDsuqNCfLrOeiMNcYTD9V=w1200-h630-c"
+  ],
+  "telephone": "+66624605863",
+  "priceRange": "฿800 - ฿7,500",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "35 หมู่ 7 ต.หนองขนาก",
+    "addressLocality": "อ.ท่าเรือ",
+    "addressRegion": "จ.พระนครศรีอยุธยา",
+    "postalCode": "13130",
+    "addressCountry": "TH"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 14.5254055,
+    "longitude": 100.7213839
+  },
+  "checkinTime": "14:00",
+  "checkoutTime": "12:00",
+  "petsAllowed": true,
+  "amenityFeature": [
+    {
+      "@type": "LocationFeatureSpecification",
+      "name": "Wi-Fi ฟรี",
+      "value": true
+    },
+    {
+      "@type": "LocationFeatureSpecification",
+      "name": "อาหารเช้า",
+      "value": true
+    },
+    {
+      "@type": "LocationFeatureSpecification",
+      "name": "คายัคและจักรยานฟรี",
+      "value": true
+    },
+    {
+      "@type": "LocationFeatureSpecification",
+      "name": "ที่จอดรถ",
+      "value": true
+    }
+  ],
+  "hasMap": "https://maps.app.goo.gl/QZnssrZgScjpk9cJ8",
+  "sameAs": [
+    "https://www.facebook.com/Baantaphai",
+    "https://line.me/R/ti/p/@baantaphairesort"
+  ]
+}
+  </script>
+
   <!-- ================= META PIXEL & FACEBOOK ADS CONVERSION TRACKING ================= -->
   <script>
     !function(f,b,e,v,n,t,s)
@@ -229,8 +300,9 @@
     #attractions,
     #faq,
     #info {
-      content-visibility: auto;
-      contain-intrinsic-size: 1px 750px;
+      /* content-visibility:auto made off-screen sections collapse to a 750px guess, so menu links landed on the
+         wrong spot. Sections now keep their real height, which keeps every anchor stable. */
+      content-visibility: visible;
     }
 
     /* Eliminate 300ms tap delay and touch lag across all devices */
@@ -1244,6 +1316,8 @@
     }
     #perksGridContainer > div:hover { transform: translateY(-3px); border-color: #BFD3F5 !important; }
     #perksGridContainer > div > div:first-of-type { width: 44px !important; height: 44px !important; border-radius: 9999px !important; font-size: 1.3rem !important; background: #EAF1FB !important; border-color: #D6E3F6 !important; }
+
+
 
     /* ---------- Story ---------- */
     #story .story-tagline { font-style: italic; font-weight: 500; color: var(--bt-brown); }
@@ -21451,6 +21525,44 @@
       if (!e.target.closest('#adminToolsPanel') && !e.target.closest('#adminToolsToggle')) toggleAdminTools(false);
     });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') toggleAdminTools(false); });
+
+    // ===== Accurate anchor navigation (menus, drawer, buttons) =====
+    // Scrolls so a section sits right under the sticky header ("home" goes to the very top), then re-measures
+    // once images/layout settle and corrects any drift.
+    (function () {
+      var timer = null;
+      function headerOffset() {
+        var h = document.getElementById('siteHeader');
+        return h ? h.getBoundingClientRect().height : 64;
+      }
+      function targetY(el, id) {
+        if (id === 'hero') return 0;                                         // "home" = very top (shows the announcement strip)
+        return Math.max(0, el.getBoundingClientRect().top + window.scrollY - headerOffset() + 1);
+      }
+      function go(el, id) {
+        var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var behavior = (reduce || document.hidden) ? 'instant' : 'smooth';   // 'auto' would defer to the CSS smooth rule
+        clearTimeout(timer);
+        window.scrollTo({ top: targetY(el, id), behavior: behavior });
+        var fix = function () {                                              // correct any drift after the layout settled
+          var y = targetY(el, id);
+          if (Math.abs(window.scrollY - y) > 6) window.scrollTo({ top: y, behavior: 'instant' });
+        };
+        setTimeout(fix, behavior === 'smooth' ? 900 : 120);
+        setTimeout(fix, behavior === 'smooth' ? 1700 : 500);
+        try { history.replaceState(null, '', '#' + id); } catch (e) {}
+      }
+      document.addEventListener('click', function (e) {
+        var a = e.target.closest && e.target.closest('a[href^="#"]');
+        if (!a || e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey) return;
+        var id = (a.getAttribute('href') || '').slice(1);
+        if (!id || !/^[\w-]+$/.test(id)) return;
+        var el = document.getElementById(id);
+        if (!el) return;
+        e.preventDefault();
+        go(el, id);
+      }, true);   // capture phase: the mobile drawer panel calls stopPropagation(), which would otherwise hide its links from us
+    })();
 
     try { initOmikujiLock(); } catch (e) { console.warn('[omikuji lock]', e); }
     try { renderExtraSections(); } catch (e) { console.warn('[extra sections]', e); }
