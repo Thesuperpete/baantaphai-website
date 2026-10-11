@@ -1216,6 +1216,35 @@
     #mobileMenuDrawer nav a { border-radius: 14px; transition: background .2s ease, transform .2s ease; }
     #mobileMenuDrawer nav a:hover { background: #EAF1FB; transform: translateX(3px); }
 
+
+    /* ---------- Section badges: one consistent look ---------- */
+    section .inline-flex.rounded-full.uppercase.tracking-widest {
+      background: #EAF1FB !important; color: #1D4ED8 !important; border: 1px solid #CFE0F8 !important; font-weight: 600 !important;
+      letter-spacing: .2em !important; padding: .4rem 1rem !important; box-shadow: 0 10px 22px -16px rgba(37, 99, 235, .8);
+    }
+    section .inline-flex.rounded-full.uppercase.tracking-widest i { color: #2563EB !important; }
+
+    /* ---------- Story: numbers strip ---------- */
+    .story-stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .85rem; margin-top: 2.6rem; }
+    @media (min-width: 768px) { .story-stats { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+    .story-stat {
+      position: relative; display: flex; flex-direction: column; align-items: center; gap: .15rem; padding: 1.15rem .75rem 1rem; text-align: center;
+      background: #fff; border: 1px solid #E2EAF5; border-radius: 20px; box-shadow: 0 22px 44px -34px rgba(37, 99, 235, .6);
+      transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+    }
+    .story-stat:hover { transform: translateY(-4px); border-color: #BFD3F5; box-shadow: 0 30px 50px -32px rgba(37, 99, 235, .7); }
+    .story-stat i { width: 34px; height: 34px; display: inline-flex; align-items: center; justify-content: center; border-radius: 9999px; background: #EAF1FB; color: #2563EB; font-size: .85rem; margin-bottom: .35rem; }
+    .story-stat b { font-size: 1.7rem; line-height: 1.1; font-weight: 600; color: #0B2545; letter-spacing: .01em; }
+    .story-stat span { font-size: 11.5px; color: #5F7089; font-weight: 300; line-height: 1.5; }
+
+    /* ---------- Rooms perks tiles ---------- */
+    #perksGridContainer > div {
+      border-radius: 20px !important; border: 1px solid #E2EAF5 !important; padding: 1.1rem 1.2rem !important; box-shadow: 0 22px 44px -34px rgba(37, 99, 235, .6) !important;
+      transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+    }
+    #perksGridContainer > div:hover { transform: translateY(-3px); border-color: #BFD3F5 !important; }
+    #perksGridContainer > div > div:first-of-type { width: 44px !important; height: 44px !important; border-radius: 9999px !important; font-size: 1.3rem !important; background: #EAF1FB !important; border-color: #D6E3F6 !important; }
+
     /* ---------- Story ---------- */
     #story .story-tagline { font-style: italic; font-weight: 500; color: var(--bt-brown); }
     body.night-mode #story .story-tagline { color: #E6EEF9; }
@@ -1815,6 +1844,7 @@
 
       <div class="mx-auto mt-10 w-full max-w-md h-px bg-zen-dark/70"></div>
       <p id="storyTagline" class="story-tagline mt-6 text-base sm:text-lg">พักผ่อนแบบเรียบง่าย ท่ามกลางธรรมชาติริมน้ำ</p>
+      <div id="storyStats" class="story-stats" aria-label="ตัวเลขสรุปของบ้านตาผาย"></div>
     </div>
   </section>
 
@@ -8693,10 +8723,10 @@
         <input 
           type="password" 
           id="adminPinInput" 
-          placeholder="••••••" 
-          maxlength="20"
+          placeholder="••••••••" 
+          maxlength="128"
           autocomplete="current-password"
-          class="w-full text-center tracking-[0.3em] font-mono text-xl py-3 px-4 rounded-2xl border-2 border-stone-200 focus:border-amber-500 focus:outline-none transition-colors"
+          class="w-full text-center tracking-[0.2em] font-mono text-lg py-3 px-4 rounded-2xl border-2 border-stone-200 focus:border-amber-500 focus:outline-none transition-colors"
           onkeydown="if(event.key === 'Enter') submitAdminPin()"
         />
         <p id="adminPinError" class="text-xs text-rose-600 font-medium hidden">❌ รหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง</p>
@@ -8705,7 +8735,7 @@
         <button onclick="closeAdminPinModal()" class="py-2.5 px-4 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 font-medium text-xs transition-colors min-h-[44px]">
           ยกเลิก
         </button>
-        <button onclick="submitAdminPin()" class="py-2.5 px-4 rounded-xl bg-amber-500 hover:bg-amber-600 text-stone-950 font-bold text-xs shadow-sm transition-colors min-h-[44px]">
+        <button id="adminPinSubmit" onclick="submitAdminPin()" class="py-2.5 px-4 rounded-xl bg-amber-500 hover:bg-amber-600 text-stone-950 font-bold text-xs shadow-sm transition-colors min-h-[44px] disabled:opacity-60">
           ยืนยันรหัส
         </button>
       </div>
@@ -10492,6 +10522,22 @@
       }
     }
 
+    // Live numbers under the story (read from the same data the rest of the page uses)
+    function renderStoryStats() {
+      const box = document.getElementById('storyStats');
+      if (!box) return;
+      const txt = id => { const el = document.getElementById(id); return el ? el.textContent.trim() : ''; };
+      const rooms = (typeof SITE_ROOMS === 'object' && SITE_ROOMS) ? Object.keys(SITE_ROOMS).length : 0;
+      const items = [
+        { ico: 'fa-bed', v: rooms ? String(rooms) : '', l: 'แบบห้องพักให้เลือก' },
+        { ico: 'fa-star', v: txt('reviewsGoogleRating'), l: txt('reviewsGoogleCount') || 'คะแนนรีวิว Google' },
+        { ico: 'fa-thumbs-up', v: txt('reviewsFacebookPercent'), l: 'แขกแนะนำบน Facebook' },
+        { ico: 'fa-person-biking', v: 'ฟรี', l: 'คายัค & จักรยานตลอดการพัก' }
+      ].filter(i => i.v);
+      box.innerHTML = items.map(i => `<div class="story-stat"><i class="fa-solid ${i.ico}"></i><b>${xEsc(i.v)}</b><span>${xEsc(i.l)}</span></div>`).join('');
+      box.classList.toggle('hidden', !items.length);
+    }
+
     // ---------- render: find us + map ----------
     function buildMapSrc(q) {
       q = (q || '').trim();
@@ -10660,6 +10706,7 @@
 
     function renderExtraSections() {
       renderExtraStory();
+      renderStoryStats();
       renderExtraFindUs();
       renderExtraFab();
       renderExtraReviews();
@@ -11423,18 +11470,34 @@
       };
 
       try {
+        const session = (typeof getAdminSession === 'function') ? getAdminSession() : null;
+        if (!session) {
+          // No valid admin session: keep the edit on this device and ask for the passphrase again.
+          updateCloudSyncStatusIndicator('error');
+          showToast('🔐 เซสชันแอดมินหมดอายุ กรุณาเข้าสู่ระบบอีกครั้งเพื่อเผยแพร่ขึ้นคลาวด์ (ข้อมูลยังเก็บไว้ในเครื่องนี้)');
+          if (typeof promptAdminLoginForced === 'function') promptAdminLoginForced();
+          return false;
+        }
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 10000);
         const res = await fetch(CLOUD_SYNC_ENDPOINT, {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + session.token
           },
           body: JSON.stringify(payload),
           signal: controller.signal
         });
         clearTimeout(timeoutId);
 
+        if (res.status === 401) {
+          clearAdminSession();
+          updateCloudSyncStatusIndicator('error');
+          showToast('🔐 เซิร์ฟเวอร์ปฏิเสธสิทธิ์ (รหัสถูกเปลี่ยนหรือเซสชันหมดอายุ) กรุณาเข้าสู่ระบบใหม่ ข้อมูลยังเก็บไว้ในเครื่องนี้');
+          if (typeof promptAdminLoginForced === 'function') promptAdminLoginForced();
+          return false;
+        }
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const result = await res.json();
 
@@ -13129,9 +13192,12 @@
       toriiTapTimer = setTimeout(() => { toriiTapCount = 0; }, 3000);
       if (toriiTapCount >= 5) {
         toriiTapCount = 0;
-        const pin = prompt('⚙️ โหมดเจ้าหน้าที่: ป้อนรหัสเพื่อรีเซ็ตสิทธิ์เซียมซีของเครื่องนี้');
-        if (pin === 'admin' || pin === '021045') {
-          adminResetOmikuji();
+        const pin = prompt('⚙️ โหมดเจ้าหน้าที่: ป้อนรหัสแอดมินเพื่อรีเซ็ตสิทธิ์เซียมซีของเครื่องนี้');
+        if (pin) {
+          verifyAdminPassphrase(pin.trim()).then(r => {
+            if (r.ok) adminResetOmikuji();
+            else showToast(adminLoginErrorText(r));
+          });
         }
       }
     }
@@ -18124,8 +18190,40 @@
       }
     }
 
-    // Secure Admin Mode Authentication (No Plaintext Password Ever Displayed)
-    const ADMIN_SECRET_KEY = '021045';
+    // Admin authentication: the passphrase is verified by the server (env var ADMIN_TOKEN on Netlify).
+    // The page only ever holds a short-lived signed session token, kept in sessionStorage (cleared when the tab closes).
+    const ADMIN_SESSION_KEY = 'baantaphai_admin_session';
+    function getAdminSession() {
+      try {
+        const s = JSON.parse(sessionStorage.getItem(ADMIN_SESSION_KEY) || 'null');
+        if (s && s.token && s.expiresAt > Date.now() + 5000) return s;
+        sessionStorage.removeItem(ADMIN_SESSION_KEY);
+      } catch (e) {}
+      return null;
+    }
+    function clearAdminSession() { try { sessionStorage.removeItem(ADMIN_SESSION_KEY); } catch (e) {} }
+    /** Asks the server to verify a passphrase. Resolves { ok, status, token, expiresAt, retryAfterSec, error }. */
+    async function verifyAdminPassphrase(passphrase) {
+      try {
+        const url = CLOUD_SYNC_ENDPOINT + (CLOUD_SYNC_ENDPOINT.includes('?') ? '&' : '?') + 'action=login';
+        const res = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ passphrase }) });
+        let data = {};
+        try { data = await res.json(); } catch (e) {}
+        if (res.ok && data.success && data.token) {
+          try { sessionStorage.setItem(ADMIN_SESSION_KEY, JSON.stringify({ token: data.token, expiresAt: data.expiresAt })); } catch (e) {}
+          return { ok: true, status: res.status, token: data.token, expiresAt: data.expiresAt };
+        }
+        return { ok: false, status: res.status, error: data.error || 'error', retryAfterSec: data.retryAfterSec || 0 };
+      } catch (e) {
+        return { ok: false, status: 0, error: 'network' };
+      }
+    }
+    function adminLoginErrorText(r) {
+      if (r.status === 429) return '🔒 กรอกผิดหลายครั้ง ระบบล็อกชั่วคราว กรุณารอ ' + Math.max(1, Math.ceil((r.retryAfterSec || 900) / 60)) + ' นาที';
+      if (r.status === 503) return '⚙️ เซิร์ฟเวอร์ยังไม่ได้ตั้งค่ารหัสแอดมิน (ADMIN_TOKEN)';
+      if (r.error === 'network' || r.status === 0) return '📡 เชื่อมต่อเซิร์ฟเวอร์ไม่ได้ ลองใหม่อีกครั้ง';
+      return '❌ รหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง';
+    }
 
     function promptAdminLogin() {
       if (isAdminMode) {
@@ -18145,6 +18243,18 @@
       }
     }
 
+    function promptAdminLoginForced() {
+      const pinModal = document.getElementById('adminPinModal');
+      const pinInput = document.getElementById('adminPinInput');
+      const pinError = document.getElementById('adminPinError');
+      if (pinInput) pinInput.value = '';
+      if (pinError) pinError.classList.add('hidden');
+      if (pinModal) {
+        pinModal.classList.remove('hidden');
+        setTimeout(() => pinInput && pinInput.focus(), 100);
+      }
+    }
+
     function closeAdminPinModal() {
       const pinModal = document.getElementById('adminPinModal');
       const pinInput = document.getElementById('adminPinInput');
@@ -18155,19 +18265,26 @@
       if (pinError) pinError.classList.add('hidden');
     }
 
-    function submitAdminPin() {
+    async function submitAdminPin() {
       const pinInput = document.getElementById('adminPinInput');
       const pinError = document.getElementById('adminPinError');
       const val = (pinInput ? pinInput.value : '').trim();
+      if (!val) { if (pinInput) pinInput.focus(); return; }
 
-      if (val === ADMIN_SECRET_KEY) {
+      if (pinError) pinError.classList.add('hidden');
+      const submitBtn = document.getElementById('adminPinSubmit');
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.dataset.label = submitBtn.textContent; submitBtn.textContent = 'กำลังตรวจสอบ...'; }
+      const r = await verifyAdminPassphrase(val);
+      if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = submitBtn.dataset.label || 'ยืนยันรหัส'; }
+
+      if (r.ok) {
         closeAdminPinModal();
         if (!isAdminMode) {
           toggleAdminMode();
         }
         showToast('🔓 เข้าสู่โหมดแก้ไขข้อมูลสำเร็จ!');
       } else {
-        if (pinError) pinError.classList.remove('hidden');
+        if (pinError) { pinError.textContent = adminLoginErrorText(r); pinError.classList.remove('hidden'); }
         if (pinInput) {
           pinInput.select();
           pinInput.focus();
@@ -18181,6 +18298,7 @@
         return;
       }
       isAdminMode = !isAdminMode;
+      if (!isAdminMode && typeof clearAdminSession === 'function') clearAdminSession();   // leaving admin mode drops the session token
       const bar = document.getElementById('adminBar');
       if (bar) {
         if (isAdminMode) {
