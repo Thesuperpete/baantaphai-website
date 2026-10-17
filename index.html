@@ -2376,31 +2376,73 @@
     </div>
   </section>
 
-  <!-- ================= COMPLIMENTARY ACTIVITIES ================= -->
-  <section id="highlights" class="py-12 sm:py-20 bg-white border-y border-zen-cardborder/70 scroll-mt-16">
+  <!-- ================= ROOM SHOWCASE & DYNAMIC FILTER ================= -->
+  <section id="rooms" class="py-12 sm:py-24 bg-zen-sand/40 border-y border-zen-cardborder/70 scroll-mt-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
-      <div class="text-center max-w-xl mx-auto mb-8 sm:mb-12 space-y-1.5 relative">
-        <!-- Admin Edit Trigger for Activities Header -->
-        <div id="actHeaderAdminTrigger" class="hidden mb-2">
-          <button onclick="openActivitiesHeaderEditModal()" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-stone-900 font-bold text-xs shadow-md transition-all active:scale-95">
-            <i class="fa-solid fa-pen-to-square"></i> แก้ไขหัวข้อกิจกรรมฟรี
+      <!-- Section Header -->
+      <div class="text-center max-w-2xl mx-auto space-y-2 mb-8 sm:mb-10 relative">
+        <div id="roomsHeaderAdminTrigger" class="hidden mb-2">
+          <button onclick="openRoomsHeaderEditModal()" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-stone-900 font-bold text-xs shadow-md transition-all active:scale-95">
+            <i class="fa-solid fa-pen-to-square"></i> แก้ไขหัวข้อห้องพัก & หมายเหตุ
           </button>
         </div>
-        <span id="actSubtitleEl" class="text-zen-torii text-[10px] sm:text-[11px] font-medium tracking-widest uppercase">Resort Experience</span>
-        <h2 id="actTitleEl" class="text-2xl sm:text-3xl font-semibold text-zen-dark">
-          กิจกรรมฟรีสำหรับผู้เข้าพักทุกท่าน
+        <span id="roomsSubtitleEl" class="inline-block text-zen-torii text-[10px] sm:text-[11px] font-medium tracking-widest uppercase">Accommodations & Rates</span>
+        <h2 id="roomsTitleEl" class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-zen-dark">
+          เลือกห้องพักที่เหมาะกับการพักผ่อนของคุณ
         </h2>
-        <p id="actDescEl" class="text-xs sm:text-sm text-zen-muted font-light">
-          เพลิดเพลินกับบรรยากาศธรรมชาติและความสนุกสนานริมน้ำได้โดยไม่มีค่าใช้จ่ายเพิ่ม
+        <p id="roomsDescEl" class="text-xs sm:text-sm text-zen-muted font-light leading-relaxed">
+          ทุกห้องพักเพียบพร้อมด้วย แอร์ ทีวี ตู้เย็น เครื่องทำน้ำอุ่น Wi-Fi ฟรี พร้อมบริการอาหารเช้าแสนอบอุ่น
         </p>
+        <div class="pt-1 flex flex-wrap items-center justify-center gap-2">
+          <span id="roomsPriceNoteEl" class="text-[10px] sm:text-[11px] text-amber-800 bg-amber-50/90 px-3 py-1 rounded-full border border-amber-200/80 inline-block font-light">
+            *หมายเหตุ: ราคาที่แสดงเป็น <strong>"ราคาเริ่มต้น"</strong> อาจมีการปรับเปลี่ยนตามวันเสาร์-อาทิตย์ หรือวันหยุดนักขัตฤกษ์
+          </span>
+          <button onclick="shareResortToLine()" class="text-[10px] sm:text-[11px] text-zen-forest bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200 inline-flex items-center gap-1 active:scale-95 transition-transform">
+            <i class="fa-brands fa-line text-emerald-600"></i> <span>แชร์ชวนเพื่อนใน LINE</span>
+          </button>
+        </div>
       </div>
 
-      <div id="activitiesGridContainer" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
-        <!-- Javascript dynamically populates activity cards here -->
+      <!-- Seasonal Promotions & Exclusive Guest Perks -->
+      <div class="mb-8 relative">
+        <div id="perksAdminTrigger" class="hidden mb-3 text-center">
+          <button onclick="openPerksEditModal()" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-stone-900 font-bold text-xs shadow-md transition-all active:scale-95">
+            <i class="fa-solid fa-pen-to-square"></i> แก้ไขสิทธิพิเศษ 3 ช่อง (Perks & Emoji)
+          </button>
+        </div>
+        <div id="perksGridContainer" class="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+          <!-- Dynamically populated by JS -->
+        </div>
       </div>
-      <div class="mt-7 text-center">
-        <a href="https://line.me/R/oaMessage/@baantaphairesort/?%E0%B8%AA%E0%B8%AD%E0%B8%9A%E0%B8%96%E0%B8%B2%E0%B8%A1%E0%B9%80%E0%B8%A3%E0%B8%B7%E0%B9%88%E0%B8%AD%E0%B8%87%E0%B8%9E%E0%B8%B2%E0%B8%AA%E0%B8%B1%E0%B8%95%E0%B8%A7%E0%B9%8C%E0%B9%80%E0%B8%A5%E0%B8%B5%E0%B9%89%E0%B8%A2%E0%B8%87%E0%B9%80%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%9E%E0%B8%B1%E0%B8%81%E0%B8%84%E0%B9%88%E0%B8%B0" target="_blank" rel="noopener noreferrer" class="pet-badge pet-badge-light"><i class="fa-solid fa-paw"></i><span>พาสัตว์เลี้ยงมาพักได้ (Pet Friendly)</span><em>ทักถามทาง LINE</em></a>
+
+      <!-- Touch-Friendly Filter Tabs with Snap Scrolling on Mobile -->
+      <div class="flex items-center justify-start sm:justify-center gap-2 overflow-x-auto no-scrollbar pb-3 mb-8 sm:mb-10 px-1 -mx-4 sm:mx-0 px-4 sm:px-0">
+        <button onclick="filterRooms('all', this)" class="filter-pill active shrink-0 px-4 sm:px-5 py-2.5 rounded-full text-xs font-normal transition-all shadow-minimal bg-zen-dark text-white border border-zen-dark active:scale-95">
+          ทั้งหมด (10 รูปแบบ)
+        </button>
+        <button onclick="filterRooms('riverside', this)" class="filter-pill shrink-0 px-4 sm:px-5 py-2.5 rounded-full text-xs font-normal transition-all shadow-minimal bg-white text-zen-dark hover:bg-zen-sand border border-zen-cardborder active:scale-95">
+          🌊 โซนริมน้ำ
+        </button>
+        <button onclick="filterRooms('japanese', this)" class="filter-pill shrink-0 px-4 sm:px-5 py-2.5 rounded-full text-xs font-normal transition-all shadow-minimal bg-white text-zen-dark hover:bg-zen-sand border border-zen-cardborder active:scale-95">
+          ⛩️ โซนบ้านญี่ปุ่น
+        </button>
+        <button onclick="filterRooms('whole', this)" class="filter-pill shrink-0 px-4 sm:px-5 py-2.5 rounded-full text-xs font-normal transition-all shadow-minimal bg-white text-zen-dark hover:bg-zen-sand border border-zen-cardborder active:scale-95">
+          🏡 บ้านพักเหมาหลัง
+        </button>
+        <button onclick="openComparisonModal()" class="filter-pill shrink-0 px-4 sm:px-5 py-2.5 rounded-full text-xs font-medium transition-all shadow-minimal bg-blue-50 text-blue-900 hover:bg-blue-100 border border-blue-300 flex items-center gap-1.5 active:scale-95">
+          <i class="fa-solid fa-table-columns text-blue-700 text-xs"></i>
+          <span>📊 เปรียบเทียบห้องพัก (10 แบบ)</span>
+        </button>
+        <a href="#dining" class="filter-pill shrink-0 px-4 sm:px-5 py-2.5 rounded-full text-xs font-medium transition-all shadow-minimal bg-amber-50/90 text-amber-900 hover:bg-amber-100 border border-amber-300 flex items-center gap-1.5 active:scale-95">
+          <i class="fa-solid fa-mug-saucer text-amber-700 text-xs"></i>
+          <span>☕ คาเฟ่ & อาหารริมน้ำ</span>
+        </a>
+      </div>
+
+      <!-- DYNAMIC ROOMS GRID (Rendered by JS) -->
+      <div id="roomContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-8">
+        <!-- Javascript dynamically populates room cards here -->
       </div>
 
     </div>
@@ -2488,73 +2530,31 @@
     </div>
   </section>
 
-  <!-- ================= ROOM SHOWCASE & DYNAMIC FILTER ================= -->
-  <section id="rooms" class="py-12 sm:py-24 bg-zen-sand/40 border-y border-zen-cardborder/70 scroll-mt-16">
+  <!-- ================= COMPLIMENTARY ACTIVITIES ================= -->
+  <section id="highlights" class="py-12 sm:py-20 bg-white border-y border-zen-cardborder/70 scroll-mt-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
-      <!-- Section Header -->
-      <div class="text-center max-w-2xl mx-auto space-y-2 mb-8 sm:mb-10 relative">
-        <div id="roomsHeaderAdminTrigger" class="hidden mb-2">
-          <button onclick="openRoomsHeaderEditModal()" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-stone-900 font-bold text-xs shadow-md transition-all active:scale-95">
-            <i class="fa-solid fa-pen-to-square"></i> แก้ไขหัวข้อห้องพัก & หมายเหตุ
+      <div class="text-center max-w-xl mx-auto mb-8 sm:mb-12 space-y-1.5 relative">
+        <!-- Admin Edit Trigger for Activities Header -->
+        <div id="actHeaderAdminTrigger" class="hidden mb-2">
+          <button onclick="openActivitiesHeaderEditModal()" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-stone-900 font-bold text-xs shadow-md transition-all active:scale-95">
+            <i class="fa-solid fa-pen-to-square"></i> แก้ไขหัวข้อกิจกรรมฟรี
           </button>
         </div>
-        <span id="roomsSubtitleEl" class="inline-block text-zen-torii text-[10px] sm:text-[11px] font-medium tracking-widest uppercase">Accommodations & Rates</span>
-        <h2 id="roomsTitleEl" class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-zen-dark">
-          เลือกห้องพักที่เหมาะกับการพักผ่อนของคุณ
+        <span id="actSubtitleEl" class="text-zen-torii text-[10px] sm:text-[11px] font-medium tracking-widest uppercase">Resort Experience</span>
+        <h2 id="actTitleEl" class="text-2xl sm:text-3xl font-semibold text-zen-dark">
+          กิจกรรมฟรีสำหรับผู้เข้าพักทุกท่าน
         </h2>
-        <p id="roomsDescEl" class="text-xs sm:text-sm text-zen-muted font-light leading-relaxed">
-          ทุกห้องพักเพียบพร้อมด้วย แอร์ ทีวี ตู้เย็น เครื่องทำน้ำอุ่น Wi-Fi ฟรี พร้อมบริการอาหารเช้าแสนอบอุ่น
+        <p id="actDescEl" class="text-xs sm:text-sm text-zen-muted font-light">
+          เพลิดเพลินกับบรรยากาศธรรมชาติและความสนุกสนานริมน้ำได้โดยไม่มีค่าใช้จ่ายเพิ่ม
         </p>
-        <div class="pt-1 flex flex-wrap items-center justify-center gap-2">
-          <span id="roomsPriceNoteEl" class="text-[10px] sm:text-[11px] text-amber-800 bg-amber-50/90 px-3 py-1 rounded-full border border-amber-200/80 inline-block font-light">
-            *หมายเหตุ: ราคาที่แสดงเป็น <strong>"ราคาเริ่มต้น"</strong> อาจมีการปรับเปลี่ยนตามวันเสาร์-อาทิตย์ หรือวันหยุดนักขัตฤกษ์
-          </span>
-          <button onclick="shareResortToLine()" class="text-[10px] sm:text-[11px] text-zen-forest bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200 inline-flex items-center gap-1 active:scale-95 transition-transform">
-            <i class="fa-brands fa-line text-emerald-600"></i> <span>แชร์ชวนเพื่อนใน LINE</span>
-          </button>
-        </div>
       </div>
 
-      <!-- Seasonal Promotions & Exclusive Guest Perks -->
-      <div class="mb-8 relative">
-        <div id="perksAdminTrigger" class="hidden mb-3 text-center">
-          <button onclick="openPerksEditModal()" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-stone-900 font-bold text-xs shadow-md transition-all active:scale-95">
-            <i class="fa-solid fa-pen-to-square"></i> แก้ไขสิทธิพิเศษ 3 ช่อง (Perks & Emoji)
-          </button>
-        </div>
-        <div id="perksGridContainer" class="grid grid-cols-1 md:grid-cols-3 gap-3.5">
-          <!-- Dynamically populated by JS -->
-        </div>
+      <div id="activitiesGridContainer" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
+        <!-- Javascript dynamically populates activity cards here -->
       </div>
-
-      <!-- Touch-Friendly Filter Tabs with Snap Scrolling on Mobile -->
-      <div class="flex items-center justify-start sm:justify-center gap-2 overflow-x-auto no-scrollbar pb-3 mb-8 sm:mb-10 px-1 -mx-4 sm:mx-0 px-4 sm:px-0">
-        <button onclick="filterRooms('all', this)" class="filter-pill active shrink-0 px-4 sm:px-5 py-2.5 rounded-full text-xs font-normal transition-all shadow-minimal bg-zen-dark text-white border border-zen-dark active:scale-95">
-          ทั้งหมด (10 รูปแบบ)
-        </button>
-        <button onclick="filterRooms('riverside', this)" class="filter-pill shrink-0 px-4 sm:px-5 py-2.5 rounded-full text-xs font-normal transition-all shadow-minimal bg-white text-zen-dark hover:bg-zen-sand border border-zen-cardborder active:scale-95">
-          🌊 โซนริมน้ำ
-        </button>
-        <button onclick="filterRooms('japanese', this)" class="filter-pill shrink-0 px-4 sm:px-5 py-2.5 rounded-full text-xs font-normal transition-all shadow-minimal bg-white text-zen-dark hover:bg-zen-sand border border-zen-cardborder active:scale-95">
-          ⛩️ โซนบ้านญี่ปุ่น
-        </button>
-        <button onclick="filterRooms('whole', this)" class="filter-pill shrink-0 px-4 sm:px-5 py-2.5 rounded-full text-xs font-normal transition-all shadow-minimal bg-white text-zen-dark hover:bg-zen-sand border border-zen-cardborder active:scale-95">
-          🏡 บ้านพักเหมาหลัง
-        </button>
-        <button onclick="openComparisonModal()" class="filter-pill shrink-0 px-4 sm:px-5 py-2.5 rounded-full text-xs font-medium transition-all shadow-minimal bg-blue-50 text-blue-900 hover:bg-blue-100 border border-blue-300 flex items-center gap-1.5 active:scale-95">
-          <i class="fa-solid fa-table-columns text-blue-700 text-xs"></i>
-          <span>📊 เปรียบเทียบห้องพัก (10 แบบ)</span>
-        </button>
-        <a href="#dining" class="filter-pill shrink-0 px-4 sm:px-5 py-2.5 rounded-full text-xs font-medium transition-all shadow-minimal bg-amber-50/90 text-amber-900 hover:bg-amber-100 border border-amber-300 flex items-center gap-1.5 active:scale-95">
-          <i class="fa-solid fa-mug-saucer text-amber-700 text-xs"></i>
-          <span>☕ คาเฟ่ & อาหารริมน้ำ</span>
-        </a>
-      </div>
-
-      <!-- DYNAMIC ROOMS GRID (Rendered by JS) -->
-      <div id="roomContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-8">
-        <!-- Javascript dynamically populates room cards here -->
+      <div class="mt-7 text-center">
+        <a href="https://line.me/R/oaMessage/@baantaphairesort/?%E0%B8%AA%E0%B8%AD%E0%B8%9A%E0%B8%96%E0%B8%B2%E0%B8%A1%E0%B9%80%E0%B8%A3%E0%B8%B7%E0%B9%88%E0%B8%AD%E0%B8%87%E0%B8%9E%E0%B8%B2%E0%B8%AA%E0%B8%B1%E0%B8%95%E0%B8%A7%E0%B9%8C%E0%B9%80%E0%B8%A5%E0%B8%B5%E0%B9%89%E0%B8%A2%E0%B8%87%E0%B9%80%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%9E%E0%B8%B1%E0%B8%81%E0%B8%84%E0%B9%88%E0%B8%B0" target="_blank" rel="noopener noreferrer" class="pet-badge pet-badge-light"><i class="fa-solid fa-paw"></i><span>พาสัตว์เลี้ยงมาพักได้ (Pet Friendly)</span><em>ทักถามทาง LINE</em></a>
       </div>
 
     </div>
