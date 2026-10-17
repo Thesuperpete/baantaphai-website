@@ -1,22 +1,26 @@
 // Baan Ta Phai cloud sync.
 //   GET                      public   – everyone reads the site data
-//   POST ?action=login       public   – exchange the admin passphrase for a 12h session token
+//   PATCH ?action=login      public   – exchange the admin passphrase for a 12h session token
+//                                       (PATCH on purpose: an older deployed version of this function rejects PATCH with 405
+//                                        instead of treating the request as a data save)
 //   POST / PUT               ADMIN    – save site data (needs "Authorization: Bearer <session token>")
 //
 // Setup (Netlify -> Site configuration -> Environment variables):
 //   ADMIN_TOKEN     required. The admin passphrase. Never put it in the repo or the HTML.
 //   SESSION_SECRET  optional. Extra secret used to sign session tokens.
-// If ADMIN_TOKEN is missing the function refuses every write (fail closed).
+// If ADMIN_TOKEN is missing, or shorter than 12 characters, the function refuses every login and write (fail closed).
+// (The failed-login lockout is per client and can be outrun with parallel requests, so the passphrase itself must be long.)
 import { getStore } from "@netlify/blobs";
 import {
   bearerToken, checkLock, clearFailures, recordFailure, safeEqual, signSession, verifySession,
 } from "../lib/auth.mjs";
 
 const MAX_BODY_BYTES = 6 * 1024 * 1024;
+const MIN_TOKEN_LENGTH = 12;
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "GET, POST, PUT, OPTIONS",
+  "Access-Control-Allow-Methods": "GET, POST, PUT, PATCH, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Requested-With",
   "Access-Control-Max-Age": "86400",
   "Content-Type": "application/json; charset=utf-8",
@@ -32,6 +36,7 @@ export async function handle(req, context, deps) {
   const { store, authStore, env = {}, now = Date.now() } = deps;
   const adminToken = env.ADMIN_TOKEN || "";
   const sessionSecret = env.SESSION_SECRET || "";
+  const notReady = !adminToken ? "not_configured" : adminToken.length < MIN_TOKEN_LENGTH ? "weak_token" : "";
 
   if (req.method === "OPTIONS") return new Response(null, { status: 204, headers: corsHeaders });
 
@@ -41,8 +46,8 @@ export async function handle(req, context, deps) {
     try { action = new URL(req.url).searchParams.get("action") || ""; } catch (e) {}
 
     // ---- Login: passphrase -> session token ----
-    if (isWrite && action === "login") {
-      if (!adminToken) return json(503, { success: false, error: "not_configured" });
+    if (req.method === "PATCH" && action === "login") {
+      if (notReady) return json(503, { success: false, error: notReady });
       const ip = (context && context.ip) || req.headers.get("x-nf-client-connection-ip") || "unknown";
 
       const lock = await checkLock(authStore, ip, now);
@@ -66,7 +71,7 @@ export async function handle(req, context, deps) {
 
     // ---- Save (admin only) ----
     if (isWrite) {
-      if (!adminToken) return json(503, { success: false, error: "not_configured" });
+      if (notReady) return json(503, { success: false, error: notReady });
       if (!verifySession(adminToken, sessionSecret, bearerToken(req), now)) {
         return json(401, { success: false, error: "unauthorized" });
       }

@@ -20,12 +20,28 @@ const req = (method, { q = "", body, token } = {}) =>
     body: body === undefined ? undefined : typeof body === "string" ? body : JSON.stringify(body),
   });
 const mk = (env = ENV, now = Date.now()) => ({ store: new MemStore(), authStore: new MemStore(), env, now });
-const login = async (d, passphrase = PASS) => handle(req("POST", { q: "?action=login", body: { passphrase } }), ctx, d);
+const login = async (d, passphrase = PASS) => handle(req("PATCH", { q: "?action=login", body: { passphrase } }), ctx, d);
 
 test("writes are refused when ADMIN_TOKEN is not configured (fail closed)", async () => {
   const d = mk({});
   assert.equal((await handle(req("POST", { body: { a: 1 } }), ctx, d)).status, 503);
   assert.equal((await login(d)).status, 503);
+});
+
+test("a too-short ADMIN_TOKEN is refused like a missing one (login and save)", async () => {
+  const d = mk({ ADMIN_TOKEN: "021045" });
+  const r = await login(d, "021045");
+  assert.equal(r.status, 503);
+  assert.equal((await r.json()).error, "weak_token");
+  assert.equal((await handle(req("POST", { body: { a: 1 }, token: "x" }), ctx, d)).status, 503);
+  assert.equal(await d.store.get("site_data"), null);
+});
+
+test("a POST to the login URL is NOT a login and never writes data", async () => {
+  const d = mk();
+  const r = await handle(req("POST", { q: "?action=login", body: { passphrase: PASS } }), ctx, d);
+  assert.equal(r.status, 401);
+  assert.equal(await d.store.get("site_data"), null);
 });
 
 test("anonymous or forged writes are rejected and nothing is stored", async () => {
