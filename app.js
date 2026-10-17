@@ -1098,7 +1098,15 @@
       pageName: "บ้านตาผาย Baan Ta Phai",
       pageHandle: "@Baantaphai • ผู้ติดตาม 8,270+ คน • ตอบกลับใน 5 นาที",
       pageUrl: "https://www.facebook.com/Baantaphai",
-      postBadge: "โพสต์ปักหมุด",
+      postBadge: "โพสต์เด่น",
+      tabLiveLabel: "🔴 ฟีดล่าสุดจากเพจ",
+      tabPostLabel: "📢 โพสต์เด่นจากเพจ",
+      postMeta: "จากเพจ Facebook • สาธารณะ 🌐",
+      postUrl: "",
+      postCta: "ดูกติกาและรายละเอียดครบบน Facebook",
+      defaultTab: "live",
+      showLiveTab: true,
+      showPostTab: true,
       postCaption: "🎉 ขยายโปรโมชั่นพิเศษถึงสิ้นเดือนนี้! หนีความวุ่นวายมาพักผ่อนริมสายน้ำอยุธยาที่บ้านตาผายรีสอร์ท รับส่วนลดสุดคุ้ม 100 บาท เพียงร่วมกิจกรรมผ่าน TikTok หรือ FB/IG พร้อมพายคายัคฟรี และความเงียบสงบในบรรยากาศญี่ปุ่นริมแม่น้ำ ✨",
       promoBannerImg: "facebook_promo_banner.jpg",
       messengerUrl: "https://m.me/Baantaphai",
@@ -8109,7 +8117,23 @@
         if (capText.includes('<')) postCaption.innerHTML = capText;
         else postCaption.textContent = capText;
       }
-      if (postLink) postLink.href = pageUrl;
+      {
+        const F = SITE_FACEBOOK_FEED || {}, D = DEFAULT_FACEBOOK_FEED_DATA;
+        const val = k => (F[k] !== undefined && F[k] !== '') ? F[k] : D[k];
+        const setText = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+        setText('fbTabLiveLabel', val('tabLiveLabel')); setText('fbTabPostLabel', val('tabPostLabel'));
+        setText('fbPostMeta', val('postMeta')); setText('fbPostCta', val('postCta'));
+        if (postLink) postLink.href = F.postUrl || pageUrl;
+        let showLive = F.showLiveTab !== false, showPost = F.showPostTab !== false;
+        if (!showLive && !showPost) showLive = showPost = true;
+        const tl = document.getElementById('fbTabLive'), tp = document.getElementById('fbTabPost'), bar = document.getElementById('fbTabBar');
+        if (tl) tl.style.display = showLive ? '' : 'none';
+        if (tp) tp.style.display = showPost ? '' : 'none';
+        if (bar) bar.style.display = (showLive && showPost) ? '' : 'none';
+        if (!window.__fbTabInit) { window.__fbTabInit = true; switchFbTab((showLive && showPost) ? (F.defaultTab === 'post' ? 'post' : 'live') : (showPost ? 'post' : 'live')); }
+        else if (!showPost) switchFbTab('live');
+        else if (!showLive) switchFbTab('post');
+      }
       if (promoImg) {
         const imgUrl = (SITE_FACEBOOK_FEED && SITE_FACEBOOK_FEED.promoBannerImg) || DEFAULT_FACEBOOK_FEED_DATA.promoBannerImg;
         if (promoImg.src !== imgUrl && !promoImg.src.endsWith(imgUrl)) {
@@ -8217,6 +8241,13 @@
       const imgInput = document.getElementById('editFbPromoImg');
       const pageInput = document.getElementById('editFbPageUrl');
       const msgInput = document.getElementById('editFbMessengerUrl');
+      const F0 = SITE_FACEBOOK_FEED || {};
+      const setV = (id, v) => { const el = document.getElementById(id); if (el) el.value = v; };
+      setV('editFbTabLive', F0.tabLiveLabel || ''); setV('editFbTabPost', F0.tabPostLabel || ''); setV('editFbPostBadge', F0.postBadge || '');
+      setV('editFbPostMeta', F0.postMeta || ''); setV('editFbPostUrl', F0.postUrl || ''); setV('editFbPostCta', F0.postCta || '');
+      setV('editFbDefaultTab', F0.defaultTab === 'post' ? 'post' : 'live');
+      const cl = document.getElementById('editFbShowLive'), cp = document.getElementById('editFbShowPost');
+      if (cl) cl.checked = F0.showLiveTab !== false; if (cp) cp.checked = F0.showPostTab !== false;
 
       if (bInput) bInput.value = (SITE_FACEBOOK_FEED && SITE_FACEBOOK_FEED.badge) || '';
       if (biInput) biInput.value = (SITE_FACEBOOK_FEED && SITE_FACEBOOK_FEED.badgeIcon) || '';
@@ -8309,6 +8340,16 @@
       }
       SITE_FACEBOOK_FEED.promoBannerImg = promoImg;
 
+      const getV = id => (document.getElementById(id)?.value || '').trim();
+      SITE_FACEBOOK_FEED.tabLiveLabel = getV('editFbTabLive') || DEFAULT_FACEBOOK_FEED_DATA.tabLiveLabel;
+      SITE_FACEBOOK_FEED.tabPostLabel = getV('editFbTabPost') || DEFAULT_FACEBOOK_FEED_DATA.tabPostLabel;
+      SITE_FACEBOOK_FEED.postBadge = getV('editFbPostBadge') || DEFAULT_FACEBOOK_FEED_DATA.postBadge;
+      SITE_FACEBOOK_FEED.postMeta = getV('editFbPostMeta') || DEFAULT_FACEBOOK_FEED_DATA.postMeta;
+      SITE_FACEBOOK_FEED.postUrl = getV('editFbPostUrl');
+      SITE_FACEBOOK_FEED.postCta = getV('editFbPostCta') || DEFAULT_FACEBOOK_FEED_DATA.postCta;
+      SITE_FACEBOOK_FEED.defaultTab = getV('editFbDefaultTab') === 'post' ? 'post' : 'live';
+      SITE_FACEBOOK_FEED.showLiveTab = document.getElementById('editFbShowLive') ? document.getElementById('editFbShowLive').checked : true;
+      SITE_FACEBOOK_FEED.showPostTab = document.getElementById('editFbShowPost') ? document.getElementById('editFbShowPost').checked : true;
       SITE_FACEBOOK_FEED.pageUrl = (document.getElementById('editFbPageUrl')?.value || '').trim() || DEFAULT_FACEBOOK_FEED_DATA.pageUrl;
       SITE_FACEBOOK_FEED.messengerUrl = (document.getElementById('editFbMessengerUrl')?.value || '').trim() || DEFAULT_FACEBOOK_FEED_DATA.messengerUrl;
 

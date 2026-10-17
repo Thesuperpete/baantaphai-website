@@ -1705,7 +1705,7 @@
     .pet-badge i { color: var(--thai-gold); }
     .pet-badge em { font-style: normal; font-size: 12px; color: #F1DDA8; padding-left: .55rem; border-left: 1px solid rgba(255, 255, 255, .3); }
     .pet-badge:hover { background: rgba(6, 18, 38, .7); }
-    @media (max-width: 480px) { .pet-badge { font-size: 12.5px; padding: .5rem .9rem; } .pet-badge em { display: none; } }
+    @media (max-width: 480px) { .pet-badge { font-size: 12.5px; padding: .5rem .9rem; min-height: 44px; } .pet-badge em { display: none; } }
     .pet-badge-light { background: #fff; color: var(--navy); border-color: var(--thai-gold); -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: 0 10px 24px -16px rgba(11, 37, 69, .5); }
     .pet-badge-light em { color: var(--blue-deep); border-left-color: var(--border-mid); }
     .pet-badge-light:hover { background: var(--paper); }
@@ -1731,6 +1731,36 @@
 
     #rooms #roomsDescEl { color: #4A5C78; }
     body.night-mode #rooms #roomsDescEl { color: var(--on-dark-muted); }
+
+    /* Facebook live feed: fallback behind the iframe + an always-visible button */
+    .fb-fallback { position: absolute; left: 0; right: 0; top: 150px; z-index: 0; padding: 0 1.5rem; text-align: center; }
+    .fb-fallback p { margin: 0; font-weight: 600; color: var(--navy); }
+    .fb-fallback span { display: block; margin: .25rem 0 .8rem; font-size: 12.5px; color: var(--muted); }
+    .fb-fallback a, .fb-open-btn { display: inline-flex; align-items: center; gap: .5rem; padding: .6rem 1.15rem; border-radius: 9999px; background: var(--facebook); color: #fff; font-size: 13px; font-weight: 600; box-shadow: 0 10px 22px -14px rgba(20, 101, 216, .9); }
+    .fb-fallback a:hover, .fb-open-btn:hover { filter: brightness(1.08); }
+    body.night-mode .fb-fallback p { color: var(--on-dark); }
+
+    /* ---------- Motion: one authored welcome in the story scene, loops pause when off screen, filter changes are acknowledged ---------- */
+    /* the sun rises from behind the hills, the bears step in one after the other, the petals settle; content stays visible if the script never runs */
+    .mascot-scene.ms-ready .ms-sun, .mascot-scene.ms-ready .ms-sun-glow { transform: translateY(52px); opacity: 0; }
+    .mascot-scene.ms-ready .ms-petals { transform: translate(-8px, -22px); opacity: 0; }
+    .mascot-scene.ms-ready .mascot .mascot-img { opacity: 0; transform: translateY(20px) scale(.96); }
+    .mascot-scene.ms-ready.in .ms-sun, .mascot-scene.ms-ready.in .ms-sun-glow { transform: none; opacity: 1; transition: transform 1.5s cubic-bezier(.16, 1, .3, 1), opacity 1s ease-out; }
+    .mascot-scene.ms-ready.in .ms-sun-glow { transition-delay: .1s; }
+    .mascot-scene.ms-ready.in .ms-petals { transform: none; opacity: .9; transition: transform 2.8s cubic-bezier(.16, 1, .3, 1) .6s, opacity 1.2s ease-out .6s; }
+    .mascot-scene.ms-ready.in .mascot .mascot-img { opacity: 1; transform: none; transition: transform .7s cubic-bezier(.16, 1, .3, 1), opacity .5s ease-out; }
+    .mascot-scene.ms-ready.in .ms-b1 .mascot-img { transition-delay: .5s; }
+    .mascot-scene.ms-ready.in .ms-b2 .mascot-img { transition-delay: .72s; }
+    .mascot-scene.ms-ready:not(.in) .mascot-bob { animation-play-state: paused; }
+    .mascot-bob.is-paused, body:not(.in-hero) .sakura-fall i { animation-play-state: paused; }
+    /* a changed room list fades up so the change is noticed */
+    @keyframes cardIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+    @keyframes cardInFade { from { opacity: 0; } to { opacity: 1; } }
+    #roomContainer .room-card { animation: cardIn .38s cubic-bezier(.16, 1, .3, 1) backwards; }
+    @media (prefers-reduced-motion: reduce) {
+      .mascot-scene.ms-ready .ms-sun, .mascot-scene.ms-ready .ms-sun-glow, .mascot-scene.ms-ready .ms-petals, .mascot-scene.ms-ready .mascot .mascot-img { transform: none !important; transition: opacity .35s ease-out !important; transition-delay: 0s !important; }
+      #roomContainer .room-card { animation: cardInFade .2s ease-out backwards; }
+    }
 
     /* ---------- Story ---------- */
     #story .story-tagline { font-style: italic; font-weight: 500; color: var(--bt-brown); }
@@ -2336,8 +2366,8 @@
               <clipPath id="msRiverClip"><rect x="0" y="200" width="340" height="64"/></clipPath>
             </defs>
             <rect width="340" height="400" fill="url(#msSky)"/>
-            <circle cx="170" cy="172" r="120" fill="url(#msGlow)"/>
-            <circle cx="170" cy="176" r="48" fill="#FFF0D4"/>
+            <circle class="ms-sun-glow" cx="170" cy="172" r="120" fill="url(#msGlow)"/>
+            <circle class="ms-sun" cx="170" cy="176" r="48" fill="#FFF0D4"/>
             <path d="M0 202 Q60 188 130 200 T250 196 T340 200 V210 H0Z" fill="#C3D3EE"/>
             <g fill="#7E9BCB" opacity=".9"><path d="M-30 48V42H-22V36H-16V30H-11V24H-7V16H-4L0 0L4 16H7V24H11V30H16V36H22V42H30V48Z" transform="translate(40 166.4) scale(0.7)"/><path d="M-30 48V42H-22V36H-16V30H-11V24H-7V16H-4L0 0L4 16H7V24H11V30H16V36H22V42H30V48Z" transform="translate(88 144.8) scale(1.15)"/><path d="M-30 48V42H-22V36H-16V30H-11V24H-7V16H-4L0 0L4 16H7V24H11V30H16V36H22V42H30V48Z" transform="translate(134 171.2) scale(0.6)"/><path d="M-30 48V42H-22V36H-16V30H-11V24H-7V16H-4L0 0L4 16H7V24H11V30H16V36H22V42H30V48Z" transform="translate(206 171.2) scale(0.6)"/><path d="M-30 48V42H-22V36H-16V30H-11V24H-7V16H-4L0 0L4 16H7V24H11V30H16V36H22V42H30V48Z" transform="translate(252 144.8) scale(1.15)"/><path d="M-30 48V42H-22V36H-16V30H-11V24H-7V16H-4L0 0L4 16H7V24H11V30H16V36H22V42H30V48Z" transform="translate(300 166.4) scale(0.7)"/><rect x="0" y="198" width="340" height="6"/></g>
             <rect y="200" width="340" height="64" fill="url(#msRiver)"/>
@@ -2350,7 +2380,7 @@
             <g stroke="#7A5A3A" stroke-width="3" fill="none" stroke-linecap="round"><path d="M340 30 Q292 46 254 36 T198 58"/><path d="M288 42 Q278 62 264 68"/><path d="M0 52 Q36 66 70 56 T118 78"/></g>
             <g fill="#F9B4C8" stroke="#E889A6" stroke-width=".6"><circle cx="314" cy="36" r="9"/><circle cx="298" cy="48" r="7"/><circle cx="278" cy="40" r="8"/><circle cx="258" cy="44" r="6"/><circle cx="232" cy="50" r="7"/><circle cx="216" cy="58" r="5"/><circle cx="274" cy="66" r="6"/><circle cx="22" cy="62" r="8"/><circle cx="46" cy="70" r="6"/><circle cx="72" cy="62" r="7"/><circle cx="96" cy="74" r="5"/></g>
             <g fill="#F2C14E"><circle cx="314" cy="36" r="2"/><circle cx="278" cy="40" r="1.8"/><circle cx="232" cy="50" r="1.6"/><circle cx="22" cy="62" r="1.8"/><circle cx="72" cy="62" r="1.6"/></g>
-            <g fill="#F9B4C8" opacity=".9"><ellipse cx="60" cy="120" rx="4" ry="2.6" transform="rotate(30 60 120)"/><ellipse cx="120" cy="160" rx="3.5" ry="2.2" transform="rotate(-20 120 160)"/><ellipse cx="300" cy="150" rx="4" ry="2.6" transform="rotate(40 300 150)"/><ellipse cx="30" cy="190" rx="3" ry="2" transform="rotate(10 30 190)"/><ellipse cx="230" cy="110" rx="3.5" ry="2.2" transform="rotate(-30 230 110)"/></g>
+            <g class="ms-petals" fill="#F9B4C8" opacity=".9"><ellipse cx="60" cy="120" rx="4" ry="2.6" transform="rotate(30 60 120)"/><ellipse cx="120" cy="160" rx="3.5" ry="2.2" transform="rotate(-20 120 160)"/><ellipse cx="300" cy="150" rx="4" ry="2.6" transform="rotate(40 300 150)"/><ellipse cx="30" cy="190" rx="3" ry="2" transform="rotate(10 30 190)"/><ellipse cx="230" cy="110" rx="3.5" ry="2.2" transform="rotate(-30 230 110)"/></g>
           </svg>
           <div class="ms-bears">
             <figure class="mascot mascot-bob ms-b1"><img class="mascot-img" src="mascot-cream.webp" alt="น้องผาย มาสคอตหมีสีครีมของบ้านตาผาย" width="577" height="720" loading="lazy" decoding="async"></figure>
@@ -3297,12 +3327,12 @@
             </div>
 
             <!-- Tab Switcher (Featured Promo vs Live Page Feed) -->
-            <div class="flex p-1 bg-stone-100/90 rounded-2xl text-xs gap-1">
+            <div id="fbTabBar" class="flex p-1 bg-stone-100/90 rounded-2xl text-xs gap-1">
               <button id="fbTabLive" type="button" onclick="switchFbTab('live')" class="flex-1 py-1.5 px-3 rounded-xl font-semibold bg-white text-zen-dark shadow-xs transition-all flex items-center justify-center gap-1.5 text-[11px] sm:text-xs">
-                <span>🔴 ฟีดล่าสุดจากเพจ</span>
+                <span id="fbTabLiveLabel">🔴 ฟีดล่าสุดจากเพจ</span>
               </button>
               <button id="fbTabPost" type="button" onclick="switchFbTab('post')" class="flex-1 py-1.5 px-3 rounded-xl font-medium text-stone-500 hover:text-stone-800 transition-all flex items-center justify-center gap-1.5 text-[11px] sm:text-xs">
-                <span>📌 โปรโมชั่นปักหมุด</span>
+                <span id="fbTabPostLabel">📢 โพสต์เด่นจากเพจ</span>
               </button>
             </div>
 
@@ -3314,9 +3344,9 @@
                 <div class="flex items-center justify-between text-[10px] text-stone-400 font-light">
                   <span class="inline-flex items-center gap-1 text-blue-700 font-medium bg-blue-50/80 px-2 py-0.5 rounded-full">
                     <i class="fa-solid fa-thumbtack text-[9px]"></i>
-                    <span id="fbPostBadge">โพสต์ปักหมุด</span>
+                    <span id="fbPostBadge">โพสต์เด่น</span>
                   </span>
-                  <span>อัปเดตล่าสุด • สาธารณะ 🌐</span>
+                  <span id="fbPostMeta">จากเพจ Facebook • สาธารณะ 🌐</span>
                 </div>
                 <p id="fbPostCaption" class="text-xs sm:text-[13px] text-stone-800 font-light leading-relaxed">
                   🎉 <strong class="font-medium text-zen-dark">ขยายโปรโมชั่นพิเศษถึงสิ้นเดือนนี้!</strong> หนีความวุ่นวายมาพักผ่อนริมสายน้ำอยุธยาที่บ้านตาผายรีสอร์ท รับส่วนลดสุดคุ้ม 100 บาท เพียงร่วมกิจกรรมผ่าน TikTok หรือ FB/IG พร้อมพายคายัคฟรี และความเงียบสงบในบรรยากาศญี่ปุ่นริมแม่น้ำ ✨
@@ -3333,7 +3363,7 @@
                   loading="lazy">
                 
                 <!-- Bottom fade + "see full details" bar (graphics from Facebook are often cropped; this makes the cut look intentional) -->
-                <div class="fb-promo-fade" aria-hidden="true"><span><i class="fa-brands fa-facebook"></i> ดูกติกาและรายละเอียดครบบน Facebook <i class="fa-solid fa-arrow-right text-[10px]"></i></span></div>
+                <div class="fb-promo-fade" aria-hidden="true"><span><i class="fa-brands fa-facebook"></i> <b id="fbPostCta">ดูกติกาและรายละเอียดครบบน Facebook</b> <i class="fa-solid fa-arrow-right text-[10px]"></i></span></div>
 
                 <!-- Hover Hint Overlay -->
                 <div class="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 text-white text-xs font-medium backdrop-blur-[2px]">
@@ -3381,11 +3411,16 @@
             <!-- Panel 2: Live Facebook Page Plugin (Adaptive Container, Never Clipped) -->
             <div id="fbPanelLive" class="space-y-3">
               <div class="w-full rounded-2xl overflow-hidden bg-stone-50 border border-stone-200/90 flex flex-col items-center justify-center relative min-h-[460px]">
+                <div class="fb-fallback" aria-hidden="false">
+                  <p>ยังไม่เห็นโพสต์ล่าสุด?</p>
+                  <span>บางเบราว์เซอร์หรือโหมดส่วนตัวบล็อกฟีดของ Facebook</span>
+                  <a href="https://www.facebook.com/Baantaphai" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-facebook"></i> ดูโพสต์ล่าสุดบนเพจ Facebook</a>
+                </div>
                 <iframe 
                   src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FBaantaphai&tabs=timeline&width=500&height=500&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=true" 
                   width="100%" 
                   height="500" 
-                  style="border:none;width:100%;height:500px;display:block;" 
+                  style="border:none;width:100%;height:500px;display:block;position:relative;z-index:1;" 
                   scrolling="yes" 
                   frameborder="0" 
                   allowfullscreen="true" 
@@ -3395,11 +3430,9 @@
                 </iframe>
               </div>
 
-              <!-- Helper Caption -->
+              <!-- Always-visible way to the page itself -->
               <div class="pt-0.5 text-center">
-                <p class="text-[10px] text-stone-400 font-light">
-                  *หากเบราว์เซอร์บล็อกคุกกี้ สามารถ <a href="https://www.facebook.com/Baantaphai" target="_blank" rel="noopener noreferrer" class="text-blue-600 underline hover:text-blue-800">เปิดดูบนแอป Facebook ตรงนี้</a> ได้เลยครับ
-                </p>
+                <a href="https://www.facebook.com/Baantaphai" target="_blank" rel="noopener noreferrer" class="fb-open-btn"><i class="fa-brands fa-facebook"></i> ดูโพสต์ล่าสุดทั้งหมดบน Facebook <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i></a>
               </div>
             </div>
 
@@ -7104,6 +7137,42 @@
           <h4 class="font-bold text-blue-950 text-xs flex items-center gap-1.5">
             <span>📢</span> ไฮไลต์โพสต์โปรโมชั่นล่าสุด
           </h4>
+          <div class="grid grid-cols-2 gap-2.5">
+            <div>
+              <label class="block text-[10px] text-stone-500 mb-0.5">ชื่อแท็บฟีดสด</label>
+              <input type="text" id="editFbTabLive" class="w-full p-2 rounded-lg border border-stone-300 text-xs" placeholder="🔴 ฟีดล่าสุดจากเพจ">
+            </div>
+            <div>
+              <label class="block text-[10px] text-stone-500 mb-0.5">ชื่อแท็บโพสต์เด่น</label>
+              <input type="text" id="editFbTabPost" class="w-full p-2 rounded-lg border border-stone-300 text-xs" placeholder="📢 โพสต์เด่นจากเพจ">
+            </div>
+            <div>
+              <label class="block text-[10px] text-stone-500 mb-0.5">ป้ายเหนือแคปชั่น</label>
+              <input type="text" id="editFbPostBadge" class="w-full p-2 rounded-lg border border-stone-300 text-xs" placeholder="โพสต์เด่น">
+            </div>
+            <div>
+              <label class="block text-[10px] text-stone-500 mb-0.5">ข้อความบรรทัดข้างป้าย</label>
+              <input type="text" id="editFbPostMeta" class="w-full p-2 rounded-lg border border-stone-300 text-xs" placeholder="จากเพจ Facebook • สาธารณะ 🌐">
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-2.5">
+            <div>
+              <label class="block text-[10px] text-stone-500 mb-0.5">ลิงก์โพสต์นี้ (ว่าง = ลิงก์เพจ)</label>
+              <input type="text" id="editFbPostUrl" class="w-full p-2 rounded-lg border border-stone-300 text-xs" placeholder="https://www.facebook.com/.../posts/...">
+            </div>
+            <div>
+              <label class="block text-[10px] text-stone-500 mb-0.5">ข้อความบนปุ่มใต้รูป</label>
+              <input type="text" id="editFbPostCta" class="w-full p-2 rounded-lg border border-stone-300 text-xs" placeholder="ดูกติกาและรายละเอียดครบบน Facebook">
+            </div>
+          </div>
+          <div class="grid grid-cols-3 gap-2.5 items-end">
+            <div>
+              <label class="block text-[10px] text-stone-500 mb-0.5">แท็บที่เปิดก่อน</label>
+              <select id="editFbDefaultTab" class="w-full p-2 rounded-lg border border-stone-300 text-xs bg-white"><option value="live">ฟีดสด</option><option value="post">โพสต์เด่น</option></select>
+            </div>
+            <label class="flex items-center gap-1.5 text-xs text-stone-700"><input type="checkbox" id="editFbShowLive" checked> แสดงแท็บฟีดสด</label>
+            <label class="flex items-center gap-1.5 text-xs text-stone-700"><input type="checkbox" id="editFbShowPost" checked> แสดงแท็บโพสต์เด่น</label>
+          </div>
           <div>
             <label class="block font-semibold text-stone-700 mb-1">ข้อความแคปชั่นโพสต์ (Caption)</label>
             <textarea id="editFbPostCaption" rows="3" class="w-full p-2.5 rounded-xl border border-stone-300 focus:outline-none focus:border-blue-600 text-xs leading-relaxed" placeholder="🎉 ขยายโปรโมชั่นพิเศษถึงสิ้นเดือนนี้..."></textarea>

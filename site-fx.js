@@ -412,14 +412,26 @@
 })();
 
 
-// ===== Stock photos are not this resort: until a real photo is set, show a plain branded placeholder instead =====
+// ===== Photos: normalise addresses (Google Drive / Dropbox share links, http), retry once, never show a broken-image icon =====
+// Stock photos are not this resort: until a real photo is set, a plain branded placeholder is shown instead.
 (function () {
   var PH = 'data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%20800%20600%27%3E%3Cdefs%3E%3ClinearGradient%20id%3D%27g%27%20x1%3D%270%27%20y1%3D%270%27%20x2%3D%271%27%20y2%3D%271%27%3E%3Cstop%20offset%3D%270%27%20stop-color%3D%27%2312306B%27%2F%3E%3Cstop%20offset%3D%271%27%20stop-color%3D%27%230B2545%27%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%27800%27%20height%3D%27600%27%20fill%3D%27url%28%23g%29%27%2F%3E%3Crect%20x%3D%2724%27%20y%3D%2724%27%20width%3D%27752%27%20height%3D%27552%27%20rx%3D%2718%27%20fill%3D%27none%27%20stroke%3D%27%23C9A24B%27%20stroke-opacity%3D%27.55%27%20stroke-width%3D%272%27%2F%3E%3Cg%20transform%3D%27translate%28336%2096%29%20scale%282%29%27%3E%3Cpath%20d%3D%27M0%208Q32%2018%2064%208L61%2015Q32%2024%203%2015Z%27%20fill%3D%27%23D63A2F%27%2F%3E%3Cpath%20d%3D%27M3%2015Q32%2024%2061%2015V19Q32%2028%203%2019Z%27%20fill%3D%27%239E241C%27%2F%3E%3Crect%20x%3D%279%27%20y%3D%2726%27%20width%3D%2746%27%20height%3D%275%27%20fill%3D%27%23D63A2F%27%2F%3E%3Crect%20x%3D%2714%27%20y%3D%2718%27%20width%3D%276%27%20height%3D%2742%27%20fill%3D%27%23D63A2F%27%2F%3E%3Crect%20x%3D%2744%27%20y%3D%2718%27%20width%3D%276%27%20height%3D%2742%27%20fill%3D%27%23D63A2F%27%2F%3E%3C%2Fg%3E%3Ctext%20x%3D%27400%27%20y%3D%27300%27%20text-anchor%3D%27middle%27%20fill%3D%27%23fff%27%20font-size%3D%2736%27%20font-weight%3D%27600%27%20font-family%3D%27Prompt%2CThonburi%2CSarabun%2Csans-serif%27%3E%E0%B8%A3%E0%B8%B9%E0%B8%9B%E0%B8%88%E0%B8%A3%E0%B8%B4%E0%B8%87%E0%B8%81%E0%B8%B3%E0%B8%A5%E0%B8%B1%E0%B8%87%E0%B8%A1%E0%B8%B2%3C%2Ftext%3E%3Ctext%20x%3D%27400%27%20y%3D%27346%27%20text-anchor%3D%27middle%27%20fill%3D%27%23C9A24B%27%20font-size%3D%2720%27%20letter-spacing%3D%276%27%20font-family%3D%27Prompt%2CHelvetica%2CArial%2Csans-serif%27%3EBAAN%20TA%20PHAI%3C%2Ftext%3E%3C%2Fsvg%3E';
   function stock(src) { return /images\.unsplash\.com/i.test(src || ''); }
+  function normalize(src) {
+    var u = (src || '').trim(), m;
+    if (/^(data:|blob:)/i.test(u) || !u) return src;
+    if ((m = u.match(/drive\.google\.com\/file\/d\/([\w-]+)/)) ) return 'https://lh3.googleusercontent.com/d/' + m[1];
+    if (/drive\.google\.com/.test(u) && (m = u.match(/[?&]id=([\w-]+)/))) return 'https://lh3.googleusercontent.com/d/' + m[1];
+    if (/^https?:\/\/(www\.)?dropbox\.com\//i.test(u)) { if (/[?&]raw=1/.test(u)) return src; var d = u.replace(/[?&]dl=[01]/, ''); return d + (d.indexOf('?') > -1 ? '&' : '?') + 'raw=1'; }
+    if (/^http:\/\//i.test(u) && !/^http:\/\/(localhost|127\.)/i.test(u)) return u.replace(/^http:/i, 'https:');
+    return src;
+  }
   function swap(img) {
     var s = img.getAttribute('src') || '';
     if (s === PH) return;
-    if (stock(s) || (!s && img.classList.contains('needs-photo'))) { img.dataset.stockSrc = s; img.setAttribute('src', PH); }
+    if (stock(s) || (!s && img.classList.contains('needs-photo'))) { img.dataset.stockSrc = s; img.setAttribute('src', PH); return; }
+    var n = normalize(s);
+    if (n !== s) img.setAttribute('src', n);
   }
   function scan(root) { (root || document).querySelectorAll('img').forEach(swap); }
   scan(document);
@@ -429,6 +441,22 @@
       m.addedNodes.forEach(function (n) { if (n.nodeType !== 1) return; if (n.tagName === 'IMG') swap(n); else if (n.querySelectorAll) scan(n); });
     });
   }).observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ['src'] });
+
+  document.addEventListener('error', function (e) {
+    var img = e.target;
+    if (!img || img.tagName !== 'IMG') return;
+    var s = img.getAttribute('src') || '';
+    if (!s || s === PH || /^data:/i.test(s)) return;
+    if (img.closest('.hidden') || /logo/i.test(img.id) || img.closest('[id*="dit"][id$="Modal"]')) return;   // hidden logos and admin previews keep showing the real error
+    var tries = +(img.dataset.retry || 0);
+    if (tries < 1 && /googleusercontent\.com|drive\.google\.com/i.test(s)) {                                // Google Drive sometimes refuses the first request
+      img.dataset.retry = String(tries + 1);
+      setTimeout(function () { img.setAttribute('src', s + (s.indexOf('?') > -1 ? '&' : '?') + 'r=' + Date.now()); }, 1200);
+      return;
+    }
+    img.dataset.failedSrc = s;
+    img.setAttribute('src', PH);
+  }, true);
 })();
 
 // ===== Floating buttons stay out of the way while the hero is on screen; the notice can be dismissed for the session =====
@@ -447,4 +475,22 @@
     if (t) { t.classList.remove('toast-visible'); t.classList.add('hidden'); }
     try { sessionStorage.setItem('bt_toast_off', '1'); } catch (err) {}
   });
+})();
+
+
+// ===== Motion: reveal the story scene once, and pause looping mascots while they are off screen =====
+(function () {
+  var scene = document.querySelector('.mascot-scene');
+  if (scene) {
+    scene.classList.add('ms-ready');
+    if (!('IntersectionObserver' in window)) scene.classList.add('in');
+    else {
+      var once = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { scene.classList.add('in'); once.disconnect(); } }); }, { threshold: 0.35 });
+      once.observe(scene);
+    }
+  }
+  if ('IntersectionObserver' in window) {
+    var loop = new IntersectionObserver(function (es) { es.forEach(function (e) { e.target.classList.toggle('is-paused', !e.isIntersecting); }); }, { rootMargin: '80px' });
+    document.querySelectorAll('.mascot-bob').forEach(function (m) { loop.observe(m); });
+  }
 })();
