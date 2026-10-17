@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "node --test netlify/tests/sync.test.mjs"
+    "test": "node --test netlify/tests/sync.test.mjs",
+    "build:css": "npx --yes tailwindcss@3.4.17 -c tailwind.config.js -i tailwind.input.css -o tailwind.css --minify",
+    "check:css": "node scripts/check-css.mjs"
   },
   "repository": {
     "type": "git",
