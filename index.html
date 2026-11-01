@@ -1827,6 +1827,9 @@
   html.lang-en #siteHeader #navLogoSubtitle { letter-spacing: 0.08em; }
 }
 
+/* ---------- Admin: English wording editor tabs ---------- */
+.i18n-tab.i18n-tab-on { background: #FEF3C7; border-color: #D97706; color: #78350F; }
+
 /* ---------- Story ---------- */
     #story .story-tagline { font-style: italic; font-weight: 500; color: var(--bt-brown); }
     body.night-mode #story .story-tagline { color: var(--on-dark); }
@@ -1931,6 +1934,10 @@
       <div class="admin-group">
         <h4><i class="fa-solid fa-location-dot"></i> ข้อมูล & ติดต่อ</h4>
         <button type="button" class="admin-tool" onclick="openManageAttractionsModal()"><span class="ico">🗺️</span><span class="lbl">ที่เที่ยวใกล้เคียง</span></button><button type="button" class="admin-tool" onclick="openExtraEditor('findUs')"><span class="ico">🧷</span><span class="lbl">ค้นหาเราบน Google & แผนที่</span><em>ใหม่</em></button><button type="button" class="admin-tool" onclick="openContactEditModal()"><span class="ico">📍</span><span class="lbl">การเดินทาง & ข้อมูลติดต่อ</span></button><button type="button" class="admin-tool" onclick="openPoliciesEditModal()"><span class="ico">📋</span><span class="lbl">เงื่อนไขการเข้าพัก</span></button><button type="button" class="admin-tool" onclick="openFaqModal()"><span class="ico">❓</span><span class="lbl">คำถามที่พบบ่อย (FAQ)</span></button><button type="button" class="admin-tool" onclick="openFooterEditModal()"><span class="ico">🦶</span><span class="lbl">ท้ายเว็บ (Footer)</span></button>
+      </div>
+      <div class="admin-group">
+        <h4><i class="fa-solid fa-globe"></i> ภาษา</h4>
+        <button type="button" class="admin-tool" onclick="openI18nEditor()"><span class="ico">🌐</span><span class="lbl">คำแปลภาษาอังกฤษ</span><em>ใหม่</em></button>
       </div>
       </div>
       <div class="admin-foot">
@@ -4696,7 +4703,7 @@
                   </span>
                 </div>
                 <div class="req-row req-q sm:col-span-2">
-                  <span class="req-lbl"><i class="fa-solid fa-paw req-paw"></i>สัตว์เลี้ยง<small>แอดมินจะแจ้งเงื่อนไขการพาสัตว์เลี้ยงเข้าพักให้ก่อนยืนยัน</small></span>
+                  <span class="req-lbl"><i class="fa-solid fa-paw req-paw"></i>สัตว์เลี้ยง<small>ตัวละ 100 บาทต่อคืน · แอดมินจะแจ้งเงื่อนไขอื่นให้ก่อนยืนยัน</small></span>
                   <span class="req-chips" role="group" aria-label="ชนิดสัตว์เลี้ยง">
                   <label class="req-chip"><input type="checkbox" name="roomReqPet" value="สุนัข" onchange="refreshRoomBookingLink()"><span><i class="fa-solid fa-dog"></i>สุนัข</span></label>
                   <label class="req-chip"><input type="checkbox" name="roomReqPet" value="แมว" onchange="refreshRoomBookingLink()"><span><i class="fa-solid fa-cat"></i>แมว</span></label>
@@ -9485,6 +9492,33 @@
         <button onclick="saveTopBarEdit()" class="px-5 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold shadow-sm min-h-[44px] active:scale-98">
           <i class="fa-solid fa-check mr-1"></i> บันทึกประกาศ & อากาศ
         </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= ENGLISH WORDING EDITOR (admin) ================= -->
+  <div id="editI18nModal" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm flex items-end sm:items-center justify-center overflow-hidden" onclick="closeI18nEditor()">
+    <div class="relative w-full max-w-2xl bg-white rounded-t-3xl sm:rounded-3xl overflow-hidden shadow-2xl mobile-sheet-enter desktop-modal-enter max-h-[92vh] flex flex-col border border-amber-300" onclick="event.stopPropagation()">
+      <div class="w-12 h-1 rounded-full bg-stone-300 mx-auto mt-2.5 mb-1 sm:hidden"></div>
+      <div class="bg-amber-100 p-4 border-b border-amber-200 flex items-center justify-between shrink-0">
+        <div class="flex items-center gap-2 text-stone-900 font-bold text-xs sm:text-sm">
+          <i class="fa-solid fa-globe text-amber-700"></i>
+          <span>คำแปลภาษาอังกฤษ</span>
+        </div>
+        <button onclick="closeI18nEditor()" class="text-stone-500 hover:text-black text-lg p-1" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="p-4 sm:p-5 space-y-3 overflow-y-auto flex-1 text-xs">
+        <p class="text-stone-600 leading-relaxed">ข้อความที่คุณพิมพ์เองในหน้าเว็บ (เช่น ห้อง เมนู คำถามที่พบบ่อย) จะแสดงเป็นภาษาไทยในโหมด English จนกว่าจะใส่คำแปลตรงนี้ พิมพ์คำแปลแล้วกดบันทึก จากนั้นเผยแพร่เหมือนการแก้ไขอื่น ถ้าไม่กรอก ข้อความนั้นจะยังเป็นภาษาไทย</p>
+        <div class="flex flex-wrap items-center gap-2">
+          <button type="button" id="i18nTabMissing" onclick="setI18nMode('missing')" class="i18n-tab px-3 py-2 rounded-xl border border-stone-300 text-stone-700 font-semibold min-h-[40px]">ยังไม่มีคำแปล</button>
+          <button type="button" id="i18nTabMine" onclick="setI18nMode('mine')" class="i18n-tab px-3 py-2 rounded-xl border border-stone-300 text-stone-700 font-semibold min-h-[40px]">ที่เพิ่มไว้</button>
+          <input type="search" id="i18nSearch" oninput="renderI18nList()" placeholder="ค้นหา" class="flex-1 min-w-[8rem] p-2.5 rounded-xl border border-stone-300 focus:outline-none focus:border-amber-600 text-xs">
+        </div>
+        <div id="i18nList" class="space-y-2"></div>
+      </div>
+      <div class="p-3.5 sm:p-4 bg-stone-50 border-t border-stone-200 flex items-center justify-end gap-2 shrink-0">
+        <button onclick="closeI18nEditor()" class="px-4 py-2.5 rounded-xl bg-white border border-stone-300 text-xs font-medium text-stone-700 hover:bg-stone-100 min-h-[44px]">ยกเลิก</button>
+        <button onclick="saveI18nEdit()" class="px-5 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold shadow-sm min-h-[44px] active:scale-98"><i class="fa-solid fa-check mr-1"></i> บันทึกคำแปล</button>
       </div>
     </div>
   </div>

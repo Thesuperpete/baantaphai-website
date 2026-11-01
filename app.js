@@ -1235,7 +1235,7 @@
         id: "faq_3",
         icon: "🐶",
         question: "สามารถนำสัตว์เลี้ยง (สุนัข / แมว) เข้าพักได้ไหม?",
-        answer: "เพื่อรักษาความสะอาด ความเงียบสงบ และสุขอนามัยสำหรับผู้เข้าพักทุกท่าน รวมถึงผู้ที่มีอาการแพ้ขนสัตว์ **ทางรีสอร์ทขอความกรุณางดรับสัตว์เลี้ยงทุกประเภทเข้าพักในห้องพักครับ**"
+        answer: "**พาสัตว์เลี้ยงเข้าพักได้ครับ!** ค่าบริการสัตว์เลี้ยง **ตัวละ 100 บาทต่อคืน** กรุณาแจ้งชนิดและจำนวนสัตว์เลี้ยงล่วงหน้าทาง LINE หรือ Messenger ครับ"
       },
       {
         id: "faq_4",
@@ -2305,6 +2305,15 @@
       return JSON.parse(JSON.stringify(DEFAULT_TOP_BAR_DATA));
     })();
 
+    // English wording added by the admin: { en: { '<Thai text, whitespace collapsed>': '<English>' } } (see the translation editor)
+    let SITE_I18N = (() => {
+      try {
+        const saved = localStorage.getItem('baantaphai_i18n_v3');
+        if (saved) { const o = JSON.parse(saved); return { en: (o && o.en) || {} }; }
+      } catch(e) {}
+      return { en: {} };
+    })();
+
     let SITE_OMIKUJI_HEADER = (() => {
       try {
         const saved = localStorage.getItem('baantaphai_omikuji_header_v3');
@@ -2615,6 +2624,11 @@
             try { localStorage.setItem('baantaphai_comp_matrix_v3', JSON.stringify(SITE_COMP_MATRIX)); } catch(e){}
             renderComparisonTable();
           }
+          if (d.i18n && typeof d.i18n === 'object' && isDiff(d.i18n, SITE_I18N)) {
+            SITE_I18N = { en: d.i18n.en || {} };
+            try { localStorage.setItem('baantaphai_i18n_v3', JSON.stringify(SITE_I18N)); } catch(e){}
+            if (window.i18nSetExtra) window.i18nSetExtra(SITE_I18N.en);
+          }
           if (d.topBar && typeof d.topBar === 'object' && isDiff(d.topBar, SITE_TOP_BAR)) {
             SITE_TOP_BAR = { ...DEFAULT_TOP_BAR_DATA, ...d.topBar };
             try { localStorage.setItem('baantaphai_topbar_v3', JSON.stringify(SITE_TOP_BAR)); } catch(e){}
@@ -2694,40 +2708,8 @@
       updateCloudSyncStatusIndicator('syncing');
 
       const payload = {
-        rooms: SITE_ROOMS,
-        hero: SITE_HERO,
-        dining: SITE_DINING,
-        menu: SITE_MENU,
-        activitiesHeader: SITE_ACTIVITIES_HEADER,
-        activities: SITE_ACTIVITIES,
-        roomsHeader: SITE_ROOMS_HEADER,
-        perks: SITE_PERKS,
-        perksFontSize: SITE_PERKS_FONT_SIZE,
-        photoSpotsHeader: SITE_PHOTO_SPOTS_HEADER,
-        photoSpots: SITE_PHOTO_SPOTS,
-        reviewsHeader: SITE_REVIEWS_HEADER,
-        facebookFeed: SITE_FACEBOOK_FEED,
-        attractionsHeader: SITE_ATTRACTIONS_HEADER,
-        attractionsItems: SITE_ATTRACTIONS_ITEMS,
-        logo: SITE_LOGO,
-        policies: SITE_POLICIES,
-        contact: SITE_CONTACT,
-        faqHeader: SITE_FAQ_HEADER,
-        faqItems: SITE_FAQ_ITEMS,
-        footer: SITE_FOOTER,
-        compHeader: SITE_COMP_HEADER,
-        compMatrix: SITE_COMP_MATRIX,
-        topBar: SITE_TOP_BAR,
-        omikujiHeader: SITE_OMIKUJI_HEADER,
-        omikujiPrizes: SITE_OMIKUJI_PRIZES,
-        roomFinder: SITE_ROOM_FINDER,
-        diningHeader: SITE_DINING_HEADER,
-        diningBanner: SITE_DINING_BANNER,
-        navMenu: SITE_NAV_MENU,
-        headerActions: SITE_HEADER_ACTIONS,
-        menuHeader: SITE_MENU_HEADER,
-        typography: SITE_TYPOGRAPHY,
-        extra: SITE_EXTRA,
+        ...buildSiteData(),
+        i18n: SITE_I18N,
         updatedAt: new Date().toISOString(),
         updatedReason: reason
       };
@@ -2790,6 +2772,46 @@
           pushCloudData(nextReason);
         }
       }
+    }
+
+    // Every editable site section in one object (what is published to the cloud; also scanned by the translation editor).
+    function buildSiteData() {
+      return {
+        rooms: SITE_ROOMS,
+        hero: SITE_HERO,
+        dining: SITE_DINING,
+        menu: SITE_MENU,
+        activitiesHeader: SITE_ACTIVITIES_HEADER,
+        activities: SITE_ACTIVITIES,
+        roomsHeader: SITE_ROOMS_HEADER,
+        perks: SITE_PERKS,
+        perksFontSize: SITE_PERKS_FONT_SIZE,
+        photoSpotsHeader: SITE_PHOTO_SPOTS_HEADER,
+        photoSpots: SITE_PHOTO_SPOTS,
+        reviewsHeader: SITE_REVIEWS_HEADER,
+        facebookFeed: SITE_FACEBOOK_FEED,
+        attractionsHeader: SITE_ATTRACTIONS_HEADER,
+        attractionsItems: SITE_ATTRACTIONS_ITEMS,
+        logo: SITE_LOGO,
+        policies: SITE_POLICIES,
+        contact: SITE_CONTACT,
+        faqHeader: SITE_FAQ_HEADER,
+        faqItems: SITE_FAQ_ITEMS,
+        footer: SITE_FOOTER,
+        compHeader: SITE_COMP_HEADER,
+        compMatrix: SITE_COMP_MATRIX,
+        topBar: SITE_TOP_BAR,
+        omikujiHeader: SITE_OMIKUJI_HEADER,
+        omikujiPrizes: SITE_OMIKUJI_PRIZES,
+        roomFinder: SITE_ROOM_FINDER,
+        diningHeader: SITE_DINING_HEADER,
+        diningBanner: SITE_DINING_BANNER,
+        navMenu: SITE_NAV_MENU,
+        headerActions: SITE_HEADER_ACTIONS,
+        menuHeader: SITE_MENU_HEADER,
+        typography: SITE_TYPOGRAPHY,
+        extra: SITE_EXTRA,
+      };
     }
 
     function forceSyncWithCloud() {
@@ -2927,7 +2949,8 @@
       story: { name: 'เรื่องราวของบ้านตาผาย (Story)', icon: '📖' },
       findUs: { name: 'หัวข้อค้นหาเรา & แผนที่ Google', icon: '📍' },
       reviewItems: { name: 'รีวิวลูกค้า (สไลด์ & การ์ด)', icon: '💬' },
-      contactFab: { name: 'ปุ่มติดต่อลอย (ติดต่อเรา)', icon: '💬' }
+      contactFab: { name: 'ปุ่มติดต่อลอย (ติดต่อเรา)', icon: '💬' },
+      i18n: { name: 'คำแปลภาษาอังกฤษ', icon: '🌐' }
     };
 
     let draftManifest = (() => {
@@ -2990,6 +3013,7 @@
           SITE_ROOM_FINDER,
           SITE_FOOTER,
           SITE_EXTRA,
+          SITE_I18N,
           timestamp: new Date().toISOString()
         };
         localStorage.setItem('baantaphai_published_snapshot_v3', JSON.stringify(snapshot));
@@ -3066,6 +3090,7 @@
         if (snap.SITE_ROOM_FINDER) { SITE_ROOM_FINDER = snap.SITE_ROOM_FINDER; localStorage.setItem('baantaphai_room_finder_v3', JSON.stringify(SITE_ROOM_FINDER)); }
         if (snap.SITE_FOOTER) { SITE_FOOTER = snap.SITE_FOOTER; localStorage.setItem('baantaphai_footer_v3', JSON.stringify(SITE_FOOTER)); }
         if (snap.SITE_EXTRA) { restoreExtraFromSnapshot(snap.SITE_EXTRA); }
+        if (snap.SITE_I18N) { SITE_I18N = snap.SITE_I18N; localStorage.setItem('baantaphai_i18n_v3', JSON.stringify(SITE_I18N)); }
 
         clearDraftManifest();
         renderAllSiteSections();
@@ -3357,6 +3382,7 @@
           footer: () => { if (snap.SITE_FOOTER) { SITE_FOOTER = snap.SITE_FOOTER; localStorage.setItem('baantaphai_footer_v3', JSON.stringify(SITE_FOOTER)); } },
           compMatrix: () => { if (snap.SITE_COMP_MATRIX) { SITE_COMP_MATRIX = snap.SITE_COMP_MATRIX; localStorage.setItem('baantaphai_comp_matrix_v3', JSON.stringify(SITE_COMP_MATRIX)); } },
           compHeader: () => { if (snap.SITE_COMP_HEADER) { SITE_COMP_HEADER = snap.SITE_COMP_HEADER; localStorage.setItem('baantaphai_comp_header_v3', JSON.stringify(SITE_COMP_HEADER)); } },
+          i18n: () => { if (snap.SITE_I18N) { SITE_I18N = snap.SITE_I18N; localStorage.setItem('baantaphai_i18n_v3', JSON.stringify(SITE_I18N)); } },
           topBar: () => { if (snap.SITE_TOP_BAR) { SITE_TOP_BAR = snap.SITE_TOP_BAR; localStorage.setItem('baantaphai_topbar_v3', JSON.stringify(SITE_TOP_BAR)); } },
           omikuji: () => {
             if (snap.SITE_OMIKUJI_PRIZES) {
@@ -3863,7 +3889,7 @@
         const petNote = document.getElementById('roomReqPetNote');
         petNote.classList.toggle('hidden', !pets.length);
         // rates come from the policies the admin edits; the breakfast figures mirror FAQ faq_4
-        document.getElementById('roomReqRates').textContent = `อัตราเสริม: ${SITE_POLICIES.extraBed || ''} · อาหารเช้าเพิ่ม เด็กเล็ก 50.- / ผู้ใหญ่ 100.-`;
+        document.getElementById('roomReqRates').textContent = `อัตราเสริม: ${SITE_POLICIES.extraBed || ''} · อาหารเช้าเพิ่ม เด็กเล็ก 50.- / ผู้ใหญ่ 100.- · สัตว์เลี้ยง 100.-/ตัว/คืน`;
         const nights = inEl.value && outEl.value ? Math.round((new Date(outEl.value) - new Date(inEl.value)) / 864e5) : 0;
         const fmt = v => new Date(v + 'T00:00').toLocaleDateString(UI_LOCALE, { day: 'numeric', month: 'short', year: window.SITE_LANG === 'en' ? 'numeric' : '2-digit' });
         if (nights > 0) {
@@ -3886,7 +3912,7 @@
           const more = [];
           if (bkfOn) more.push(tt('🍳 อาหารเช้าเพิ่ม: {0} ท่าน', extra));
           if (bed || mat) more.push(tt('🛏️ เสริม:') + ' ' + [bed && tt('เตียงเสริม {0} หลัง', bed), mat && tt('ฟูกเสริม {0} ชุด', mat)].filter(Boolean).join(', '));
-          if (pets.length) more.push(tt('🐾 สัตว์เลี้ยง:') + ' ' + pets.join(', ') + (petNote.value.trim() ? ` (${petNote.value.trim()})` : '') + ' ' + tt('— ขอสอบถามเงื่อนไข'));
+          if (pets.length) more.push(tt('🐾 สัตว์เลี้ยง:') + ' ' + pets.join(', ') + (petNote.value.trim() ? ` (${petNote.value.trim()})` : '') + ' ' + tt('— ทราบค่าบริการตัวละ 100 บาท/คืน'));
           if (more.length) lines.push('', ...more);
           lines.push('', tt('รบกวนตรวจห้องว่างและยืนยันให้ด้วยครับ/ค่ะ 🙏'));
           msg = lines.join('\n');
@@ -5420,6 +5446,122 @@
         fetchLiveWeather(true);
       }
       handleSectionSave('topBar', 'แก้ไขแถบประกาศและสภาพอากาศ', isDirectPublish);
+    }
+
+    // ==========================================
+    // ENGLISH WORDING EDITOR (admin): lists Thai text from the site data that has no English yet
+    // ==========================================
+    const I18N_SECTION_LABELS = {
+      rooms: 'ห้องพัก', roomsHeader: 'หัวข้อห้องพัก', hero: 'หน้าแรก', dining: 'การ์ดอาหาร', diningHeader: 'หัวข้อคาเฟ่', diningBanner: 'แถบสั่งอาหาร',
+      menu: 'เมนู', menuHeader: 'หัวข้อเมนู', activities: 'กิจกรรม', activitiesHeader: 'หัวข้อกิจกรรม', perks: 'สิทธิพิเศษ', photoSpots: 'จุดถ่ายรูป',
+      photoSpotsHeader: 'หัวข้อจุดถ่ายรูป', reviewsHeader: 'รีวิว', facebookFeed: 'Facebook', attractionsHeader: 'หัวข้อที่เที่ยว', attractionsItems: 'ที่เที่ยวใกล้เคียง',
+      logo: 'โลโก้', policies: 'เงื่อนไขการพัก', contact: 'ข้อมูลติดต่อ', faqHeader: 'หัวข้อ FAQ', faqItems: 'FAQ', footer: 'ท้ายเว็บ', compHeader: 'หัวข้อตารางเปรียบเทียบ',
+      compMatrix: 'ตารางเปรียบเทียบ', topBar: 'แถบประกาศ', omikujiHeader: 'หัวข้อเซียมซี', omikujiPrizes: 'รางวัลเซียมซี', roomFinder: 'ตัวช่วยเลือกห้อง',
+      navMenu: 'เมนูนำทาง', headerActions: 'ปุ่มแถบบน', extra: 'เรื่องราว / รีวิว / แผนที่'
+    };
+    let i18nEditMode = 'missing';
+    let i18nDraft = {};
+    let i18nCandidates = new Map();
+
+    function collectI18nCandidates() {
+      const TH = /[ก-฾เ-๛]/;
+      const found = new Map(); // normalized Thai -> section label
+      const add = (txt, where) => { const k = window.i18nNorm(txt); if (TH.test(k) && !found.has(k)) found.set(k, where); };
+      const visit = (v, key) => {
+        const where = I18N_SECTION_LABELS[key] || key;
+        if (typeof v === 'string') {
+          if (!TH.test(v) || /^\s*(https?:|data:)/i.test(v)) return;
+          if (/<[a-z][^>]*>/i.test(v)) {
+            const doc = new DOMParser().parseFromString('<body>' + v + '</body>', 'text/html');
+            const w = doc.createTreeWalker(doc.body, 4);
+            let n; while ((n = w.nextNode())) add(n.nodeValue, where);
+            doc.body.querySelectorAll('[placeholder],[title],[aria-label],[alt]').forEach(el => ['placeholder', 'title', 'aria-label', 'alt'].forEach(a => { if (el.getAttribute(a)) add(el.getAttribute(a), where); }));
+          } else if (key !== 'faqItems' && v.indexOf('\n') > -1) {
+            v.split('\n').forEach(line => add(line, where)); // multi-line text is shown line by line on the page
+          } else add(v, where);
+        } else if (Array.isArray(v)) v.forEach(x => visit(x, key));
+        else if (v && typeof v === 'object') Object.keys(v).forEach(k => { if (!/href|url|link|src|image|img|icon|video|query/i.test(k)) visit(v[k], key); });
+      };
+      const src = buildSiteData();
+      Object.keys(src).forEach(k => { if (k !== 'updatedAt' && k !== 'updatedReason' && k !== 'typography') visit(src[k], k); });
+      return found;
+    }
+
+    function openI18nEditor() {
+      const m = document.getElementById('editI18nModal');
+      if (!m) return;
+      i18nDraft = {};
+      i18nEditMode = 'missing';
+      const list = document.getElementById('i18nList');
+      if (list) list.innerHTML = '<p class="text-stone-500 py-6 text-center">กำลังตรวจข้อความ...</p>';
+      m.classList.remove('hidden');
+      document.body.classList.add('overflow-hidden');
+      window.i18nLoadBase(() => {
+        i18nCandidates = collectI18nCandidates();
+        const q = document.getElementById('i18nSearch'); if (q) q.value = '';
+        renderI18nList();
+      });
+    }
+
+    function closeI18nEditor() {
+      const m = document.getElementById('editI18nModal');
+      if (m) m.classList.add('hidden');
+      document.body.classList.remove('overflow-hidden');
+    }
+
+    function setI18nMode(mode) {
+      i18nEditMode = mode;
+      renderI18nList();
+    }
+
+    function renderI18nList() {
+      const list = document.getElementById('i18nList');
+      if (!list) return;
+      const esc = t => String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      const saved = SITE_I18N.en || {};
+      const q = ((document.getElementById('i18nSearch') || {}).value || '').trim().toLowerCase();
+      const missing = [];
+      i18nCandidates.forEach((where, k) => { if (!window.i18nHas(k) || (k in i18nDraft && !(k in saved))) missing.push([k, where]); });
+      const mine = Object.keys(saved).map(k => [k, 'เพิ่มไว้แล้ว']);
+      const rows = (i18nEditMode === 'missing' ? missing : mine).filter(([k]) => !q || k.toLowerCase().includes(q) || String(i18nDraft[k] !== undefined ? i18nDraft[k] : saved[k] || '').toLowerCase().includes(q));
+      document.getElementById('i18nTabMissing').textContent = `ยังไม่มีคำแปล (${missing.length})`;
+      document.getElementById('i18nTabMine').textContent = `ที่เพิ่มไว้ (${mine.length})`;
+      document.getElementById('i18nTabMissing').classList.toggle('i18n-tab-on', i18nEditMode === 'missing');
+      document.getElementById('i18nTabMine').classList.toggle('i18n-tab-on', i18nEditMode === 'mine');
+      if (!rows.length) {
+        list.innerHTML = `<p class="text-stone-500 py-6 text-center">${i18nEditMode === 'missing' ? '🎉 ข้อความทั้งหมดมีคำแปลอังกฤษแล้ว' : 'ยังไม่มีคำแปลที่เพิ่มเอง'}</p>`;
+        return;
+      }
+      const shown = rows.slice(0, 120);
+      list.innerHTML = shown.map(([k, where]) => {
+        const val = i18nDraft[k] !== undefined ? i18nDraft[k] : (saved[k] || '');
+        const rowsAttr = k.length > 90 ? 3 : 2;
+        return `<div class="p-3 rounded-2xl border border-stone-200 bg-white space-y-1.5">
+          <div class="flex items-center justify-between gap-2"><span class="text-[10px] px-2 py-0.5 rounded-full bg-stone-100 text-stone-600">${esc(where)}</span></div>
+          <div class="text-stone-900 leading-relaxed break-words">${esc(k)}</div>
+          <textarea rows="${rowsAttr}" data-i18n-key="${esc(k)}" oninput="onI18nInput(this)" class="w-full p-2 rounded-xl border border-stone-300 focus:outline-none focus:border-amber-600 text-xs" placeholder="English (ปล่อยว่าง = ใช้ภาษาไทยต่อไป)">${esc(val)}</textarea>
+        </div>`;
+      }).join('') + (rows.length > shown.length ? `<p class="text-center text-stone-500 py-2">แสดง ${shown.length} จาก ${rows.length} รายการ — ใช้ช่องค้นหาเพื่อกรอง</p>` : '');
+    }
+
+    function onI18nInput(el) {
+      i18nDraft[el.getAttribute('data-i18n-key')] = el.value;
+    }
+
+    function saveI18nEdit(isDirectPublish = false) {
+      const next = { ...(SITE_I18N.en || {}) };
+      let changed = 0;
+      Object.keys(i18nDraft).forEach(k => {
+        const v = String(i18nDraft[k] || '').trim();
+        if (v) { if (next[k] !== v) { next[k] = v; changed++; } }
+        else if (k in next) { delete next[k]; changed++; }
+      });
+      if (!changed) { showToast('ยังไม่มีคำแปลที่เปลี่ยน'); return; }
+      SITE_I18N = { en: next };
+      try { localStorage.setItem('baantaphai_i18n_v3', JSON.stringify(SITE_I18N)); } catch(e) {}
+      window.i18nSetExtra(SITE_I18N.en);
+      closeI18nEditor();
+      handleSectionSave('i18n', `แก้ไขคำแปลอังกฤษ ${changed} รายการ`, isDirectPublish);
     }
 
     // 9. VIRAL SHARE TO LINE

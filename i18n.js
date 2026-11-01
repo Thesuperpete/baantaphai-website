@@ -1,36 +1,52 @@
 /* Thai / English switcher.
    Thai is the source language of the page. In English mode this script translates every Thai text node and
-   placeholder/title/aria-label/alt attribute from the dictionary in i18n-en.js (the same pass also catches text
-   that app.js renders later, e.g. cloud data, modals and the weather bar).
-   Text that is not in the dictionary (for example new wording typed by the admin) simply stays Thai.
+   placeholder/title/aria-label/alt attribute from the dictionary in i18n-en.js, plus the extra entries the admin
+   adds in the "คำแปลอังกฤษ" editor (cloud-synced, cached in localStorage). The same pass also catches text that
+   app.js renders later (cloud data, modals, the weather bar).
+   Text that is not in any dictionary simply stays Thai.
    Switching language reloads the page, so no live revert logic is needed. */
 (function () {
   var LANG = (window.SITE_LANG === 'en' && window.I18N_EN) ? 'en' : 'th';
   window.SITE_LANG = LANG;
 
-  var SKIPTAG = { SCRIPT: 1, STYLE: 1, TEXTAREA: 1, NOSCRIPT: 1 };
-  var SKIP = SKIPTAG;
-  var TH = /[\u0E01-\u0E3E\u0E40-\u0E5B]/; // Thai letters, not the baht sign (U+0E3F)
-  var D = window.I18N_EN || {};
+  var TH = /[ก-฾เ-๛]/; // Thai letters, not the baht sign (U+0E3F)
+  var SKIP = { SCRIPT: 1, STYLE: 1, TEXTAREA: 1, NOSCRIPT: 1 };
+  var started = false;
+
+  var Dn = {};          // normalized Thai -> English (every entry, used by tt())
   var exact = new Map();
+  var patMap = new Map(); // normalized Thai with {n} -> pattern record
   var pats = [];
-  var Dn = {};
+
+  function esc(s) { return s.replace(/[.*+?^$()|[\]\\]/g, '\\$&'); }
 
   // Collapse whitespace and unify the two spellings of "นํ้า/น้ำ" (nikhahit + tone mark vs. sara am) so keys match typed text.
   function norm(s) {
-    return s.replace(/\u0E4D\u0E49\u0E32/g, '\u0E49\u0E33').replace(/\u0E4D\u0E32/g, '\u0E33').replace(/\s+/g, ' ').trim();
+    return s.replace(/ํ้า/g, '้ำ').replace(/ํา/g, 'ำ').replace(/\s+/g, ' ').trim();
   }
 
-  function esc(s) { return s.replace(/[.*+?^$()|[\]\\]/g, '\\$&'); }
-  Object.keys(D).forEach(function (k0) {
-    var k = norm(k0);
-    Dn[k] = D[k0];
-    if (!/\{\d+\}/.test(k)) { exact.set(k, D[k0]); return; }
-    var names = [];
-    var src = esc(k).replace(/\{(\d+)\}/g, function (_, n) { names.push(n); return '(.+?)'; });
-    pats.push({ rx: new RegExp('^' + src + '$'), names: names, en: D[k0], len: k.length });
-  });
-  pats.sort(function (a, b) { return b.len - a.len; });
+  /** Add or replace dictionary entries. Later calls win, so admin extras override the built-in dictionary. */
+  function addEntries(obj) {
+    if (!obj) return;
+    Object.keys(obj).forEach(function (k0) {
+      var en = obj[k0];
+      if (typeof en !== 'string' || !en.trim()) return;
+      var k = norm(k0);
+      Dn[k] = en;
+      if (!/\{\d+\}/.test(k)) { exact.set(k, en); return; }
+      var names = [];
+      var src = esc(k).replace(/\\?\{(\d+)\\?\}/g, function (_, n) { names.push(n); return '(.+?)'; });
+      patMap.set(k, { rx: new RegExp('^' + src + '$'), names: names, en: en, len: k.length });
+    });
+    pats = Array.from(patMap.values()).sort(function (a, b) { return b.len - a.len; });
+  }
+
+  function cachedExtra() {
+    try { return (JSON.parse(localStorage.getItem('baantaphai_i18n_v3') || 'null') || {}).en || null; } catch (e) { return null; }
+  }
+
+  addEntries(window.I18N_EN);
+  addEntries(cachedExtra());
 
   function lookup(core) {
     var r = exact.get(core);
@@ -72,6 +88,25 @@
   };
   window.toggleSiteLang = function () { window.setSiteLang(LANG === 'en' ? 'th' : 'en'); };
 
+  // ---- used by the admin translation editor (works in Thai mode too) ----
+  window.i18nNorm = norm;
+  /** true when this Thai text already has an English entry (built-in or admin) */
+  window.i18nHas = function (s) { return TH.test(s) && lookup(norm(s)) !== null; };
+  /** the built-in dictionary is only downloaded in English mode; the editor loads it on demand */
+  window.i18nLoadBase = function (cb) {
+    if (window.I18N_EN) { cb(); return; }
+    var s = document.createElement('script');
+    s.src = 'i18n-en.js';
+    s.onload = function () { addEntries(window.I18N_EN); addEntries(cachedExtra()); cb(); };
+    s.onerror = function () { cb(); };
+    document.head.appendChild(s);
+  };
+  /** admin extras from the cloud/editor: merge them in and translate what is on the page */
+  window.i18nSetExtra = function (en) {
+    addEntries(en);
+    if (started && LANG === 'en') walk(document.documentElement);
+  };
+
   function paintToggle() {
     document.querySelectorAll('[data-lang-toggle]').forEach(function (b) {
       b.setAttribute('aria-label', LANG === 'en' ? 'เปลี่ยนเป็นภาษาไทย' : 'Switch to English');
@@ -83,12 +118,17 @@
   document.addEventListener('DOMContentLoaded', paintToggle);
   paintToggle();
 
+  // The admin editor stays Thai: its labels and forms are never translated.
+  var ADM = '[id^="edit"],[id^="manage"],#adminBar,#adminToolsPanel,#publishModal,#adminPinModal,[id$="AdminTrigger"],[id$="AdminTriggers"],#previewModeFloatingBar,.modal-admin-only,.extra-admin';
+  function isAdmin(el) { return !!(el && el.closest && el.closest(ADM)); }
+
   // Debug helper: window.i18nMissing() lists visible Thai text that has no English yet (admin areas excluded).
   window.i18nMissing = function () {
     var w = document.createTreeWalker(document.body, 4), n, seen = {};
     while ((n = w.nextNode())) {
-      if (!TH.test(n.nodeValue) || SKIPTAG[n.parentNode.nodeName] || isAdmin(n.parentElement)) continue;
-      seen[norm(n.nodeValue)] = 1;
+      if (!TH.test(n.nodeValue) || SKIP[n.parentNode.nodeName] || isAdmin(n.parentElement)) continue;
+      var k = norm(n.nodeValue);
+      if (lookup(k) === null) seen[k] = 1;
     }
     return Object.keys(seen);
   };
@@ -96,10 +136,6 @@
   if (LANG !== 'en') return;
 
   var ATTRS = ['placeholder', 'title', 'aria-label', 'alt'];
-
-  // The admin editor stays Thai: its labels and forms are never translated.
-  var ADM = '[id^="edit"],[id^="manage"],#adminBar,#adminToolsPanel,#publishModal,#adminPinModal,[id$="AdminTrigger"],[id$="AdminTriggers"],#previewModeFloatingBar,.modal-admin-only,.extra-admin';
-  function isAdmin(el) { return !!(el && el.closest && el.closest(ADM)); }
 
   function textNode(n) {
     var v = n.nodeValue;
@@ -161,6 +197,7 @@
     meta();
     walk(document.documentElement);
     mo.observe(document.documentElement, { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ATTRS });
+    started = true;
     paintToggle();
   }
   start();

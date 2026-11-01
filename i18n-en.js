@@ -395,7 +395,6 @@ window.I18N_EN = {
 "ไม่รับ": "No",
 "รับ": "Yes",
 "สัตว์เลี้ยง": "Pets",
-"แอดมินจะแจ้งเงื่อนไขการพาสัตว์เลี้ยงเข้าพักให้ก่อนยืนยัน": "We will confirm the pet policy with you before the booking is confirmed.",
 "ชนิดสัตว์เลี้ยง": "Type of pet",
 "สุนัข": "Dog",
 "แมว": "Cat",
@@ -757,7 +756,6 @@ window.I18N_EN = {
 "อาหารเช้ารวมฟรีในห้องพักไหม และมีบริการสั่งอาหารขึ้นห้องพักหรือไม่?": "Is breakfast included, and can I order food to my room?",
 "**รวมอาหารเช้าฟรีทุกห้องพักครับ!** บริการเวลา 07:30 – 09:30 น. เมนูประกอบด้วย American Breakfast (ไข่ดาว ไส้กรอก แฮม ขนมปังปิ้ง แยมผลไม้ เนย) และข้าวต้มหมู/ไก่ร้อนๆ เติมได้ไม่อั้น พร้อมชา กาแฟ และน้ำผลไม้ นอกจากนี้ ทางรีสอร์ทมีบริการครัวอาหารไทย (10:00 – 20:00 น.) บริการยกเสิร์ฟร้อนๆ ถึงซุ้มไม้ริมน้ำส่วนตัวและระเบียงห้องพักฟรี สามารถสั่งล่วงหน้าผ่าน LINE ได้เลยครับ": "**Free breakfast is included with every room!** Served 07:30 – 09:30. The menu includes an American breakfast (fried egg, sausage, ham, toast, fruit jam, butter) and hot pork or chicken rice porridge with unlimited refills, plus tea, coffee and juice. The resort also has a Thai kitchen (10:00 – 20:00) that serves hot dishes to your private riverside wooden pavilion and room balcony for free. You can pre-order via LINE.",
 "สามารถนำสัตว์เลี้ยง (สุนัข / แมว) เข้าพักได้ไหม?": "Can I bring pets (dogs / cats)?",
-"เพื่อรักษาความสะอาด ความเงียบสงบ และสุขอนามัยสำหรับผู้เข้าพักทุกท่าน รวมถึงผู้ที่มีอาการแพ้ขนสัตว์ **ทางรีสอร์ทขอความกรุณางดรับสัตว์เลี้ยงทุกประเภทเข้าพักในห้องพักครับ**": "To keep things clean, quiet and hygienic for all guests, including those allergic to pet hair, **the resort kindly asks that no pets of any kind stay in the rooms.**",
 "เสริมเตียง / ฟูกเสริม คิดราคาเท่าไหร่ และเด็กพักฟรีไหม?": "How much are extra beds / mattresses, and do children stay free?",
 "• **เด็กเล็กอายุต่ำกว่า 7 ขวบ:** เข้าพักฟรีร่วมกับผู้ปกครองได้ (ไม่เสริมเตียง) • **ฟูกเสริม (ขนาด 3.5 ฟุต):** ราคา 100 บาท / ชุด • **เตียงเสริม (ขนาด 3.5 ฟุต):** ราคา 200 บาท / หลัง (รวมอุปกรณ์เครื่องนอนครบชุด) • **ค่าบริการผู้เข้าพักเสริม:** 50 บาท / ท่าน | ค่าอาหารเช้าเพิ่มเติม เด็กเล็ก 50.- / ผู้ใหญ่ 100.-": "• **Children under 7:** stay free with their parents (no extra bed) • **Extra mattress (3.5 ft):** ฿100 / set • **Extra bed (3.5 ft):** ฿200 / bed (with a full set of bedding) • **Extra guest fee:** ฿50 / guest | Extra breakfast: young child ฿50 / adult ฿100",
 "กิจกรรมพายเรือคายัค จักรยาน และสนุกเกอร์ ฟรีจริงไหม? มีค่าใช้จ่ายเพิ่มไหม?": "Are kayaking, bicycles and snooker really free? Are there extra charges?",
@@ -858,7 +856,6 @@ window.I18N_EN = {
 "ไม่ถึง 1 ปี": "Under 1 y.o.",
 "{0} ปี": "{0} y.o.",
 "ผู้เข้าพักเสริม {0} ท่าน": "Extra guests {0}",
-"อัตราเสริม: {0} · อาหารเช้าเพิ่ม เด็กเล็ก 50.- / ผู้ใหญ่ 100.-": "Extra rates: {0} · extra breakfast: young child ฿50 / adult ฿100",
 "🏡 ขอจองห้องพัก · บ้านตาผาย รีสอร์ท": "🏡 Booking request · Baan Ta Phai Resort",
 "ห้อง: {0}": "Room: {0}",
 "ราคา: {0} {1}": "Price: {0} {1}",
@@ -875,7 +872,6 @@ window.I18N_EN = {
 "เตียงเสริม {0} หลัง": "Extra bed × {0}",
 "ฟูกเสริม {0} ชุด": "Extra mattress × {0}",
 "🐾 สัตว์เลี้ยง:": "🐾 Pets:",
-"— ขอสอบถามเงื่อนไข": "— please advise on the conditions",
 "รบกวนตรวจห้องว่างและยืนยันให้ด้วยครับ/ค่ะ 🙏": "Please check availability and confirm for us 🙏",
 "วันเช็คเอาท์ต้องหลังวันเช็คอินอย่างน้อย 1 วัน": "Check-out must be at least 1 day after check-in",
 "ส่งคำขอจองทาง LINE": "Send booking request via LINE",
@@ -1004,7 +1000,11 @@ window.I18N_EN = {
 "รีวิวที่ {0}": "Review {0}",
 "กลับขึ้นด้านบน": "Back to top",
 "สภาพอากาศสด อ.ท่าเรือ อยุธยา (อิงตามพยากรณ์จริง Open-Meteo ฟรี 100%) • คลิกเพื่ออัปเดต": "Live weather for Tha Ruea, Ayutthaya (based on the free Open-Meteo forecast) • click to refresh",
-"ปั่นจักรยานรับลมริมนํ้า": "Cycling by the river in the fresh breeze"
+"ปั่นจักรยานรับลมริมนํ้า": "Cycling by the river in the fresh breeze",
+"**พาสัตว์เลี้ยงเข้าพักได้ครับ!** ค่าบริการสัตว์เลี้ยง **ตัวละ 100 บาทต่อคืน** กรุณาแจ้งชนิดและจำนวนสัตว์เลี้ยงล่วงหน้าทาง LINE หรือ Messenger ครับ": "**Pets are welcome!** There is a pet fee of **฿100 per pet per night**. Please tell us the type and number of pets in advance on LINE or Messenger.",
+"ตัวละ 100 บาทต่อคืน · แอดมินจะแจ้งเงื่อนไขอื่นให้ก่อนยืนยัน": "฿100 per pet per night · we will confirm any other conditions before the booking is confirmed",
+"— ทราบค่าบริการตัวละ 100 บาท/คืน": "— noted: ฿100 per pet per night",
+"อัตราเสริม: {0} · อาหารเช้าเพิ่ม เด็กเล็ก 50.- / ผู้ใหญ่ 100.- · สัตว์เลี้ยง 100.-/ตัว/คืน": "Extra rates: {0} · extra breakfast: young child ฿50 / adult ฿100 · pets ฿100 per pet per night"
 };
 window.I18N_EN_META = {
  "title": "Baan Ta Phai Resort | Ta Phai Country House Resort & Restaurant",
