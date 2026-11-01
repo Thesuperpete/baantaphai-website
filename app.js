@@ -1,3 +1,6 @@
+    // Thai or English UI (set by i18n.js). T()/tt() translate text and message templates; Thai stays the default.
+    const UI_LOCALE = window.SITE_LANG === 'en' ? 'en-GB' : 'th-TH';
+
     // 🌐 Smart Image URL Converter (Auto-converts Google Drive sharing links & cleans Google Maps / Photos)
     function formatDirectImageUrl(url) {
       if (!url || typeof url !== 'string') return '';
@@ -1282,7 +1285,8 @@
       facebookUrl: "https://m.me/Baantaphai",
       lineId: "@baantaphairesort",
       lineUrl: "https://line.me/R/ti/p/@baantaphairesort",
-      mapsUrl: "https://maps.app.goo.gl/QZnssrZgScjpk9cJ8"
+      mapsUrl: "https://maps.app.goo.gl/QZnssrZgScjpk9cJ8",
+      bookingRequestEnabled: true
     };
 
     // 1.95 MASTER TOP ANNOUNCEMENT BAR & WEATHER DATA
@@ -2359,7 +2363,7 @@
         badge.className = 'inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-600/20 text-amber-950 border border-amber-700/30 text-[11px] font-semibold';
         badge.innerHTML = '<i class="fa-solid fa-arrows-rotate fa-spin text-amber-800"></i> กำลังซิงค์ขึ้นคลาวด์...';
       } else if (state === 'synced') {
-        const timeStr = detail ? new Date(detail).toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' }) : '';
+        const timeStr = detail ? new Date(detail).toLocaleTimeString(UI_LOCALE, { hour: '2-digit', minute: '2-digit' }) : '';
         badge.className = 'inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-600/20 text-emerald-950 border border-emerald-700/30 text-[11px] font-semibold';
         badge.innerHTML = `<i class="fa-solid fa-cloud-check text-emerald-800"></i> คลาวด์ซิงค์เรียลไทม์ (ออนไลน์${timeStr ? ' ' + timeStr : ''})`;
       } else if (state === 'error' || state === 'offline') {
@@ -2488,11 +2492,7 @@
                 if (modalCap) modalCap.textContent = updated.cap;
                 const modalDesc = document.getElementById('modalDesc');
                 if (modalDesc) modalDesc.textContent = updated.desc;
-                const bookingBtn = document.getElementById('modalBookingBtn');
-                if (bookingBtn) {
-                  const msg = encodeURIComponent(`สวัสดีครับ/ค่ะ สนใจสอบถาม/จองห้อง "${updated.title}" (${updated.price}${updated.unit || '/คืน'}) ครับ/ค่ะ`);
-                  bookingBtn.href = `https://line.me/R/oaMessage/@baantaphairesort/?${msg}`;
-                }
+                refreshRoomBookingLink(updated.title, updated.price, updated.unit, updated.cap);
               }
             }
           if (Array.isArray(d.dining) && d.dining.length > 0 && isDiff(d.dining, SITE_DINING)) {
@@ -2586,6 +2586,7 @@
           if (d.contact && typeof d.contact === 'object' && isDiff(d.contact, SITE_CONTACT)) {
             SITE_CONTACT = { ...DEFAULT_CONTACT_DATA, ...d.contact };
             try { localStorage.setItem('baantaphai_contact_v3', JSON.stringify(SITE_CONTACT)); } catch(e){}
+            refreshRoomBookingLink();
             renderPoliciesAndContactSection();
           }
           if (d.faqHeader && typeof d.faqHeader === 'object' && isDiff(d.faqHeader, SITE_FAQ_HEADER)) {
@@ -3161,7 +3162,15 @@
       }
     }
 
+    // The editor stores Thai text: saving or publishing while the page is shown in English could write translated text.
+    function blockSaveInEnglish() {
+      if (window.SITE_LANG !== 'en') return false;
+      showToast('⚠️ กำลังดูหน้าเว็บเป็นภาษาอังกฤษ กดปุ่ม "ไทย" มุมบนก่อนบันทึกหรือเผยแพร่');
+      return true;
+    }
+
     function handleSectionSave(sectionKey, description, isDirectPublish = false) {
+      if (blockSaveInEnglish()) return;
       ensurePublishedSnapshot();
       recordDraftChange(sectionKey, description);
       updateDraftUI();
@@ -3419,7 +3428,7 @@
       reversed.forEach((item) => {
         const row = document.createElement('div');
         row.className = 'group p-3 rounded-2xl bg-stone-50 hover:bg-amber-50/70 border border-stone-200 hover:border-amber-300 flex items-center justify-between gap-3 text-xs transition-all shadow-xs';
-        const timeStr = item.timestamp ? new Date(item.timestamp).toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' }) : '';
+        const timeStr = item.timestamp ? new Date(item.timestamp).toLocaleTimeString(UI_LOCALE, { hour: '2-digit', minute: '2-digit' }) : '';
         row.innerHTML = `
           <div onclick="navigateToDraftSection('${item.sectionKey}')" class="flex items-center gap-3 min-w-0 flex-1 cursor-pointer" title="คลิกเพื่อเลื่อนดูตำแหน่งนี้บนหน้าเว็บ">
             <span class="w-8 h-8 rounded-xl bg-amber-100 group-hover:bg-amber-200 text-stone-800 flex items-center justify-center text-base shrink-0 transition-colors shadow-xs">
@@ -3465,6 +3474,7 @@
     }
 
     async function executePublishAllDrafts(customReason) {
+      if (blockSaveInEnglish()) return;
       const count = getDraftChangesCount();
       const manifest = getDraftManifest();
       let reason = customReason;
@@ -3726,6 +3736,175 @@
     }
 
     // 5. DETAIL MODAL & CAROUSEL
+    // Room modal: optional "request a booking" form. It only builds a prefilled LINE message; the admin still confirms availability in chat.
+    // Admin turns it on/off with SITE_CONTACT.bookingRequestEnabled (contact edit modal); off = the plain LINE button as before.
+    // Flatpickr is fetched the first time the form is shown; if it cannot load, the native date inputs keep working.
+    let roomReqPickersStarted = false;
+    function initRoomReqPickers() {
+      if (roomReqPickersStarted) return;
+      roomReqPickersStarted = true;
+      const base = 'https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/';
+      const css = document.createElement('link');
+      css.rel = 'stylesheet'; css.href = base + 'flatpickr.min.css';
+      document.head.appendChild(css);
+      const load = src => new Promise((ok, no) => { const s = document.createElement('script'); s.src = src; s.onload = ok; s.onerror = no; document.head.appendChild(s); });
+      load(base + 'flatpickr.min.js').then(() => window.SITE_LANG === 'en' ? null : load(base + 'l10n/th.js')).then(() => {
+        const common = {
+          locale: window.SITE_LANG === 'en' ? 'default' : 'th', minDate: 'today', disableMobile: true, dateFormat: 'Y-m-d', altInput: true, altFormat: 'j M Y',
+          altInputClass: 'w-full px-2.5 rounded-xl border border-stone-300 bg-white text-base min-h-[44px] cursor-pointer focus:outline-none focus:border-blue-700',
+          onChange: () => refreshRoomBookingLink()
+        };
+        const out = flatpickr('#roomReqOut', { ...common, onReady: (d, s, fp) => fp.altInput.placeholder = 'เลือกวันที่' });
+        flatpickr('#roomReqIn', {
+          ...common,
+          onReady: (d, s, fp) => fp.altInput.placeholder = 'เลือกวันที่',
+          onChange: dates => {
+            if (dates[0]) {
+              const next = new Date(dates[0]); next.setDate(next.getDate() + 1);
+              out.set('minDate', next);
+              if (out.selectedDates[0] && out.selectedDates[0] < next) out.clear();
+              setTimeout(() => out.open(), 0);
+            }
+            refreshRoomBookingLink();
+          }
+        });
+      }).catch(() => {});
+    }
+
+    // Standard guests = "รวม N ท่าน" in the price unit; the room's maximum is the top of its capacity range.
+    function roomCapacity(cap, unit) {
+      const nums = ((cap || '').split('(')[0].match(/\d+/g) || []).map(Number);
+      const incl = ((unit || '').match(/รวม\s*(\d+)\s*ท่าน/) || [])[1];
+      return { std: incl ? +incl : (nums.length ? Math.min(...nums) : 0), max: nums.length ? Math.max(...nums) : 0 };
+    }
+    const reqN = id => parseInt(document.getElementById(id).textContent, 10) || 0;
+    function reqStep(id, d) {
+      const o = document.getElementById(id);
+      o.textContent = Math.min(+o.dataset.max || 10, Math.max(0, reqN(id) + d));
+      refreshRoomBookingLink();
+    }
+    let roomReqArgs = null, roomReqLastMsg = '';
+    // Messenger links cannot carry a prefilled message, so offer the same text on the clipboard.
+    function copyRoomRequest() {
+      const span = document.querySelector('#roomReqCopy span');
+      const done = ok => { span.textContent = ok ? 'คัดลอกแล้ว วางในช่องแชท Messenger ได้เลย' : 'คัดลอกไม่สำเร็จ ลองกดค้างที่ข้อความแล้วคัดลอกเอง'; setTimeout(() => { span.textContent = 'คัดลอกคำขอ ไปวางใน Messenger'; }, 2500); };
+      const fallback = () => { const t = document.createElement('textarea'); t.value = roomReqLastMsg; t.style.cssText = 'position:fixed;opacity:0'; document.body.appendChild(t); t.select(); let ok = false; try { ok = document.execCommand('copy'); } catch (e) {} t.remove(); done(ok); };
+      if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(roomReqLastMsg).then(() => done(true), fallback); else fallback();
+    }
+    function refreshRoomBookingLink(title, price, unit, cap) {
+      if (title !== undefined) roomReqArgs = { title, price, unit: unit || '/คืน', cap: cap || '' };
+      const btn = document.getElementById('modalBookingBtn');
+      const box = document.getElementById('roomReqBox');
+      if (!roomReqArgs || !btn || !box) return;
+      const on = SITE_CONTACT.bookingRequestEnabled !== false;
+      box.classList.toggle('hidden', !(on || isAdminMode));
+      document.getElementById('roomReqFields').classList.toggle('hidden', !on);
+      document.getElementById('roomReqOff').classList.toggle('hidden', on);
+      let msg = tt('สวัสดีครับ/ค่ะ สนใจสอบถาม/จองห้อง "{0}" ({1}{2}) ครับ/ค่ะ', T(roomReqArgs.title), roomReqArgs.price, T(roomReqArgs.unit));
+      let valid = false;
+      const hint = document.getElementById('roomReqHint');
+      if (on) {
+        initRoomReqPickers();
+        const inEl = document.getElementById('roomReqIn'), outEl = document.getElementById('roomReqOut');
+        const today = new Date().toLocaleDateString('en-CA');
+        inEl.min = today;
+        outEl.min = inEl.value && inEl.value >= today ? inEl.value : today;
+
+        // headcount: never above the room's maximum; guests over the standard count become "extra guests" automatically
+        const { std, max } = roomCapacity(roomReqArgs.cap, roomReqArgs.unit);
+        const set = (id, v) => { document.getElementById(id).textContent = v; };
+        while (max && reqN('roomReqAdults') + reqN('roomReqKids') > max) set(reqN('roomReqKids') ? 'roomReqKids' : 'roomReqAdults', (reqN('roomReqKids') || reqN('roomReqAdults')) - 1);
+        const adults = reqN('roomReqAdults'), kids = reqN('roomReqKids');
+        const total = adults + kids;
+        const extra = std ? Math.max(0, total - std) : 0;
+        set('roomReqExtra', extra);
+        document.getElementById('roomReqExtra').closest('.req-row').style.opacity = extra ? 1 : .7;
+        const warn = document.getElementById('roomReqWarn');
+        const atMax = max && adults + kids >= max;
+        warn.textContent = [
+          extra && `ราคาห้องนี้รวมผู้เข้าพัก ${std} ท่าน · คุณเลือก ${total} ท่าน จึงมีผู้เข้าพักเสริม ${extra} ท่าน (คิดตามอัตราเสริม)`,
+          atMax && `ห้องนี้รองรับได้สูงสุด ${max} ท่าน เพิ่มคนไม่ได้แล้ว`
+        ].filter(Boolean).join('\n');
+        document.getElementById('roomReqExtraNote').textContent = std ? `คำนวณอัตโนมัติ: ผู้เข้าพักทั้งหมด − ${std} ท่านที่รวมในราคาห้อง` : '';
+        warn.classList.toggle('hidden', !warn.textContent);
+
+        // steppers: − at 0, + at its own limit or when the room is full
+        document.querySelectorAll('#roomReqFields .req-stepper').forEach(st => {
+          const o = st.querySelector('output'), v = reqN(o.id);
+          const people = o.id === 'roomReqAdults' || o.id === 'roomReqKids';
+          st.children[0].disabled = v <= 0;
+          st.children[2].disabled = v >= (+o.dataset.max || 10) || (people && max && adults + kids >= max);
+          o.closest('.req-row').classList.toggle('on', v > 0);
+        });
+
+        // one age picker per child
+        const ages = document.getElementById('roomReqKidAges');
+        if (ages.children.length !== kids) {
+          const old = [...ages.querySelectorAll('select')].map(x => x.value);
+          ages.innerHTML = '';
+          for (let k = 0; k < kids; k++) {
+            const lab = document.createElement('label');
+            lab.innerHTML = `<span>อายุเด็กคนที่ ${k + 1}</span><select aria-label="อายุเด็กคนที่ ${k + 1}"><option value="">เลือกอายุ</option><option value="0">ไม่ถึง 1 ปี</option>${[1, 2, 3, 4, 5, 6].map(y => `<option value="${y}">${y} ปี</option>`).join('')}</select>`;
+            const sel = lab.querySelector('select'); sel.value = old[k] || ''; sel.onchange = () => refreshRoomBookingLink();
+            ages.appendChild(lab);
+          }
+        }
+        ages.classList.toggle('hidden', !kids);
+        const ageList = [...ages.querySelectorAll('select')].map(x => x.value).filter(v => v !== '').map(v => v === '0' ? tt('ไม่ถึง 1 ปี') : tt('{0} ปี', v));
+
+        // breakfast for the extra guests only: the room price already includes breakfast for the standard guests
+        const bkfPeople = extra;
+        document.getElementById('roomReqBkfRow').classList.toggle('hidden', !bkfPeople);
+        document.getElementById('roomReqBkfNote').textContent = bkfPeople ? `ผู้เข้าพักเสริม ${bkfPeople} ท่าน` : '';
+        const bkfOn = bkfPeople && document.querySelector('input[name="roomReqBkf"]:checked').value === '1';
+
+        const bed = reqN('roomReqBed'), mat = reqN('roomReqMat');
+        const pets = [...document.querySelectorAll('input[name="roomReqPet"]:checked')].map(x => T(x.value));
+        const petNote = document.getElementById('roomReqPetNote');
+        petNote.classList.toggle('hidden', !pets.length);
+        // rates come from the policies the admin edits; the breakfast figures mirror FAQ faq_4
+        document.getElementById('roomReqRates').textContent = `อัตราเสริม: ${SITE_POLICIES.extraBed || ''} · อาหารเช้าเพิ่ม เด็กเล็ก 50.- / ผู้ใหญ่ 100.-`;
+        const nights = inEl.value && outEl.value ? Math.round((new Date(outEl.value) - new Date(inEl.value)) / 864e5) : 0;
+        const fmt = v => new Date(v + 'T00:00').toLocaleDateString(UI_LOCALE, { day: 'numeric', month: 'short', year: window.SITE_LANG === 'en' ? 'numeric' : '2-digit' });
+        if (nights > 0) {
+          valid = true;
+          const unitTxt = T(roomReqArgs.unit.replace(/^\/\s*/, '/ '));
+          const lines = [
+            tt('🏡 ขอจองห้องพัก · บ้านตาผาย รีสอร์ท'), '',
+            tt('ห้อง: {0}', T(roomReqArgs.title)),
+            tt('ราคา: {0} {1}', roomReqArgs.price, unitTxt), '',
+            tt('📅 เช็คอิน: {0}', fmt(inEl.value)),
+            tt('📅 เช็คเอาท์: {0}', fmt(outEl.value)),
+            tt('🌙 พัก {0} คืน', nights)
+          ];
+          if (total) {
+            lines.push('', tt('👥 ผู้เข้าพัก: {0} ท่าน', total));
+            if (adults) lines.push('   ' + tt('• ผู้ใหญ่/เด็กโต {0} ท่าน', adults));
+            if (kids) lines.push('   ' + tt('• เด็กเล็ก {0} ท่าน', kids) + (ageList.length ? ' ' + tt('(อายุ {0})', ageList.join(', ')) : ''));
+            if (extra) lines.push('   ' + tt('• ผู้เข้าพักเสริม {0} ท่าน (ราคาห้องรวม {1} ท่าน)', extra, std));
+          }
+          const more = [];
+          if (bkfOn) more.push(tt('🍳 อาหารเช้าเพิ่ม: {0} ท่าน', extra));
+          if (bed || mat) more.push(tt('🛏️ เสริม:') + ' ' + [bed && tt('เตียงเสริม {0} หลัง', bed), mat && tt('ฟูกเสริม {0} ชุด', mat)].filter(Boolean).join(', '));
+          if (pets.length) more.push(tt('🐾 สัตว์เลี้ยง:') + ' ' + pets.join(', ') + (petNote.value.trim() ? ` (${petNote.value.trim()})` : '') + ' ' + tt('— ขอสอบถามเงื่อนไข'));
+          if (more.length) lines.push('', ...more);
+          lines.push('', tt('รบกวนตรวจห้องว่างและยืนยันให้ด้วยครับ/ค่ะ 🙏'));
+          msg = lines.join('\n');
+          hint.textContent = `${nights} คืน · กดส่งแล้วแอดมินจะตรวจห้องว่างและตอบกลับทาง LINE (ยังไม่ใช่การยืนยันการจอง)`;
+        } else if (inEl.value && outEl.value) {
+          hint.textContent = 'วันเช็คเอาท์ต้องหลังวันเช็คอินอย่างน้อย 1 วัน';
+        } else {
+          hint.textContent = 'เลือกวันที่เข้าพักก่อน แล้วกดส่งคำขอ แอดมินจะตรวจห้องว่างและตอบกลับทาง LINE';
+        }
+      }
+      roomReqLastMsg = valid ? msg : '';
+      const cp = document.getElementById('roomReqCopy');
+      if (cp) cp.classList.toggle('hidden', !(on && valid));
+      btn.href = `https://line.me/R/oaMessage/@baantaphairesort/?${encodeURIComponent(msg)}`;
+      const label = document.getElementById('modalBookingLabel');
+      if (label) label.textContent = valid ? 'ส่งคำขอจองทาง LINE' : 'จองผ่าน LINE';
+    }
+
     function openRoomModal(roomId) {
       const data = SITE_ROOMS[roomId];
       if (!data) return;
@@ -3775,11 +3954,7 @@
       if (modalGrid) modalGrid.scrollTop = 0;
 
       // Update direct booking CTA link
-      const bookingBtn = document.getElementById('modalBookingBtn');
-      if (bookingBtn) {
-        const msg = encodeURIComponent(`สวัสดีครับ/ค่ะ สนใจสอบถาม/จองห้อง "${data.title}" (${cleanPrice || rawPrice}${data.unit || '/คืน'}) ครับ/ค่ะ`);
-        bookingBtn.href = `https://line.me/R/oaMessage/@baantaphairesort/?${msg}`;
-      }
+      refreshRoomBookingLink(data.title, cleanPrice || rawPrice, data.unit, data.cap);
       const messengerBtn = document.getElementById('modalMessengerBtn');
       if (messengerBtn) {
         messengerBtn.href = 'https://m.me/Baantaphai';
@@ -4363,7 +4538,7 @@
 
       const ticketNo = 'TP-' + Math.floor(100000 + Math.random() * 900000);
       const now = new Date();
-      const timeStr = now.toLocaleDateString('th-TH', { day: 'numeric', month: 'short', year: 'numeric' }) + ' ' + now.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
+      const timeStr = now.toLocaleDateString(UI_LOCALE, { day: 'numeric', month: 'short', year: 'numeric' }) + ' ' + now.toLocaleTimeString(UI_LOCALE, { hour: '2-digit', minute: '2-digit' });
       const resultData = { ...prize, ticketNo, playedAt: timeStr };
 
       // Write lock immediately before starting animation!
@@ -4431,7 +4606,7 @@
 
         claimLineBtn.classList.remove('hidden');
         const encodedText = encodeURIComponent(
-          `สวัสดีครับ/ค่ะ สุ่มได้เซียมซีบ้านตาผาย "${data.title}" (เลขอ้างอิงดิจิทัล: ${data.ticketNo || 'TP-VERIFIED'})\nขอแจ้งรับสิทธิ์เพื่อจองห้องพัก/ใช้บริการครับ`
+          tt(`สวัสดีครับ/ค่ะ สุ่มได้เซียมซีบ้านตาผาย "{0}" (เลขอ้างอิงดิจิทัล: {1})\nขอแจ้งรับสิทธิ์เพื่อจองห้องพัก/ใช้บริการครับ`, T(data.title), data.ticketNo || 'TP-VERIFIED')
         );
         claimLineBtn.href = `https://line.me/R/ti/p/@baantaphairesort?text=${encodedText}`;
         document.getElementById('claimLineBtnText').textContent = 'แจ้งรับสิทธิ์ทาง LINE Official';
@@ -5035,7 +5210,7 @@
         temp,
         desc,
         fullText: `${icon} อ.ท่าเรือ อยุธยา ${temp}°C ${desc}`,
-        updatedAt: new Date().toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' })
+        updatedAt: new Date().toLocaleTimeString(UI_LOCALE, { hour: '2-digit', minute: '2-digit' })
       };
     }
 
@@ -5250,19 +5425,19 @@
     // 9. VIRAL SHARE TO LINE
     function shareResortToLine() {
       const shareUrl = window.location.href;
-      const text = `พาไปพักผ่อนกัน! ชวนเที่ยว "บ้านตาผาย รีสอร์ท" อยุธยา บรรยากาศริมน้ำ & สไตล์ญี่ปุ่น ซุ้มโทริอิสวยมาก มีพายเรือคายัคฟรี ดูรูปห้องพักและราคาที่นี่เลย: ${shareUrl}`;
+      const text = tt(`พาไปพักผ่อนกัน! ชวนเที่ยว "บ้านตาผาย รีสอร์ท" อยุธยา บรรยากาศริมน้ำ & สไตล์ญี่ปุ่น ซุ้มโทริอิสวยมาก มีพายเรือคายัคฟรี ดูรูปห้องพักและราคาที่นี่เลย: {0}`, shareUrl);
       window.open(`https://line.me/R/msg/text/?${encodeURIComponent(text)}`, '_blank');
     }
 
     function shareSingleRoomToLine() {
       if (!currentModalRoom) return;
-      const text = `เธอ ห้อง "${currentModalRoom.title}" (${currentModalRoom.price}) ที่บ้านตาผาย รีสอร์ท อยุธยาน่าพักมาก ดูรายละเอียดสิ: ${window.location.href}`;
+      const text = tt('เธอ ห้อง "{0}" ({1}) ที่บ้านตาผาย รีสอร์ท อยุธยาน่าพักมาก ดูรายละเอียดสิ: {2}', T(currentModalRoom.title), currentModalRoom.price, window.location.href);
       window.open(`https://line.me/R/msg/text/?${encodeURIComponent(text)}`, '_blank');
     }
 
     function copyInquiryText() {
       if (!currentModalRoom) return;
-      const inquiry = `สวัสดีค่ะ สนใจสอบถามห้องพัก "${currentModalRoom.title}" (${currentModalRoom.price}) สำหรับเข้าพักค่ะ`;
+      const inquiry = tt('สวัสดีค่ะ สนใจสอบถามห้องพัก "{0}" ({1}) สำหรับเข้าพักค่ะ', T(currentModalRoom.title), currentModalRoom.price);
       navigator.clipboard.writeText(inquiry).then(() => {
         showToast('คัดลอกข้อความสอบถามแล้ว!');
       }).catch(() => {
@@ -8932,6 +9107,7 @@
       document.getElementById('editContactLineId').value = SITE_CONTACT.lineId || '';
       document.getElementById('editContactLineUrl').value = SITE_CONTACT.lineUrl || '';
       document.getElementById('editContactMapsUrl').value = SITE_CONTACT.mapsUrl || '';
+      document.getElementById('editContactReqOn').checked = SITE_CONTACT.bookingRequestEnabled !== false;
 
       document.getElementById('editContactModal').classList.remove('hidden');
       document.body.classList.add('overflow-hidden');
@@ -8951,12 +9127,14 @@
       SITE_CONTACT.lineId = document.getElementById('editContactLineId').value.trim();
       SITE_CONTACT.lineUrl = document.getElementById('editContactLineUrl').value.trim();
       SITE_CONTACT.mapsUrl = document.getElementById('editContactMapsUrl').value.trim();
+      SITE_CONTACT.bookingRequestEnabled = document.getElementById('editContactReqOn').checked;
 
       try {
         localStorage.setItem('baantaphai_contact_v3', JSON.stringify(SITE_CONTACT));
       } catch(e) {}
 
       closeContactEditModal();
+      refreshRoomBookingLink();
       renderPoliciesAndContactSection();
       handleSectionSave('contact', 'แก้ไขข้อมูลติดต่อและเบอร์โทร', isDirectPublish);
     }
@@ -10875,6 +11053,10 @@
     // ==========================================
     function formatFaqAnswer(text) {
       if (!text) return '';
+      if (window.SITE_LANG === 'en') {
+        const en = T(text);
+        if (en !== text) text = en.replace(/ • /g, '\n• ');
+      }
       if (/<(p|ul|ol|table|div)[^>]*>/i.test(text)) {
         return text;
       }
@@ -12181,7 +12363,7 @@
       }
 
       if (lineBtn && data.lineMsg) {
-        lineBtn.href = `https://line.me/R/ti/p/@baantaphairesort?text=${encodeURIComponent(data.lineMsg)}`;
+        lineBtn.href = `https://line.me/R/ti/p/@baantaphairesort?text=${encodeURIComponent(T(data.lineMsg))}`;
       }
 
       const messengerBtn = document.getElementById('actModalMessengerBtn');
@@ -12271,7 +12453,7 @@
     }
 
     function copyHashtags() {
-      const tags = '#บ้านตาผายรีสอร์ท #ที่พักอยุธยา #อยุธยาริมน้ำ #เที่ยวอยุธยา #รีสอร์ทอยุธยา #BaanTaPhaiResort';
+      const tags = tt('#บ้านตาผายรีสอร์ท #ที่พักอยุธยา #อยุธยาริมน้ำ #เที่ยวอยุธยา #รีสอร์ทอยุธยา #BaanTaPhaiResort');
       navigator.clipboard.writeText(tags).then(() => {
         showToast('📸 คัดลอกแฮชแท็ก Instagram สำเร็จ!');
       }).catch(() => {
@@ -12506,3 +12688,4 @@
       setTimeout(removeNetlifyBadges, 2500);
     });
   
+

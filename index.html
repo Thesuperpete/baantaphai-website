@@ -2,6 +2,24 @@
 <html lang="th" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
+  <!-- Language bootstrap: Thai is the default; ?lang=en or the header button switches to English (remembered).  -->
+  <script>
+    (function () {
+      var l = 'th';
+      try {
+        var q = new URLSearchParams(location.search).get('lang');
+        if (q === 'en' || q === 'th') localStorage.setItem('baantaphai_lang', q);
+        l = localStorage.getItem('baantaphai_lang') === 'en' ? 'en' : 'th';
+      } catch (e) {}
+      window.SITE_LANG = l;
+      if (l === 'en') {
+        document.documentElement.classList.add('i18n-pending');
+        document.write('<script src="i18n-en.js"><\/script>');
+        setTimeout(function () { document.documentElement.classList.remove('i18n-pending'); }, 3000);
+      }
+    })();
+  </script>
+  <style>html.i18n-pending body { visibility: hidden; }</style>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
@@ -1762,7 +1780,54 @@
       #roomContainer .room-card { animation: cardInFade .2s ease-out backwards; }
     }
 
-    /* ---------- Story ---------- */
+    /* Flatpickr (booking-request dates) in the navy/gold palette; sits above the room modal */
+    body .flatpickr-calendar { font-family: inherit; border-radius: 16px; box-shadow: 0 18px 40px -18px rgba(11, 37, 69, .55); border: 1px solid var(--border); z-index: 100000 !important; }
+    body .flatpickr-months .flatpickr-month, body .flatpickr-current-month .flatpickr-monthDropdown-months, body .flatpickr-weekdays, body span.flatpickr-weekday { color: var(--navy); fill: var(--navy); }
+    body .flatpickr-day.selected, body .flatpickr-day.selected:hover, body .flatpickr-day.selected:focus { background: var(--navy); border-color: var(--navy); color: #fff; }
+    body .flatpickr-day.today:not(.selected) { border-color: var(--thai-gold); }
+    body .flatpickr-day:hover:not(.selected):not(.flatpickr-disabled) { background: var(--tint); border-color: var(--tint); }
+    body .flatpickr-day.flatpickr-disabled, body .flatpickr-day.flatpickr-disabled:hover { color: #A8B3C4; }
+    @media (max-width: 640px) { body .flatpickr-day { height: 42px; line-height: 42px; } }
+
+    /* Booking-request form rows (room modal) */
+    .req-h { display: flex; align-items: center; gap: .5rem; margin: 14px 0 8px; font-size: 12px; font-weight: 600; color: var(--navy); }
+    .req-h::before { content: ""; width: 14px; height: 2px; background: var(--thai-gold); }
+    .req-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 52px; padding: 4px 6px 4px 12px; border: 1px solid #D6D3D1; border-radius: 14px; background: #fff; transition: border-color .2s, box-shadow .2s; }
+    /* beat the room modal's first-grid-child tint (#roomModal .grid > div:first-child) */
+    #roomModal .grid div.req-row.req-row { background: #fff !important; border-color: #D6D3D1 !important; }
+    #roomModal .grid div.req-row.on, #roomModal .grid div.req-row:has(input:checked), #roomModal .grid label.req-row:has(input:checked) { border-color: var(--navy) !important; }
+    .req-row.on, .req-row:has(input:checked) { border-color: var(--navy); box-shadow: 0 0 0 1px var(--navy) inset; }
+    .req-lbl { font-size: 12.5px; line-height: 1.3; color: #44403C; }
+    .req-lbl small { display: block; font-size: 10.5px; color: #78716C; }
+    .req-paw { color: var(--thai-gold); margin-right: .45rem; }
+    .req-stepper { display: flex; align-items: center; flex-shrink: 0; }
+    .req-stepper button { width: 44px; height: 44px; display: grid; place-items: center; border: 0; border-radius: 12px; background: transparent; color: var(--navy); font-size: 12px; cursor: pointer; transition: background .15s; }
+    .req-stepper button:hover:not(:disabled) { background: var(--tint); }
+    .req-stepper button:disabled { opacity: .3; cursor: default; }
+    .req-stepper output { min-width: 1.5rem; text-align: center; font: 600 15px/1 Prompt, sans-serif; font-variant-numeric: tabular-nums; color: var(--navy); }
+
+    .req-auto { background: var(--paper) !important; border-style: dashed; }
+    .req-lock { color: #A8A29E; margin-right: .45rem; font-size: 11px; }
+    .req-auto-n { margin-right: 14px; font: 600 15px/1 Prompt, sans-serif; font-variant-numeric: tabular-nums; color: var(--navy); }
+    .req-warn { white-space: pre-line; margin-top: 8px; font-size: 12.5px; font-weight: 600; line-height: 1.45; color: #B42318; }
+    .req-q { flex-wrap: wrap; padding: 8px 10px 8px 12px; }
+    .req-chips { display: inline-flex; flex-wrap: wrap; gap: 6px; }
+    .req-chip { position: relative; display: inline-flex; }
+    .req-chip input { position: absolute; opacity: 0; inset: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+    .req-chip span { display: inline-flex; align-items: center; gap: .4rem; min-height: 44px; padding: 0 14px; border: 1px solid #D6D3D1; border-radius: 9999px; background: #fff; font-size: 12.5px; color: #44403C; transition: background .15s, color .15s, border-color .15s; pointer-events: none; }
+    .req-chip input:checked + span { background: var(--navy); border-color: var(--navy); color: #fff; }
+    .req-chip input:focus-visible + span { outline: 2px solid var(--thai-gold); outline-offset: 2px; }
+    #roomReqKidAges label { display: block; }
+    #roomReqKidAges label span { display: block; margin-bottom: 4px; font-size: 11px; font-weight: 500; color: #57534E; }
+    #roomReqKidAges select { width: 100%; min-height: 44px; padding: 0 10px; border: 1px solid #D6D3D1; border-radius: 12px; background: #fff; font-size: 16px; color: var(--navy); }
+
+    /* ---------- English mode: the long English logo must not push the header buttons off a phone ---------- */
+@media (max-width: 480px) {
+  html.lang-en #siteHeader #navLogoTitle { font-size: 0.9rem; letter-spacing: 0.04em; }
+  html.lang-en #siteHeader #navLogoSubtitle { letter-spacing: 0.08em; }
+}
+
+/* ---------- Story ---------- */
     #story .story-tagline { font-style: italic; font-weight: 500; color: var(--bt-brown); }
     body.night-mode #story .story-tagline { color: var(--on-dark); }
 
@@ -2004,8 +2069,8 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-3 lg:gap-4">
       
       <!-- Brand Logo -->
-      <div class="flex items-center gap-2 relative group/logo">
-        <a href="#" class="flex items-center gap-2 sm:gap-3 group shrink-0 min-w-0">
+      <div class="flex items-center gap-2 relative group/logo min-w-0">
+        <a href="#" class="flex items-center gap-2 sm:gap-3 group min-w-0">
           <div id="navLogoIconWrapper" class="w-8 h-8 sm:w-11 sm:h-11 rounded-2xl bg-zen-dark text-zen-sand flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform duration-300 shrink-0 overflow-hidden">
             <i id="navLogoIcon" class="fa-solid fa-torii-gate text-xs sm:text-lg text-zen-torii"></i>
             <img id="navLogoImg" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Logo" class="w-full h-full object-cover hidden">
@@ -2080,6 +2145,12 @@
           </button>
         </div>
 
+        <!-- Language switch (Thai / English) -->
+        <button type="button" data-lang-toggle onclick="toggleSiteLang()" class="lang-toggle flex items-center justify-center gap-1.5 h-9 px-2.5 sm:px-3 rounded-full bg-zen-sand text-zen-dark border border-zen-cardborder text-[11px] font-semibold hover:bg-zen-sanddark transition-colors active:scale-95" aria-label="Switch to English" title="English">
+          <i class="fa-solid fa-globe text-[11px] text-zen-torii"></i>
+          <span data-lang-label>EN</span>
+        </button>
+
         <!-- Day / Night Ambience Toggle -->
         <button onclick="toggleDayNightMode()" id="dayNightBtn" class="flex items-center justify-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full bg-zen-sand text-zen-dark border border-zen-cardborder text-xs hover:bg-zen-sanddark transition-all active:scale-95 shadow-sm" title="สลับโหมดกลางวัน / โหมดกลางคืน">
           <i id="dayNightIcon" class="fa-solid fa-moon text-amber-500 text-xs"></i>
@@ -2126,6 +2197,12 @@
             <i class="fa-solid fa-xmark"></i>
           </button>
         </div>
+
+        <!-- Language switch inside drawer -->
+        <button type="button" data-lang-toggle onclick="toggleSiteLang()" class="lang-toggle w-full py-2.5 px-3 rounded-2xl bg-zen-sand text-zen-dark text-xs font-medium flex items-center justify-between border border-zen-cardborder min-h-[44px]" aria-label="Switch to English" title="English">
+          <span class="flex items-center gap-2"><i class="fa-solid fa-globe text-zen-torii text-xs"></i><span>ภาษา / Language</span></span>
+          <span data-lang-label class="text-[10px] font-semibold bg-white/70 px-2 py-0.5 rounded-full border border-stone-200">EN</span>
+        </button>
 
         <!-- Quick Day/Night Toggle inside drawer -->
         <button id="drawerDayNightToggleBtn" onclick="toggleDayNightMode()" class="w-full py-2.5 px-3 rounded-2xl bg-zen-sand text-zen-dark text-xs font-medium flex items-center justify-between border border-zen-cardborder active:scale-98 transition-transform">
@@ -4553,6 +4630,91 @@
             </div>
           </div>
 
+          <!-- Optional booking-request form (admin switch: contact edit modal) -->
+          <div id="roomReqBox" class="hidden mb-3 pt-3 border-t border-stone-200">
+            <div id="roomReqFields">
+              <p class="text-sm font-semibold text-stone-800">วางแผนวันเข้าพักของคุณ</p>
+              <p class="req-h">วันที่เข้าพัก</p>
+              <div class="grid grid-cols-2 gap-2">
+                <label for="roomReqIn" class="block">
+                  <span class="block text-[11px] font-medium text-stone-600 mb-1">เช็คอิน</span>
+                  <input type="date" id="roomReqIn" oninput="refreshRoomBookingLink()" class="w-full px-2.5 rounded-xl border border-stone-300 bg-white text-base min-h-[44px] focus:outline-none focus:border-blue-700">
+                </label>
+                <label for="roomReqOut" class="block">
+                  <span class="block text-[11px] font-medium text-stone-600 mb-1">เช็คเอาท์</span>
+                  <input type="date" id="roomReqOut" oninput="refreshRoomBookingLink()" class="w-full px-2.5 rounded-xl border border-stone-300 bg-white text-base min-h-[44px] focus:outline-none focus:border-blue-700">
+                </label>
+              </div>
+              <p class="req-h">ผู้เข้าพัก</p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <div class="req-row">
+                  <span class="req-lbl">ผู้ใหญ่ / เด็กโต<small>อายุ 7 ขวบขึ้นไป</small></span>
+                  <span class="req-stepper">
+                    <button type="button" onclick="reqStep('roomReqAdults', -1)" aria-label="ลดผู้ใหญ่ / เด็กโต" disabled><i class="fa-solid fa-minus"></i></button>
+                    <output id="roomReqAdults" data-max="30" aria-live="polite">0</output>
+                    <button type="button" onclick="reqStep('roomReqAdults', 1)" aria-label="เพิ่มผู้ใหญ่ / เด็กโต"><i class="fa-solid fa-plus"></i></button>
+                  </span>
+                </div>
+                <div class="req-row">
+                  <span class="req-lbl">เด็กเล็ก<small>ต่ำกว่า 7 ขวบ</small></span>
+                  <span class="req-stepper">
+                    <button type="button" onclick="reqStep('roomReqKids', -1)" aria-label="ลดเด็กเล็ก" disabled><i class="fa-solid fa-minus"></i></button>
+                    <output id="roomReqKids" data-max="6" aria-live="polite">0</output>
+                    <button type="button" onclick="reqStep('roomReqKids', 1)" aria-label="เพิ่มเด็กเล็ก"><i class="fa-solid fa-plus"></i></button>
+                  </span>
+                </div>
+                <div id="roomReqKidAges" class="hidden sm:col-span-2 grid grid-cols-2 gap-2"></div>
+                <div class="req-row req-auto sm:col-span-2">
+                  <span class="req-lbl"><i class="fa-solid fa-lock req-lock"></i>ผู้เข้าพักเสริม<small id="roomReqExtraNote">ระบบคำนวณให้อัตโนมัติเมื่อเกินจำนวนมาตรฐานของห้อง</small></span>
+                  <output id="roomReqExtra" class="req-auto-n" aria-live="polite">0</output>
+                </div>
+              </div>
+              <p id="roomReqWarn" class="req-warn hidden" role="status"></p>
+              <p class="req-h">ตัวเลือกเพิ่มเติม</p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <div class="req-row">
+                  <span class="req-lbl">เตียงเสริม</span>
+                  <span class="req-stepper">
+                    <button type="button" onclick="reqStep('roomReqBed', -1)" aria-label="ลดเตียงเสริม" disabled><i class="fa-solid fa-minus"></i></button>
+                    <output id="roomReqBed" data-max="10" aria-live="polite">0</output>
+                    <button type="button" onclick="reqStep('roomReqBed', 1)" aria-label="เพิ่มเตียงเสริม"><i class="fa-solid fa-plus"></i></button>
+                  </span>
+                </div>
+                <div class="req-row">
+                  <span class="req-lbl">ฟูกเสริม</span>
+                  <span class="req-stepper">
+                    <button type="button" onclick="reqStep('roomReqMat', -1)" aria-label="ลดฟูกเสริม" disabled><i class="fa-solid fa-minus"></i></button>
+                    <output id="roomReqMat" data-max="10" aria-live="polite">0</output>
+                    <button type="button" onclick="reqStep('roomReqMat', 1)" aria-label="เพิ่มฟูกเสริม"><i class="fa-solid fa-plus"></i></button>
+                  </span>
+                </div>
+                <div id="roomReqBkfRow" class="req-row req-q hidden sm:col-span-2">
+                  <span class="req-lbl">อาหารเช้าสำหรับผู้ที่เพิ่มมา<small id="roomReqBkfNote"></small></span>
+                  <span class="req-chips" role="radiogroup" aria-label="รับอาหารเช้าเพิ่มหรือไม่">
+                  <label class="req-chip"><input type="radio" name="roomReqBkf" value="0" onchange="refreshRoomBookingLink()" checked><span>ไม่รับ</span></label>
+                  <label class="req-chip"><input type="radio" name="roomReqBkf" value="1" onchange="refreshRoomBookingLink()"><span>รับ</span></label>
+                  </span>
+                </div>
+                <div class="req-row req-q sm:col-span-2">
+                  <span class="req-lbl"><i class="fa-solid fa-paw req-paw"></i>สัตว์เลี้ยง<small>แอดมินจะแจ้งเงื่อนไขการพาสัตว์เลี้ยงเข้าพักให้ก่อนยืนยัน</small></span>
+                  <span class="req-chips" role="group" aria-label="ชนิดสัตว์เลี้ยง">
+                  <label class="req-chip"><input type="checkbox" name="roomReqPet" value="สุนัข" onchange="refreshRoomBookingLink()"><span><i class="fa-solid fa-dog"></i>สุนัข</span></label>
+                  <label class="req-chip"><input type="checkbox" name="roomReqPet" value="แมว" onchange="refreshRoomBookingLink()"><span><i class="fa-solid fa-cat"></i>แมว</span></label>
+                  <label class="req-chip"><input type="checkbox" name="roomReqPet" value="อื่นๆ" onchange="refreshRoomBookingLink()"><span><i class="fa-solid fa-paw"></i>อื่นๆ</span></label>
+                  </span>
+                </div>
+                <input type="text" id="roomReqPetNote" maxlength="60" oninput="refreshRoomBookingLink()" placeholder="ขนาด / จำนวน / ชนิดสัตว์" aria-label="รายละเอียดสัตว์เลี้ยง" class="hidden sm:col-span-2 w-full px-3 rounded-xl border border-stone-300 bg-white text-base min-h-[44px] focus:outline-none focus:border-blue-700">
+              </div>
+              <p id="roomReqRates" class="mt-3 text-[11px] leading-relaxed text-stone-500"></p>
+              <p id="roomReqHint" class="mt-1.5 text-[11px] leading-relaxed text-stone-600"></p>
+              <button type="button" id="roomReqCopy" onclick="copyRoomRequest()" class="hidden mt-2 px-3.5 rounded-xl border border-blue-700 bg-white text-blue-800 hover:bg-blue-50 text-xs font-semibold min-h-[44px] inline-flex items-center gap-2"><i class="fa-brands fa-facebook-messenger text-sm"></i> <span>คัดลอกคำขอ ไปวางใน Messenger</span></button>
+            </div>
+            <div id="roomReqOff" class="hidden text-[11px] leading-relaxed text-stone-600">ฟอร์มขอจองปิดอยู่ ลูกค้าจะไม่เห็นส่วนนี้ (เห็นเฉพาะแอดมิน)</div>
+            <button type="button" onclick="openContactEditModal()" class="modal-admin-only hidden mt-2 px-3 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-stone-900 font-bold text-[11px] items-center gap-1.5 min-h-[44px]">
+              <i class="fa-solid fa-toggle-on"></i> เปิด/ปิดฟอร์มขอจอง
+            </button>
+          </div>
+
           <!-- Bottom Action Buttons in Right Column (Desktop sticky/docked) -->
           <div class="pt-3 border-t border-stone-200 flex items-center gap-2 mt-auto pb-6 sm:pb-0 safe-bottom-bar flex-wrap sm:flex-nowrap">
             <button id="modalAdminEditBottomBtn" onclick="openEditModalFromDetail()" class="modal-admin-only hidden px-3.5 sm:px-4 py-3 rounded-2xl bg-amber-500 hover:bg-amber-600 text-stone-900 font-bold text-xs items-center justify-center gap-1.5 shadow-sm transition-all min-h-[44px] active:scale-98 shrink-0">
@@ -4568,7 +4730,7 @@
             </a>
             <a id="modalBookingBtn" href="https://line.me/R/ti/p/@baantaphairesort" target="_blank" class="flex-1 py-3 rounded-2xl bg-zen-line hover:bg-emerald-600 font-medium text-xs text-white text-center flex items-center justify-center gap-1.5 shadow-sm transition-all min-h-[44px] active:scale-98">
               <i class="fa-brands fa-line text-lg"></i>
-              <span>จองผ่าน LINE</span>
+              <span id="modalBookingLabel">จองผ่าน LINE</span>
             </a>
           </div>
 
@@ -9219,6 +9381,10 @@
           <label class="block font-semibold text-stone-700 mb-1">ลิงก์นำทาง Google Maps</label>
           <input type="text" id="editContactMapsUrl" class="w-full p-2.5 rounded-xl border border-stone-300 focus:outline-none focus:border-amber-600 text-xs" placeholder="https://maps.app.goo.gl/...">
         </div>
+        <label class="flex items-start gap-3 p-3 rounded-xl border border-stone-300 bg-stone-50 cursor-pointer">
+          <input type="checkbox" id="editContactReqOn" class="mt-0.5 w-5 h-5 shrink-0 accent-amber-600">
+          <span class="text-xs text-stone-800"><b>เปิดฟอร์ม "ขอจองห้อง" ในหน้าต่างห้องพัก</b><br><span class="text-[11px] text-stone-500 leading-relaxed">ลูกค้าเลือกวันที่/จำนวนคนแล้วส่งเข้า LINE ถ้าไม่ติ๊ก แล้วเผยแพร่ ฟอร์มจะหายไป ปุ่ม "จองผ่าน LINE" ยังใช้ได้เหมือนเดิม</span></span>
+        </label>
         <div class="p-2.5 bg-emerald-50 rounded-xl border border-emerald-200 text-emerald-900 text-[11px] leading-relaxed">
           <i class="fa-solid fa-check-circle mr-1"></i> เมื่อเปลี่ยนเบอร์โทรศัพท์หลัก ระบบจะอัปเดตเบอร์โทรในแถบนำทางด้านบน (Navbar), เมนูมือถือ และแถบด้านล่างเว็บไซต์ (Footer) ให้ตรงกันทุกจุดโดยอัตโนมัติ!
         </div>
@@ -9363,6 +9529,7 @@
   </div>
 
   <!-- ================= JAVASCRIPT ENGINE & DATA STORE ================= -->
+  <script src="i18n.js"></script>
   <script src="app.js"></script>
 
   <script src="site-fx.js"></script>
