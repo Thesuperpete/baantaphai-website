@@ -100,9 +100,22 @@
         unit: "/ คืน (รวม 4 ท่าน)",
         cap: "4 - 6 ท่าน (เตียง King 6 ฟุต 2 หลัง)",
         images: [
-          "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1000&q=80",
-          "https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=1000&q=80",
-          "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=1000&q=80"
+          "photos/rooms/family_house/1.webp",
+          "photos/rooms/family_house/2.webp",
+          "photos/rooms/family_house/3.webp",
+          "photos/rooms/family_house/4.webp",
+          "photos/rooms/family_house/5.webp",
+          "photos/rooms/family_house/6.webp",
+          "photos/rooms/family_house/7.webp",
+          "photos/rooms/family_house/8.webp",
+          "photos/rooms/family_house/9.webp",
+          "photos/rooms/family_house/10.webp",
+          "photos/rooms/family_house/11.webp",
+          "photos/rooms/family_house/12.webp",
+          "photos/rooms/family_house/13.webp",
+          "photos/rooms/family_house/14.webp",
+          "photos/rooms/family_house/15.webp",
+          "photos/rooms/family_house/16.webp"
         ],
         desc: "บ้านพักติดริมน้ำขนาดใหญ่ ดีไซน์โปร่งสบาย พร้อมดาดฟ้าชมวิว 360 องศา และซุ้มอาหารส่วนตัวยื่นออกสู่ริมน้ำ บรรยากาศสุดผ่อนคลายสำหรับครอบครัว",
         highlights: [
@@ -121,9 +134,16 @@
         unit: "/ คืน (รวม 2 ท่าน)",
         cap: "2 - 4 ท่าน (เตียง King 6 ฟุต 1 หลัง)",
         images: [
-          "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=1000&q=80",
-          "https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?auto=format&fit=crop&w=1000&q=80",
-          "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1000&q=80"
+          "photos/rooms/lake_view/1.webp",
+          "photos/rooms/lake_view/2.webp",
+          "photos/rooms/lake_view/3.webp",
+          "photos/rooms/lake_view/4.webp",
+          "photos/rooms/lake_view/5.webp",
+          "photos/rooms/lake_view/6.webp",
+          "photos/rooms/lake_view/7.webp",
+          "photos/rooms/lake_view/8.webp",
+          "photos/rooms/lake_view/9.webp",
+          "photos/rooms/lake_view/10.webp"
         ],
         desc: "ดีไซน์น่ารักแบบ 1 ชั้นครึ่ง เตียงนอนบนชั้นลอยสุดชิค พร้อมเฉลียงยื่นริมน้ำและซุ้มอาหารส่วนตัวสัมผัสไอเย็นอย่างใกล้ชิด",
         highlights: [
@@ -142,9 +162,27 @@
         unit: "/ คืน (รวม 2 ท่าน)",
         cap: "2 - 4 ท่าน (เตียง King 6 ฟุต 1 หลัง)",
         images: [
-          "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1000&q=80",
-          "https://images.unsplash.com/photo-1519710164239-da123dc03ef4?auto=format&fit=crop&w=1000&q=80",
-          "https://images.unsplash.com/photo-1507652313519-d4e9174996dd?auto=format&fit=crop&w=1000&q=80"
+          "photos/rooms/sky_view/1.webp",
+          "photos/rooms/sky_view/2.webp",
+          "photos/rooms/sky_view/3.webp",
+          "photos/rooms/sky_view/4.webp",
+          "photos/rooms/sky_view/5.webp",
+          "photos/rooms/sky_view/6.webp",
+          "photos/rooms/sky_view/7.webp",
+          "photos/rooms/sky_view/8.webp",
+          "photos/rooms/sky_view/9.webp",
+          "photos/rooms/sky_view/10.webp",
+          "photos/rooms/sky_view/11.webp",
+          "photos/rooms/sky_view/12.webp",
+          "photos/rooms/sky_view/13.webp",
+          "photos/rooms/sky_view/14.webp",
+          "photos/rooms/sky_view/15.webp",
+          "photos/rooms/sky_view/16.webp",
+          "photos/rooms/sky_view/17.webp",
+          "photos/rooms/sky_view/18.webp",
+          "photos/rooms/sky_view/19.webp",
+          "photos/rooms/sky_view/20.webp",
+          "photos/rooms/sky_view/21.webp"
         ],
         desc: "ห้องพักติดริมน้ำในโซนส่วนตัวสูง ไร้เสียงรบกวน โดดเด่นด้วยดาดฟ้าส่วนตัวสำหรับนั่งรับลมและดูดาวยามค่ำคืน",
         highlights: [
@@ -163,9 +201,27 @@
         unit: "/ คืน (รวม 2 ท่าน)",
         cap: "2 - 4 ท่าน (เตียง King 6 ฟุต 1 หลัง)",
         images: [
-          "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1000&q=80",
-          "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1000&q=80",
-          "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1000&q=80"
+          "photos/rooms/rock_view/1.webp",
+          "photos/rooms/rock_view/2.webp",
+          "photos/rooms/rock_view/3.webp",
+          "photos/rooms/rock_view/4.webp",
+          "photos/rooms/rock_view/5.webp",
+          "photos/rooms/rock_view/6.webp",
+          "photos/rooms/rock_view/7.webp",
+          "photos/rooms/rock_view/8.webp",
+          "photos/rooms/rock_view/9.webp",
+          "photos/rooms/rock_view/10.webp",
+          "photos/rooms/rock_view/11.webp",
+          "photos/rooms/rock_view/12.webp",
+          "photos/rooms/rock_view/13.webp",
+          "photos/rooms/rock_view/14.webp",
+          "photos/rooms/rock_view/15.webp",
+          "photos/rooms/rock_view/16.webp",
+          "photos/rooms/rock_view/17.webp",
+          "photos/rooms/rock_view/18.webp",
+          "photos/rooms/rock_view/19.webp",
+          "photos/rooms/rock_view/20.webp",
+          "photos/rooms/rock_view/21.webp"
         ],
         desc: "ห้องพักสไตล์มินิมอลติดริมน้ำ เอกลักษณ์มุมนั่งห้อยขารับไอเย็น สบายกระเป๋าแต่ได้วิวธรรมชาติหลักล้าน",
         highlights: [
@@ -184,9 +240,17 @@
         unit: "/ คืน (รวม 8 ท่าน)",
         cap: "8 - 12 ท่าน (4 เตียง King 6 ฟุต)",
         images: [
-          "https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=1000&q=80",
-          "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1000&q=80",
-          "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=1000&q=80"
+          "photos/rooms/jp_full/1.webp",
+          "photos/rooms/jp_full/2.webp",
+          "photos/rooms/jp_full/3.webp",
+          "photos/rooms/jp_full/4.webp",
+          "photos/rooms/jp_full/5.webp",
+          "photos/rooms/jp_full/6.webp",
+          "photos/rooms/jp_full/7.webp",
+          "photos/rooms/jp_full/8.webp",
+          "photos/rooms/jp_full/9.webp",
+          "photos/rooms/jp_full/10.webp",
+          "photos/rooms/jp_full/11.webp"
         ],
         desc: "บ้านพักสไตล์ญี่ปุ่นเหมาหลัง 3 ห้องนอน 4 เตียงคิงไซส์ เป็นส่วนตัวยกแก๊ง พร้อมประตู Connecting เชื่อมถึงกัน",
         highlights: [
@@ -205,9 +269,10 @@
         unit: "/ คืน (รวม 4 ท่าน)",
         cap: "4 - 6 ท่าน (2 เตียง King 6 ฟุต)",
         images: [
-          "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1000&q=80",
-          "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&w=1000&q=80",
-          "https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=1000&q=80"
+          "photos/rooms/jp_connect/1.webp",
+          "photos/rooms/jp_connect/2.webp",
+          "photos/rooms/jp_connect/3.webp",
+          "photos/rooms/jp_connect/4.webp"
         ],
         desc: "บ้านพักขนาดกลาง 2 ห้องนอนที่มีประตูด้านในเชื่อมถึงกัน สะดวกและอบอุ่นสำหรับครอบครัวหรือกลุ่มเพื่อน",
         highlights: [
@@ -226,9 +291,21 @@
         unit: "/ คืน (รวม 4 ท่าน)",
         cap: "4 - 6 ท่าน (2 เตียง King 6 ฟุต)",
         images: [
-          "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=1000&q=80",
-          "https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=1000&q=80",
-          "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1000&q=80"
+          "photos/rooms/jp_2king/1.webp",
+          "photos/rooms/jp_2king/2.webp",
+          "photos/rooms/jp_2king/3.webp",
+          "photos/rooms/jp_2king/4.webp",
+          "photos/rooms/jp_2king/5.webp",
+          "photos/rooms/jp_2king/6.webp",
+          "photos/rooms/jp_2king/7.webp",
+          "photos/rooms/jp_2king/8.webp",
+          "photos/rooms/jp_2king/9.webp",
+          "photos/rooms/jp_2king/10.webp",
+          "photos/rooms/jp_2king/11.webp",
+          "photos/rooms/jp_2king/12.webp",
+          "photos/rooms/jp_2king/13.webp",
+          "photos/rooms/jp_2king/14.webp",
+          "photos/rooms/jp_2king/15.webp"
         ],
         desc: "ห้องพักขนาดใหญ่พิเศษ วาง 2 เตียงคิงไซส์ 6 ฟุต เหมาะสำหรับเพื่อน 4 ท่านหรือครอบครัวที่ต้องการนอนรวมกัน",
         highlights: [
@@ -247,9 +324,16 @@
         unit: "/ คืน (รวม 2 ท่าน)",
         cap: "2 - 4 ท่าน (1 เตียง King 6 ฟุต)",
         images: [
-          "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1000&q=80",
-          "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1000&q=80",
-          "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=1000&q=80"
+          "photos/rooms/jp_king/1.webp",
+          "photos/rooms/jp_king/2.webp",
+          "photos/rooms/jp_king/3.webp",
+          "photos/rooms/jp_king/4.webp",
+          "photos/rooms/jp_king/5.webp",
+          "photos/rooms/jp_king/6.webp",
+          "photos/rooms/jp_king/7.webp",
+          "photos/rooms/jp_king/8.webp",
+          "photos/rooms/jp_king/9.webp",
+          "photos/rooms/jp_king/10.webp"
         ],
         desc: "ห้องพักสไตล์ญี่ปุ่นขนาดกะทัดรัด พร้อมห้องน้ำส่วนตัวและอุปกรณ์ครบครัน อบอุ่น เรียบง่าย เป็นส่วนตัว",
         highlights: [
@@ -289,9 +373,37 @@
         unit: "/ คืน (รวม 16 ท่าน)",
         cap: "16 - 20 ท่าน (7 ห้องนอน 8 เตียง King 6 ฟุต)",
         images: [
-          "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=80",
-          "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1000&q=80",
-          "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=80"
+          "photos/rooms/country_house/1.webp",
+          "photos/rooms/country_house/2.webp",
+          "photos/rooms/country_house/3.webp",
+          "photos/rooms/country_house/4.webp",
+          "photos/rooms/country_house/5.webp",
+          "photos/rooms/country_house/6.webp",
+          "photos/rooms/country_house/7.webp",
+          "photos/rooms/country_house/8.webp",
+          "photos/rooms/country_house/9.webp",
+          "photos/rooms/country_house/10.webp",
+          "photos/rooms/country_house/11.webp",
+          "photos/rooms/country_house/12.webp",
+          "photos/rooms/country_house/13.webp",
+          "photos/rooms/country_house/14.webp",
+          "photos/rooms/country_house/15.webp",
+          "photos/rooms/country_house/16.webp",
+          "photos/rooms/country_house/17.webp",
+          "photos/rooms/country_house/18.webp",
+          "photos/rooms/country_house/19.webp",
+          "photos/rooms/country_house/20.webp",
+          "photos/rooms/country_house/21.webp",
+          "photos/rooms/country_house/22.webp",
+          "photos/rooms/country_house/23.webp",
+          "photos/rooms/country_house/24.webp",
+          "photos/rooms/country_house/25.webp",
+          "photos/rooms/country_house/26.webp",
+          "photos/rooms/country_house/27.webp",
+          "photos/rooms/country_house/28.webp",
+          "photos/rooms/country_house/29.webp",
+          "photos/rooms/country_house/30.webp",
+          "photos/rooms/country_house/31.webp"
         ],
         desc: "บ้านพักขนาดใหญ่ 2 ชั้น ให้บริการแบบ 'เหมาหลังส่วนตัว' เท่านั้น ไม่ซอยย่อย 7 ห้องนอน 8 เตียงคิงไซส์ 6 ห้องน้ำ พร้อมโถงกลางใหญ่ โต๊ะสนุกเกอร์ และโต๊ะฟุตบอลมือหมุนฟรี!",
         highlights: [
