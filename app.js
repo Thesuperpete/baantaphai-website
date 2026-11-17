@@ -12757,6 +12757,27 @@
     }
 
     // Initial load
+    // Latest posts from our own function (Facebook Graph API). On any failure the iframe plugin stays as it was.
+    async function loadFbFeed() {
+      const box = document.getElementById('fbNativeFeed'), plugin = document.getElementById('fbPluginBox');
+      if (!box || !plugin) return;
+      try {
+        const r = await fetch('/.netlify/functions/fb-feed');
+        const j = r.ok ? await r.json() : null;
+        if (!j || !j.success || !j.posts || !j.posts.length) return;
+        const label = T('ดูโพสต์นี้บน Facebook');
+        box.innerHTML = j.posts.map(p => {
+          const d = new Date(p.time);
+          const date = isNaN(d) ? '' : d.toLocaleDateString(UI_LOCALE, { day: 'numeric', month: 'short', year: 'numeric' });
+          const img = p.image ? `<img src="${escapeHtml(p.image)}" alt="" loading="lazy" referrerpolicy="no-referrer">` : '';
+          const text = p.text ? `<p class="fbn-text">${escapeHtml(p.text)}</p>` : '';
+          return `<a class="fbn-card" href="${escapeHtml(p.url)}" target="_blank" rel="noopener noreferrer">${img}<div class="fbn-body">${text}<div class="fbn-meta"><span>${escapeHtml(date)}</span><b>${escapeHtml(label)} ›</b></div></div></a>`;
+        }).join('');
+        box.classList.remove('hidden');
+        plugin.classList.add('hidden');
+      } catch (e) { /* offline or no function (local preview): keep the plugin */ }
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
       renderLogoSection();
       renderNavMenuSection();
@@ -12799,6 +12820,7 @@
       fetchLiveWeather(false);
 
       // ☁️ Background Cloud Data Sync (Auto-fetches latest edits made on any device)
+      loadFbFeed();
       fetchCloudData(true);
       startCloudSyncLoop();
 

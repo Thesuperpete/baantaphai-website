@@ -216,6 +216,7 @@ window.I18N_EN = {
 "ดูโพสต์ล่าสุดบนเพจ Facebook": "View the latest posts on our Facebook page",
 "Facebook Page Feed บ้านตาผาย @Baantaphai": "Facebook Page Feed · Baan Ta Phai @Baantaphai",
 "ดูโพสต์ล่าสุดทั้งหมดบน Facebook": "View all latest posts on Facebook",
+"ดูโพสต์นี้บน Facebook": "View post on Facebook",
 "ติดตามเพจบ้านตาผาย ได้อะไรบ้าง?": "What do you get by following Baan Ta Phai?",
 "ร่วมเป็นครอบครัวเดียวกับเรา รับสิทธิพิเศษก่อนใคร": "Join our family and get special perks first",
 "ภาพบรรยากาศบ้านพัก ห้องพัก": "Photos of the houses and rooms",

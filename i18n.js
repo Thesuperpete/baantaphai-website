@@ -83,8 +83,12 @@
   window.setSiteLang = function (l) {
     try { localStorage.setItem('baantaphai_lang', l); } catch (e) {}
     var u = new URL(location.href);
-    u.searchParams.delete('lang');
-    location.href = u.toString();
+    if (u.searchParams.has('lang')) {
+      u.searchParams.delete('lang');
+      try { history.replaceState(null, '', u.toString()); } catch (e) {}
+    }
+    // location.href = same URL does nothing when the URL has a #hash, so always reload explicitly
+    location.reload();
   };
   window.toggleSiteLang = function () { window.setSiteLang(LANG === 'en' ? 'th' : 'en'); };
 

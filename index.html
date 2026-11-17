@@ -1750,6 +1750,19 @@
     #rooms #roomsDescEl { color: #4A5C78; }
     body.night-mode #rooms #roomsDescEl { color: var(--on-dark-muted); }
 
+    /* Facebook posts fetched by the fb-feed function (replaces the iframe plugin when it works) */
+    .fbn-list { max-height: 560px; overflow-y: auto; display: flex; flex-direction: column; gap: .75rem; padding-right: .15rem; -webkit-overflow-scrolling: touch; }
+    .fbn-list.hidden { display: none; }
+    .fbn-card { display: block; border: 1px solid var(--cardborder, #e7e5e4); border-radius: 1rem; overflow: hidden; background: #fff; color: inherit; text-decoration: none; transition: transform .2s ease, box-shadow .2s ease; }
+    .fbn-card:hover { transform: translateY(-2px); box-shadow: 0 14px 26px -18px rgba(20, 101, 216, .6); }
+    .fbn-card img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; background: #EEF4FD; }
+    .fbn-body { padding: .75rem .9rem .85rem; }
+    .fbn-text { margin: 0; font-size: 13px; line-height: 1.55; color: var(--navy, #1b2a49); display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; white-space: pre-line; overflow-wrap: anywhere; }
+    .fbn-meta { margin-top: .5rem; display: flex; justify-content: space-between; gap: .5rem; font-size: 11px; color: var(--muted, #78716c); }
+    .fbn-meta b { color: var(--facebook); font-weight: 600; }
+    body.night-mode .fbn-card { background: rgba(255, 255, 255, .06); border-color: rgba(255, 255, 255, .14); }
+    body.night-mode .fbn-text { color: var(--on-dark); }
+
     /* Facebook live feed: fallback behind the iframe + an always-visible button */
     .fb-fallback { position: absolute; left: 0; right: 0; top: 150px; z-index: 0; padding: 0 1.5rem; text-align: center; }
     .fb-fallback p { margin: 0; font-weight: 600; color: var(--navy); }
@@ -3494,7 +3507,8 @@
 
             <!-- Panel 2: Live Facebook Page Plugin (Adaptive Container, Never Clipped) -->
             <div id="fbPanelLive" class="space-y-3">
-              <div class="w-full rounded-2xl overflow-hidden bg-stone-50 border border-stone-200/90 flex flex-col items-center justify-center relative min-h-[460px]">
+              <div id="fbNativeFeed" class="fbn-list hidden" aria-live="polite"></div>
+              <div id="fbPluginBox" class="w-full rounded-2xl overflow-hidden bg-stone-50 border border-stone-200/90 flex flex-col items-center justify-center relative min-h-[460px]">
                 <div class="fb-fallback" aria-hidden="false">
                   <p>ยังไม่เห็นโพสต์ล่าสุด?</p>
                   <span>บางเบราว์เซอร์หรือโหมดส่วนตัวบล็อกฟีดของ Facebook</span>
