@@ -477,21 +477,3 @@
     try { sessionStorage.setItem('bt_toast_off', '1'); } catch (err) {}
   });
 })();
-
-
-// ===== Motion: reveal the story scene once, and pause looping mascots while they are off screen =====
-(function () {
-  var scene = document.querySelector('.mascot-scene');
-  if (scene) {
-    scene.classList.add('ms-ready');
-    if (!('IntersectionObserver' in window)) scene.classList.add('in');
-    else {
-      var once = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { scene.classList.add('in'); once.disconnect(); } }); }, { threshold: 0.35 });
-      once.observe(scene);
-    }
-  }
-  if ('IntersectionObserver' in window) {
-    var loop = new IntersectionObserver(function (es) { es.forEach(function (e) { e.target.classList.toggle('is-paused', !e.isIntersecting); }); }, { rootMargin: '80px' });
-    document.querySelectorAll('.mascot-bob').forEach(function (m) { loop.observe(m); });
-  }
-})();

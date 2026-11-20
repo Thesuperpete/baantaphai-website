@@ -559,8 +559,8 @@
     // 1.08 MASTER INTERACTIVE ROOM FINDER DATA
     const DEFAULT_ROOM_FINDER_DATA = {
       badge: "Interactive Room Finder",
-      title: "ไม่แน่ใจว่าจะพักห้องไหนดี? ให้เราช่วยแนะนำใน 3 คลิก!",
-      subtitle: "เลือกความต้องการของคุณ ระบบจะจับคู่ห้องพักที่เหมาะกับคุณที่สุดทันที",
+      title: "ไม่แน่ใจว่าจะพักห้องไหนดี? ให้เราช่วยเลือกให้!",
+      subtitle: "บอกจำนวนแขกกับสไตล์ที่ชอบ ระบบจะแนะนำห้องพักพร้อมราคาเบื้องต้นให้ทันที",
       step1Label: "1. จำนวนผู้เข้าพักของคุณ:",
       guestsOptions: [
         { value: "2", icon: "👥", title: "2 ท่าน", sub: "คู่รัก / เพื่อน" },
@@ -2613,7 +2613,7 @@
                 if (modalCap) modalCap.textContent = updated.cap;
                 const modalDesc = document.getElementById('modalDesc');
                 if (modalDesc) modalDesc.textContent = updated.desc;
-                refreshRoomBookingLink(updated.title, updated.price, updated.unit, updated.cap);
+                refreshRoomBookingLink(updated.title, updated.price, updated.unit, updated.cap, updated.id);
               }
             }
           if (Array.isArray(d.dining) && d.dining.length > 0 && isDiff(d.dining, SITE_DINING)) {
@@ -3660,11 +3660,6 @@
     let currentPhotoIndex = 0;
     let isNightMode = false;
 
-    // Quiz selections
-    let quizSelected = {
-      people: '2',
-      vibe: 'riverside'
-    };
 
     // Card Image Focal Point, Zoom & Filter Styling Helper
     function getCardImageStyle(item) {
@@ -3915,22 +3910,49 @@
       const incl = ((unit || '').match(/รวม\s*(\d+)\s*ท่าน/) || [])[1];
       return { std: incl ? +incl : (nums.length ? Math.min(...nums) : 0), max: nums.length ? Math.max(...nums) : 0 };
     }
+    // Preliminary-price rates (same as FAQ faq_4 and the staff quick calculator): bed and mattress are charged once per stay (a room takes one or the other), the rest per night.
+    const EST = { bed: 200, mat: 100, guest: 50, bkfAdult: 100, bkfKid: 50, pet: 100 };
     const reqN = id => parseInt(document.getElementById(id).textContent, 10) || 0;
     function reqStep(id, d) {
       const o = document.getElementById(id);
-      o.textContent = Math.min(+o.dataset.max || 10, Math.max(0, reqN(id) + d));
+      o.textContent = Math.min(+o.dataset.max || 10, Math.max(+o.dataset.min || 0, reqN(id) + d));
+      // a room takes an extra bed OR an extra mattress, one piece in total
+      const other = { roomReqBed: 'roomReqMat', roomReqMat: 'roomReqBed' }[id];
+      if (other && reqN(id)) document.getElementById(other).textContent = 0;
       refreshRoomBookingLink();
     }
     let roomReqArgs = null, roomReqLastMsg = '';
-    // Messenger links cannot carry a prefilled message, so offer the same text on the clipboard.
+    // Messenger links cannot carry a prefilled message, so the "ทัก Messenger" button copies the request to the clipboard as it opens the chat.
     function copyRoomRequest() {
-      const span = document.querySelector('#roomReqCopy span');
-      const done = ok => { span.textContent = ok ? 'คัดลอกแล้ว วางในช่องแชท Messenger ได้เลย' : 'คัดลอกไม่สำเร็จ ลองกดค้างที่ข้อความแล้วคัดลอกเอง'; setTimeout(() => { span.textContent = 'คัดลอกคำขอ ไปวางใน Messenger'; }, 2500); };
+      if (!roomReqLastMsg) return;
+      const done = ok => showToast(ok ? 'คัดลอกคำขอแล้ว วางในแชท Messenger ได้เลย' : 'คัดลอกคำขอไม่สำเร็จ พิมพ์ข้อความในแชทได้เลย');
       const fallback = () => { const t = document.createElement('textarea'); t.value = roomReqLastMsg; t.style.cssText = 'position:fixed;opacity:0'; document.body.appendChild(t); t.select(); let ok = false; try { ok = document.execCommand('copy'); } catch (e) {} t.remove(); done(ok); };
       if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(roomReqLastMsg).then(() => done(true), fallback); else fallback();
     }
-    function refreshRoomBookingLink(title, price, unit, cap) {
-      if (title !== undefined) roomReqArgs = { title, price, unit: unit || '/คืน', cap: cap || '' };
+    // Availability status under the date pickers: shows only what the server allows (see avail.js). Any failure hides the box.
+    const ROOM_AVAIL_URL = 'https://script.google.com/macros/s/AKfycbxFsDxYYXc2f4-qeYBKCTPBjpEEJRMgAhsOHl0N0QskWU1_lYDkLKCoB9j4B_ZVsTfh/exec';
+    let roomAvailKey = '', roomAvailSeq = 0;
+    function showRoomAvail(id, inStr, outStr) {
+      const box = document.getElementById('roomReqAvail'), text = document.getElementById('roomReqAvailText');
+      if (!box || typeof fetchRoomAvail !== 'function') return;
+      const key = id && inStr && outStr && outStr > inStr ? id + '|' + inStr + '|' + outStr : '';
+      if (key === roomAvailKey) return;
+      roomAvailKey = key;
+      const seq = ++roomAvailSeq;                       // a slower, older answer must not overwrite a newer one
+      if (!key) { box.classList.add('hidden'); return; }
+      box.className = 'req-avail';
+      text.textContent = tt('กำลังเช็กห้องว่าง...');
+      fetchRoomAvail(inStr, outStr, { baseUrl: ROOM_AVAIL_URL }).then(types => {
+        if (seq !== roomAvailSeq) return;
+        const v = types && roomAvailView(types[id]);
+        if (!v) { box.classList.add('hidden'); return; }
+        box.className = 'req-avail ' + v.tone;
+        text.textContent = tt(v.key, v.n);
+      });
+    }
+
+    function refreshRoomBookingLink(title, price, unit, cap, id) {
+      if (title !== undefined) roomReqArgs = { title, price, unit: unit || '/คืน', cap: cap || '', id: id || '' };
       const btn = document.getElementById('modalBookingBtn');
       const box = document.getElementById('roomReqBox');
       if (!roomReqArgs || !btn || !box) return;
@@ -3939,7 +3961,7 @@
       document.getElementById('roomReqFields').classList.toggle('hidden', !on);
       document.getElementById('roomReqOff').classList.toggle('hidden', on);
       let msg = tt('สวัสดีครับ/ค่ะ สนใจสอบถาม/จองห้อง "{0}" ({1}{2}) ครับ/ค่ะ', T(roomReqArgs.title), roomReqArgs.price, T(roomReqArgs.unit));
-      let valid = false;
+      let valid = false, estBox = null, petIncomplete = false;
       const hint = document.getElementById('roomReqHint');
       if (on) {
         initRoomReqPickers();
@@ -3957,11 +3979,27 @@
         const extra = std ? Math.max(0, total - std) : 0;
         set('roomReqExtra', extra);
         document.getElementById('roomReqExtra').closest('.req-row').style.opacity = extra ? 1 : .7;
+        // pets: each ticked type gets a count (starts at 1); "other" must also say what animal it is
+        const PET_TYPES = [['สุนัข', 'roomReqPetDog'], ['แมว', 'roomReqPetCat'], ['อื่นๆ', 'roomReqPetOther']];
+        const petSel = [];
+        PET_TYPES.forEach(([name, id]) => {
+          const on = document.querySelector(`input[name="roomReqPet"][value="${name}"]`).checked;
+          if (on && !reqN(id)) set(id, 1);
+          if (!on) set(id, 0);
+          document.getElementById(id).closest('.req-row').style.display = on ? '' : 'none';
+          if (on) petSel.push([name, reqN(id)]);
+        });
+        const otherType = document.getElementById('roomReqPetOtherType');
+        const otherOn = petSel.some(p => p[0] === 'อื่นๆ');
+        otherType.style.display = otherOn ? '' : 'none';
+        document.getElementById('roomReqPetRows').classList.toggle('hidden', !petSel.length);
+        petIncomplete = otherOn && !otherType.value.trim();
         const warn = document.getElementById('roomReqWarn');
         const atMax = max && adults + kids >= max;
         warn.textContent = [
           extra && `ราคาห้องนี้รวมผู้เข้าพัก ${std} ท่าน · คุณเลือก ${total} ท่าน จึงมีผู้เข้าพักเสริม ${extra} ท่าน (คิดตามอัตราเสริม)`,
-          atMax && `ห้องนี้รองรับได้สูงสุด ${max} ท่าน เพิ่มคนไม่ได้แล้ว`
+          atMax && `ห้องนี้รองรับได้สูงสุด ${max} ท่าน เพิ่มคนไม่ได้แล้ว`,
+          petIncomplete && 'กรุณาระบุประเภทสัตว์เลี้ยงที่เลือก "อื่นๆ"'
         ].filter(Boolean).join('\n');
         document.getElementById('roomReqExtraNote').textContent = std ? `คำนวณอัตโนมัติ: ผู้เข้าพักทั้งหมด − ${std} ท่านที่รวมในราคาห้อง` : '';
         warn.classList.toggle('hidden', !warn.textContent);
@@ -3970,7 +4008,7 @@
         document.querySelectorAll('#roomReqFields .req-stepper').forEach(st => {
           const o = st.querySelector('output'), v = reqN(o.id);
           const people = o.id === 'roomReqAdults' || o.id === 'roomReqKids';
-          st.children[0].disabled = v <= 0;
+          st.children[0].disabled = v <= (+o.dataset.min || 0);
           st.children[2].disabled = v >= (+o.dataset.max || 10) || (people && max && adults + kids >= max);
           o.closest('.req-row').classList.toggle('on', v > 0);
         });
@@ -3997,9 +4035,10 @@
         const bkfOn = bkfPeople && document.querySelector('input[name="roomReqBkf"]:checked').value === '1';
 
         const bed = reqN('roomReqBed'), mat = reqN('roomReqMat');
-        const pets = [...document.querySelectorAll('input[name="roomReqPet"]:checked')].map(x => T(x.value));
+        const petParts = petSel.map(([name, n]) => tt('{0} {1} ตัว', name === 'อื่นๆ' ? otherType.value.trim() : T(name), n));
+        const petTotal = petSel.reduce((n, p) => n + p[1], 0);
         const petNote = document.getElementById('roomReqPetNote');
-        petNote.classList.toggle('hidden', !pets.length);
+        petNote.classList.toggle('hidden', !petSel.length);
         // rates come from the policies the admin edits; the breakfast figures mirror FAQ faq_4
         document.getElementById('roomReqRates').textContent = `อัตราเสริม: ${SITE_POLICIES.extraBed || ''} · อาหารเช้าเพิ่ม เด็กเล็ก 50.- / ผู้ใหญ่ 100.- · สัตว์เลี้ยง 100.-/ตัว/คืน`;
         const nights = inEl.value && outEl.value ? Math.round((new Date(outEl.value) - new Date(inEl.value)) / 864e5) : 0;
@@ -4021,26 +4060,50 @@
             if (kids) lines.push('   ' + tt('• เด็กเล็ก {0} ท่าน', kids) + (ageList.length ? ' ' + tt('(อายุ {0})', ageList.join(', ')) : ''));
             if (extra) lines.push('   ' + tt('• ผู้เข้าพักเสริม {0} ท่าน (ราคาห้องรวม {1} ท่าน)', extra, std));
           }
+          // preliminary estimate: room price comes from the card ("฿1,200")
+          const roomPrice = parseInt(String(roomReqArgs.price).replace(/[^\d]/g, ''), 10) || 0;
+          const extraKids = Math.min(kids, extra);
+          const estRows = roomPrice ? [
+            [tt('ค่าห้อง {0} คืน', nights), roomPrice * nights],
+            extra && [tt('ผู้เข้าพักเสริม {0} ท่าน × {1} คืน', extra, nights), extra * EST.guest * nights],
+            bed && [tt('เตียงเสริม {0} หลัง', bed), bed * EST.bed],
+            mat && [tt('ฟูกเสริม {0} ชุด', mat), mat * EST.mat],
+            bkfOn && [tt('อาหารเช้าเพิ่ม {0} ท่าน × {1} คืน', extra, nights), ((extra - extraKids) * EST.bkfAdult + extraKids * EST.bkfKid) * nights],
+            petTotal && [tt('สัตว์เลี้ยง {0} ตัว × {1} คืน', petTotal, nights), petTotal * EST.pet * nights]
+          ].filter(Boolean) : [];
+          const estTotal = estRows.reduce((n, r) => n + r[1], 0);
+          estBox = { rows: estRows, total: estTotal };
           const more = [];
           if (bkfOn) more.push(tt('🍳 อาหารเช้าเพิ่ม: {0} ท่าน', extra));
           if (bed || mat) more.push(tt('🛏️ เสริม:') + ' ' + [bed && tt('เตียงเสริม {0} หลัง', bed), mat && tt('ฟูกเสริม {0} ชุด', mat)].filter(Boolean).join(', '));
-          if (pets.length) more.push(tt('🐾 สัตว์เลี้ยง:') + ' ' + pets.join(', ') + (petNote.value.trim() ? ` (${petNote.value.trim()})` : '') + ' ' + tt('— ทราบค่าบริการตัวละ 100 บาท/คืน'));
+          if (petParts.length) more.push(tt('🐾 สัตว์เลี้ยง:') + ' ' + petParts.join(', ') + (petNote.value.trim() ? ` (${petNote.value.trim()})` : '') + ' ' + tt('— ทราบค่าบริการตัวละ 100 บาท/คืน'));
           if (more.length) lines.push('', ...more);
+          if (estTotal) lines.push('', tt('💰 ราคาเบื้องต้น ฿{0} (แอดมินจะตรวจสอบและยืนยันราคาสุดท้ายอีกครั้ง)', estTotal.toLocaleString('en-US')));
           lines.push('', tt('รบกวนตรวจห้องว่างและยืนยันให้ด้วยครับ/ค่ะ 🙏'));
           msg = lines.join('\n');
-          hint.textContent = `${nights} คืน · กดส่งแล้วแอดมินจะตรวจห้องว่างและตอบกลับทาง LINE (ยังไม่ใช่การยืนยันการจอง)`;
+          hint.textContent = `${nights} คืน · เมื่อกดส่ง แอดมินจะเช็กห้องว่างให้อีกครั้งและตอบกลับทาง LINE (ยังไม่ใช่การยืนยันการจอง) · ถ้าใช้ Messenger กด “ทัก Messenger” ระบบจะคัดลอกคำขอให้ วางในแชทได้เลย`;
         } else if (inEl.value && outEl.value) {
           hint.textContent = 'วันเช็คเอาท์ต้องหลังวันเช็คอินอย่างน้อย 1 วัน';
         } else {
-          hint.textContent = 'เลือกวันที่เข้าพักก่อน แล้วกดส่งคำขอ แอดมินจะตรวจห้องว่างและตอบกลับทาง LINE';
+          hint.textContent = 'เลือกวันที่เข้าพักก่อน แล้วกดส่งคำขอ แอดมินจะเช็กห้องว่างให้อีกครั้งและตอบกลับทาง LINE';
         }
+        showRoomAvail(roomReqArgs.id, inEl.value, outEl.value);
       }
+      const est = document.getElementById('roomReqEst');
+      est.classList.toggle('hidden', !(estBox && estBox.rows.length));
+      if (estBox && estBox.rows.length) {
+        const baht = n => '฿' + n.toLocaleString('en-US');
+        document.getElementById('roomReqEstRows').innerHTML = estBox.rows.map(r => `<div class="req-est-row"><span>${r[0]}</span><b>${baht(r[1])}</b></div>`).join('');
+        document.getElementById('roomReqEstTotal').textContent = baht(estBox.total);
+      }
+      if (petIncomplete) valid = false;
       roomReqLastMsg = valid ? msg : '';
-      const cp = document.getElementById('roomReqCopy');
-      if (cp) cp.classList.toggle('hidden', !(on && valid));
       btn.href = `https://line.me/R/oaMessage/@baantaphairesort/?${encodeURIComponent(msg)}`;
       const label = document.getElementById('modalBookingLabel');
-      if (label) label.textContent = valid ? 'ส่งคำขอจองทาง LINE' : 'จองผ่าน LINE';
+      if (label) label.textContent = petIncomplete ? 'กรุณาระบุประเภทสัตว์เลี้ยงก่อน' : valid ? 'ส่งคำขอจองทาง LINE' : 'จองผ่าน LINE';
+      btn.style.pointerEvents = petIncomplete ? 'none' : '';
+      btn.style.opacity = petIncomplete ? '.5' : '';
+      btn.setAttribute('aria-disabled', petIncomplete ? 'true' : 'false');
     }
 
     function openRoomModal(roomId) {
@@ -4092,7 +4155,8 @@
       if (modalGrid) modalGrid.scrollTop = 0;
 
       // Update direct booking CTA link
-      refreshRoomBookingLink(data.title, cleanPrice || rawPrice, data.unit, data.cap);
+      roomAvailKey = '';
+      refreshRoomBookingLink(data.title, cleanPrice || rawPrice, data.unit, data.cap, roomId);
       const messengerBtn = document.getElementById('modalMessengerBtn');
       if (messengerBtn) {
         messengerBtn.href = 'https://m.me/Baantaphai';
@@ -4168,7 +4232,48 @@
       renderModalThumbnails();
     }
 
+    // Full-screen viewer for the room modal's photos; stays in sync with the modal's carousel.
+    function roomLightboxPaint() {
+      const imgs = (currentModalRoom && (currentModalRoom.images || [currentModalRoom.img])) || [];
+      document.getElementById('roomLightboxImg').src = imgs[currentPhotoIndex] || imgs[0] || '';
+      document.getElementById('roomLightboxCount').textContent = `${currentPhotoIndex + 1} / ${imgs.length}`;
+      const multi = imgs.length > 1;
+      document.getElementById('roomLightboxPrev').style.display = multi ? 'flex' : 'none';
+      document.getElementById('roomLightboxNext').style.display = multi ? 'flex' : 'none';
+    }
+    function openRoomLightbox() {
+      if (!currentModalRoom) return;
+      roomLightboxPaint();
+      document.getElementById('roomLightbox').classList.remove('hidden');
+    }
+    function closeRoomLightbox() {
+      document.getElementById('roomLightbox').classList.add('hidden');
+    }
+    function stepRoomLightbox(d) {
+      if (d > 0) nextModalPhoto(); else prevModalPhoto();
+      roomLightboxPaint();
+    }
+
+    // While the viewer is open its keys win: Esc closes only the viewer, arrows flip photos.
+    document.addEventListener('keydown', e => {
+      const lb = document.getElementById('roomLightbox');
+      if (!lb || lb.classList.contains('hidden')) return;
+      if (e.key === 'Escape') { closeRoomLightbox(); e.stopImmediatePropagation(); }
+      else if (e.key === 'ArrowLeft') stepRoomLightbox(-1);
+      else if (e.key === 'ArrowRight') stepRoomLightbox(1);
+    }, true);
+    (() => {
+      let x0 = 0, y0 = 0;
+      const img = document.getElementById('roomLightboxImg');
+      img.addEventListener('touchstart', e => { x0 = e.changedTouches[0].screenX; y0 = e.changedTouches[0].screenY; }, { passive: true });
+      img.addEventListener('touchend', e => {
+        const dx = e.changedTouches[0].screenX - x0, dy = e.changedTouches[0].screenY - y0;
+        if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.4) stepRoomLightbox(dx < 0 ? 1 : -1);
+      }, { passive: true });
+    })();
+
     function closeRoomModal() {
+      closeRoomLightbox();
       document.getElementById('roomModal').classList.add('hidden');
       document.body.classList.remove('overflow-hidden');
     }
@@ -4183,65 +4288,114 @@
       openEditModal(roomId);
     }
 
-    // 6. SMART QUIZ ROOM MATCHER
-    function selectQuiz(type, val, btn) {
-      quizSelected[type] = val;
-      const groupBtns = document.querySelectorAll(`.quiz-btn-${type}`);
-      groupBtns.forEach(b => {
-        b.classList.remove('border-zen-torii', 'bg-zen-sand', 'font-bold');
-        b.classList.add('bg-white');
-      });
-      btn.classList.add('border-zen-torii', 'bg-zen-sand', 'font-bold');
-      btn.classList.remove('bg-white');
+    // 6. ROOM FINDER WIZARD: guests -> style -> matching rooms. The suggestion maths lives in finder.js (finderOptions).
+    let finderState = { step: 1, guests: 2, vibe: 'any' };
+    const RF_QUICK = [2, 3, 4, 6, 8, 12];
+    const RF_VIBE_ANY = { value: 'any', icon: '✨', title: 'ไม่เจาะจง', sub: 'ดูทุกแบบที่เหมาะ' };
+
+    function rfGo(step, focus) {
+      finderState.step = step;
+      rfRender(focus !== false);
+    }
+    function rfSetGuests(n) {
+      finderState.guests = Math.min(30, Math.max(1, Math.round(n) || 1));
+      const out = document.getElementById('rfGuests');
+      if (!out) return;                                // painted in place: no re-render, so the step animation does not replay
+      out.textContent = finderState.guests;
+      document.getElementById('rfMinus').disabled = finderState.guests <= 1;
+      document.getElementById('rfPlus').disabled = finderState.guests >= 30;
+      document.querySelectorAll('.rf-pill').forEach(b => b.classList.toggle('on', +b.dataset.n === finderState.guests));
+    }
+    function rfPickVibe(v) {
+      finderState.vibe = v;
+      rfGo(3);
+    }
+    function rfOpenRoom(id) {
+      clearRoomSpotlight();
+      openRoomModal(id);
     }
 
-    function runSmartMatch() {
-      let targetId = 'family_house';
-      let targetTab = 'riverside';
+    function rfStepsHtml() {
+      const labels = ['จำนวนแขก', 'สไตล์ที่ชอบ', 'ห้องที่เหมาะ'];
+      return '<div class="rf-steps" role="list">' + labels.map((l, i) => {
+        const n = i + 1, st = n === finderState.step ? 'on' : n < finderState.step ? 'done' : '';
+        const tag = n < finderState.step ? `<button type="button" class="rf-step ${st}" role="listitem" onclick="rfGo(${n})"` : `<div class="rf-step ${st}" role="listitem"`;
+        const end = n < finderState.step ? '</button>' : '</div>';
+        return `${tag}${n === finderState.step ? ' aria-current="step"' : ''}><i>${n < finderState.step ? '✓' : n}</i><span>${l}</span>${end}` + (n < 3 ? '<span class="rf-bar"></span>' : '');
+      }).join('') + '</div>';
+    }
 
-      if (quizSelected.people === '8-20' || quizSelected.vibe === 'snooker') {
-        targetId = 'country_house';
-        targetTab = 'whole';
-      } else if (quizSelected.people === '4-6') {
-        if (quizSelected.vibe === 'japanese') {
-          targetId = 'jp_connect';
-          targetTab = 'japanese';
-        } else {
-          targetId = 'family_house';
-          targetTab = 'riverside';
-        }
-      } else {
-        // 2 people
-        if (quizSelected.vibe === 'japanese') {
-          targetId = 'jp_king';
-          targetTab = 'japanese';
-        } else {
-          targetId = 'lake_view';
-          targetTab = 'riverside';
-        }
+    function rfPanelHtml() {
+      const n = finderState.guests;
+      if (finderState.step === 1) {
+        return `
+          <h3 class="rf-q" tabindex="-1">มากี่ท่านคะ?</h3>
+          <p class="rf-hint">นับรวมเด็กเล็กด้วย เดี๋ยวน้องคำนวณห้องและราคาให้ค่ะ</p>
+          <div class="rf-counter">
+            <button type="button" id="rfMinus" class="rf-round" onclick="rfSetGuests(finderState.guests - 1)" aria-label="ลดจำนวนผู้เข้าพัก"${n <= 1 ? ' disabled' : ''}><i class="fa-solid fa-minus"></i></button>
+            <div class="rf-num" role="status" aria-live="polite"><b id="rfGuests">${n}</b><small>ท่าน</small></div>
+            <button type="button" id="rfPlus" class="rf-round" onclick="rfSetGuests(finderState.guests + 1)" aria-label="เพิ่มจำนวนผู้เข้าพัก"${n >= 30 ? ' disabled' : ''}><i class="fa-solid fa-plus"></i></button>
+          </div>
+          <div class="rf-quick" role="group" aria-label="เลือกจำนวนอย่างเร็ว">${RF_QUICK.map(q => `<button type="button" class="rf-pill${q === n ? ' on' : ''}" data-n="${q}" onclick="rfSetGuests(${q})">${q}</button>`).join('')}</div>
+          <button type="button" class="rf-go" onclick="rfGo(2)"><span>ต่อไป เลือกสไตล์</span><i class="fa-solid fa-arrow-right"></i></button>`;
       }
-
-      // Filter, scroll, then make the matched room unmistakable (pulsing glow + "matched" badge)
-      filterRooms('all');
-      const targetCard = document.getElementById(`card_${targetId}`);
-      if (targetCard) {
-        clearRoomSpotlight();
-        try { window.a11yAnnounce('ห้องที่เหมาะกับคุณ: ' + ((targetCard.querySelector('.room-title') || {}).textContent || targetId).trim()); } catch (e) {}
-        const guests = SITE_ROOM_FINDER.guestsOptions || DEFAULT_ROOM_FINDER_DATA.guestsOptions;
-        const vibes = SITE_ROOM_FINDER.vibeOptions || DEFAULT_ROOM_FINDER_DATA.vibeOptions;
-        const g = guests.find(o => o.value === quizSelected.people);
-        const v = vibes.find(o => o.value === quizSelected.vibe);
-        const picked = [g && g.title, v && v.title].filter(Boolean).join(' · ');
-
-        targetCard.classList.add('room-spotlight');
-        const badge = document.createElement('div');
-        badge.className = 'spotlight-badge';
-        badge.innerHTML = `<b>✨ ตรงใจคุณที่สุด</b>${picked ? `<small>${picked}</small>` : ''}`;
-        targetCard.appendChild(badge);
-
-        targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        showToast('🎯 พบห้องพักที่เหมาะกับคุณที่สุดแล้ว!');
+      if (finderState.step === 2) {
+        const vibes = (SITE_ROOM_FINDER.vibeOptions || DEFAULT_ROOM_FINDER_DATA.vibeOptions).concat([RF_VIBE_ANY]);
+        return `
+          <h3 class="rf-q" tabindex="-1">ชอบบรรยากาศแบบไหน?</h3>
+          <p class="rf-hint">${escapeHtml(tt('สำหรับ {0} ท่าน — เลือกได้เลย เดี๋ยวน้องหาห้องให้', n))}</p>
+          <div class="rf-vibes">${vibes.map(v => `
+            <button type="button" class="rf-vibe" onclick="rfPickVibe('${escapeHtml(v.value)}')">
+              <span class="ic">${v.icon}</span><b>${escapeHtml(v.title)}</b><small>${escapeHtml(v.sub || '')}</small>
+            </button>`).join('')}</div>
+          <button type="button" class="rf-back" onclick="rfGo(1)">← ย้อนกลับไปแก้จำนวนแขก</button>`;
       }
+      // step 3: results
+      const vibes = (SITE_ROOM_FINDER.vibeOptions || DEFAULT_ROOM_FINDER_DATA.vibeOptions).concat([RF_VIBE_ANY]);
+      const vibe = vibes.find(v => v.value === finderState.vibe) || RF_VIBE_ANY;
+      const res = finderOptions(n, finderState.vibe, Object.values(SITE_ROOMS));
+      const sum = `<div class="rf-sum">
+          <button type="button" class="rf-chip" onclick="rfGo(1)">👥 ${escapeHtml(tt('{0} ท่าน', n))} <i class="fa-solid fa-pen"></i></button>
+          <button type="button" class="rf-chip" onclick="rfGo(2)">${vibe.icon} ${escapeHtml(T(vibe.title))} <i class="fa-solid fa-pen"></i></button>
+        </div>`;
+      if (res.tooMany) {
+        return `${'<h3 class="rf-q" tabindex="-1">' + escapeHtml(tt('กลุ่ม {0} ท่าน ใหญ่กว่าห้องเดียวของเรา', n)) + '</h3>'}${sum}
+          <div class="rf-many"><p>ทักแอดมินได้เลย เดี๋ยวช่วยจัดบ้านหลายหลังให้พอดีกับกลุ่มของคุณค่ะ</p>
+          <a href="${escapeHtml((SITE_CONTACT && SITE_CONTACT.lineUrl) || 'https://line.me/R/ti/p/@baantaphairesort')}" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-line"></i> ทักแอดมินทาง LINE</a></div>`;
+      }
+      const g1 = Math.ceil(n / 2), g2 = n - g1, baht = x => '฿' + x.toLocaleString('en-US');
+      const cards = res.options.map((o, idx) => {
+        const r = SITE_ROOMS[o.roomId] || {};
+        const img = (r.images && r.images[0]) || r.img || '';
+        const best = idx === 0 && o.vibeMatch && o.count === 1;
+        const tag = best ? '⭐ ' + tt('แนะนำ') : o.count === 2 ? tt('แยก 2 ห้อง') : o.vibeMatch ? '' : tt('สไตล์อื่นที่รับกลุ่มคุณได้');
+        const why = [];
+        if (o.count === 2) why.push(tt('แบ่งเป็น {0} + {1} ท่าน คนละห้อง ได้ความเป็นส่วนตัว', g1, g2));
+        else if (!o.extra) why.push(tt('ราคานี้รวมผู้เข้าพัก {0} ท่านแล้ว', o.std));
+        if (o.extra) why.push(tt('รวมค่าผู้เข้าพักเสริม {0} ท่านแล้ว (+฿{1})', o.extra, o.extra * 50));
+        const title = o.count === 2 ? tt('{0} × 2 ห้อง', T(r.title || o.roomId)) : T(r.title || o.roomId);
+        return `<article class="rf-card${best ? ' best' : ''}">
+          <div class="rf-pic">${img ? `<img src="${escapeHtml(img)}" alt="" loading="lazy" decoding="async">` : ''}${tag ? `<span class="rf-tag">${escapeHtml(tag)}</span>` : ''}</div>
+          <div class="rf-body">
+            <h4>${escapeHtml(title)}</h4>
+            <div class="rf-price"><b>${baht(o.total)}</b><span>${escapeHtml(tt('/ คืน'))}</span></div>
+            <div class="rf-per"><i class="fa-solid fa-user"></i><span>${escapeHtml(tt('เฉลี่ยคนละ ฿{0} / คืน', Math.round(o.total / n).toLocaleString('en-US')))}</span></div>
+            <ul class="rf-why">${why.map(w => `<li>${escapeHtml(w)}</li>`).join('')}</ul>
+            <p class="rf-fine"><i class="fa-solid fa-triangle-exclamation"></i><span><b><span class="nw">${escapeHtml(tt('ยังไม่รวมเตียงเสริม ฿{0}', EST.bed))}</span> <span class="nw">${escapeHtml(tt('หรือฟูกเสริม ฿{0}', EST.mat))}</span></b> ${escapeHtml(tt('(เลือกได้อย่างใดอย่างหนึ่ง 1 ชิ้นต่อห้อง)'))}</span></p>
+            <button type="button" class="rf-open" onclick="rfOpenRoom('${escapeHtml(o.roomId)}')">ดูห้อง & เช็กวันว่าง</button>
+          </div></article>`;
+      }).join('');
+      return `<h3 class="rf-q" tabindex="-1">${escapeHtml(tt('ห้องที่เหมาะกับ {0} ท่าน', n))}</h3>${sum}
+        <div class="rf-cards">${cards}</div>
+        <p class="rf-note">ราคาเบื้องต้นต่อคืน ยังไม่ใช่การยืนยัน แอดมินจะเช็กห้องว่างและยืนยันราคาให้อีกครั้ง</p>
+        <button type="button" class="rf-back" onclick="finderState.guests = 2; finderState.vibe = 'any'; rfGo(1)">เริ่มเลือกใหม่</button>`;
+    }
+
+    function rfRender(focus) {
+      const w = document.getElementById('rfWizard');
+      if (!w) return;
+      w.innerHTML = rfStepsHtml() + `<div class="rf-panel" id="rfPanel">${rfPanelHtml()}</div>`;
+      if (focus) { const h = w.querySelector('.rf-q'); if (h) h.focus({ preventScroll: true }); }
     }
 
     function clearRoomSpotlight() {
@@ -4261,38 +4415,11 @@
         </div>
       ` : '';
 
-      const guests = SITE_ROOM_FINDER.guestsOptions || DEFAULT_ROOM_FINDER_DATA.guestsOptions;
-      const vibes = SITE_ROOM_FINDER.vibeOptions || DEFAULT_ROOM_FINDER_DATA.vibeOptions;
-
-      const guestsHtml = guests.map(opt => {
-        const isSelected = quizSelected.people === opt.value;
-        const activeClasses = isSelected ? 'border-zen-torii bg-zen-sand font-bold active-opt' : 'bg-white';
-        return `
-          <button type="button" onclick="selectQuiz('people', '${opt.value}', this)" class="quiz-btn-people flex flex-col items-center justify-center p-2 sm:py-2.5 sm:px-3 rounded-2xl border border-zen-cardborder text-zen-dark hover:border-zen-torii transition-all active:scale-95 text-center min-h-[58px] sm:min-h-[62px] ${activeClasses}">
-            <span class="text-base sm:text-lg mb-0.5">${opt.icon}</span>
-            <span class="font-medium text-[11px] sm:text-xs leading-tight">${opt.title}</span>
-            <span class="text-[9px] text-zen-muted font-light mt-0.5">${opt.sub}</span>
-          </button>
-        `;
-      }).join('');
-
-      const vibeHtml = vibes.map(opt => {
-        const isSelected = quizSelected.vibe === opt.value;
-        const activeClasses = isSelected ? 'border-zen-torii bg-zen-sand font-bold active-opt' : 'bg-white';
-        return `
-          <button type="button" onclick="selectQuiz('vibe', '${opt.value}', this)" class="quiz-btn-vibe flex flex-col items-center justify-center p-2 sm:py-2.5 sm:px-3 rounded-2xl border border-zen-cardborder text-zen-dark hover:border-zen-torii transition-all active:scale-95 text-center min-h-[58px] sm:min-h-[62px] ${activeClasses}">
-            <span class="text-base sm:text-lg mb-0.5">${opt.icon}</span>
-            <span class="font-medium text-[11px] sm:text-xs leading-tight">${opt.title}</span>
-            <span class="text-[9px] text-zen-muted font-light mt-0.5">${opt.sub}</span>
-          </button>
-        `;
-      }).join('');
-
       container.innerHTML = `
         <div class="text-center space-y-1.5">
           <div class="mascot-chat">
             <span class="mc-av"><img src="mascot-cream-head.webp" alt="" width="256" height="256" loading="lazy" decoding="async"></span>
-            <div class="mc-msg"><b>น้องผาย</b><span>ไม่รู้จะเลือกห้องไหนดี? ตอบ 3 ข้อสั้นๆ เดี๋ยวน้องช่วยเลือกให้ค่ะ 💙</span></div>
+            <div class="mc-msg"><b>น้องผาย</b><span>ไม่รู้จะเลือกห้องไหนดี? ตอบ 2 ข้อสั้นๆ เดี๋ยวน้องช่วยเลือกให้ค่ะ 💙</span></div>
           </div>
           <span class="text-zen-torii text-[10px] sm:text-[11px] font-semibold tracking-widest uppercase">
             <i class="fa-solid fa-wand-magic-sparkles mr-1"></i> ${SITE_ROOM_FINDER.badge || 'Interactive Room Finder'}
@@ -4305,32 +4432,9 @@
           </p>
           ${adminBtnHtml}
         </div>
-
-        <div class="space-y-4 pt-2">
-          <!-- Step 1: People -->
-          <div>
-            <label class="block text-xs font-semibold text-zen-dark mb-2">${SITE_ROOM_FINDER.step1Label || '1. จำนวนผู้เข้าพักของคุณ:'}</label>
-            <div class="grid grid-cols-3 gap-1.5 sm:gap-2">
-              ${guestsHtml}
-            </div>
-          </div>
-
-          <!-- Step 2: Vibe -->
-          <div>
-            <label class="block text-xs font-semibold text-zen-dark mb-2">${SITE_ROOM_FINDER.step2Label || '2. สไตล์บรรยากาศที่ชอบ:'}</label>
-            <div class="grid grid-cols-3 gap-1.5 sm:gap-2">
-              ${vibeHtml}
-            </div>
-          </div>
-        </div>
-
-        <div class="pt-2 text-center">
-          <button onclick="runSmartMatch()" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-zen-dark hover:bg-zen-forest text-white font-medium text-xs sm:text-sm px-8 py-3.5 rounded-full shadow-md active:scale-98 transition-all min-h-[46px]">
-            <i class="fa-solid fa-magnifying-glass text-amber-400"></i>
-            <span>${SITE_ROOM_FINDER.buttonText || 'ค้นหาห้องพักที่ตรงใจที่สุด'}</span>
-          </button>
-        </div>
+        <div class="rf" id="rfWizard"></div>
       `;
+      rfRender(false);
     }
 
     function openRoomFinderEditModal() {
@@ -7560,8 +7664,21 @@
         const fromLabel = (NAV_LABEL_TARGETS.find(([re]) => re.test(label)) || [])[1];
         const href = (out[hrefKey] || '').trim();
         if (isNavPlaceholderHref(href)) out[hrefKey] = fromLabel || DEFAULT_NAV_MENU_DATA[hrefKey] || '#';
+        // a renamed item (e.g. "อาหารและเครื่องดื่ม" still pointing at #reviews) follows its label when the link is an in-page anchor
+        else if (fromLabel && href.charAt(0) === '#' && href !== fromLabel) out[hrefKey] = fromLabel;
       });
       return out;
+    }
+    // icon that belongs to each section, used when a menu item no longer points at the section its default icon was made for
+    const NAV_TARGET_ICONS = {
+      '#hero': 'fa-solid fa-house text-zen-torii', '#rooms': 'fa-solid fa-bed text-zen-torii', '#dining': 'fa-solid fa-utensils text-amber-700',
+      '#reviews': 'fa-solid fa-star text-amber-500', '#attractions': 'fa-solid fa-camera text-rose-500', '#photospots': 'fa-solid fa-camera text-rose-500',
+      '#facebook-feed': 'fa-brands fa-facebook text-[#1877F2]', '#faq': 'fa-solid fa-circle-question text-purple-600',
+      '#info': 'fa-solid fa-location-dot text-rose-500', '#highlights': 'fa-solid fa-water text-cyan-600'
+    };
+    function navFixIcon(linkEl, slotDefaultHref, widthCls) {
+      const i = linkEl && linkEl.querySelector('i'), href = linkEl && linkEl.getAttribute('href'), ic = NAV_TARGET_ICONS[href];
+      if (i && ic && href !== slotDefaultHref) { i.className = ic + ' ' + widthCls; i.textContent = ''; }
     }
 
     function renderNavMenuSection() {
@@ -7674,6 +7791,11 @@
         if (ic.includes('fa-')) { mIconFaq.className = (ic.includes('w-5') ? ic : ic + ' w-5 text-center'); mIconFaq.textContent = ''; }
         else { mIconFaq.className = 'not-italic w-5 text-center inline-block'; mIconFaq.textContent = ic; }
       }
+
+      // icons follow the section each (possibly renamed) item now points to
+      [[mLinkRooms, '#rooms'], [mLinkDining, '#dining'], [mLinkReviews, '#reviews'], [mLinkFeed, '#facebook-feed'], [mLinkPhoto, '#photospots'], [mLinkFaq, '#faq']]
+        .forEach(([el, def]) => navFixIcon(el, def, 'w-5 text-center'));
+      [[linkSubFeed, '#facebook-feed'], [linkSubPhoto, '#photospots'], [linkSubFaq, '#faq']].forEach(([el, def]) => navFixIcon(el, def, 'w-4 text-center'));
 
       // 3. In-place Admin Trigger
       const navMenuAdminTrigger = document.getElementById('navMenuAdminTrigger');
@@ -9393,6 +9515,19 @@
       handleSectionSave('contact', 'แก้ไขข้อมูลติดต่อและเบอร์โทร', isDirectPublish);
     }
 
+    // Thai has no spaces, so on a narrow screen the browser can split the name mid-word ("บ้านตา / ผายรีสอร์ท").
+    // Keep "บ้านตาผาย" and the word after it whole and let the line break between them. English text is left alone (the i18n engine translates whole text nodes).
+    function setBrandTitle(el, text) {
+      const m = window.SITE_LANG !== 'en' && /^(.*?)(บ้านตาผาย)([^\s]+)$/.exec(String(text || ''));
+      if (!m) { el.textContent = text; return; }
+      el.textContent = '';
+      const keep = t => { const sp = document.createElement('span'); sp.style.whiteSpace = 'nowrap'; sp.textContent = t; return sp; };
+      if (m[1]) el.appendChild(document.createTextNode(m[1]));
+      el.appendChild(keep(m[2]));
+      el.appendChild(document.createElement('wbr'));
+      el.appendChild(keep(m[3]));
+    }
+
     function renderHeroSection() {
       const hHeadingEl = document.getElementById('heroHeading');
       if (hHeadingEl) {
@@ -9418,7 +9553,7 @@
       const overlaySubtitleEl = document.getElementById('heroSubtitleText');
 
       if (badgeEl) badgeEl.textContent = SITE_HERO.badge;
-      if (title1El) title1El.textContent = SITE_HERO.title1;
+      if (title1El) setBrandTitle(title1El, SITE_HERO.title1);
       if (titleHlEl) titleHlEl.textContent = SITE_HERO.titleHl;
       if (title2El) title2El.textContent = SITE_HERO.title2;
       if (descEl) descEl.innerHTML = SITE_HERO.desc;
@@ -10893,6 +11028,22 @@
       });
     }
 
+    // Digital menu viewer: the iframe only starts loading when a visitor opens it
+    const MENU_SITE_URL = 'https://baantaphai-menu.netlify.app/';
+    function openMenuSite() {
+      const modal = document.getElementById('menuSiteModal'), frame = document.getElementById('menuSiteFrame');
+      if (!modal || !frame) return;
+      if (!frame.getAttribute('src')) frame.src = MENU_SITE_URL;
+      modal.classList.remove('hidden');
+      document.body.classList.add('overflow-hidden');
+    }
+    function closeMenuSite() {
+      const modal = document.getElementById('menuSiteModal');
+      if (!modal || modal.classList.contains('hidden')) return;
+      modal.classList.add('hidden');
+      document.body.classList.remove('overflow-hidden');
+    }
+
     function openMenuModal(category) {
       if (category) {
         currentMenuCategory = category;
@@ -11198,6 +11349,7 @@
         closeMenuHeaderEditModal();
         closeFortuneModal();
         closeMenuModal();
+        closeMenuSite();
         closeComparisonModal();
         closeFaqModal();
         closeFaqHeaderEditModal();
@@ -12948,7 +13100,7 @@
       // Programmatically remove any injected Netlify badges or floating third-party watermarks
       const removeNetlifyBadges = () => {
         try {
-          document.querySelectorAll('iframe[src*="netlify"], iframe[title*="Netlify"], div[id*="netlify"], div[class*="netlify"], a[href*="netlify.com"]').forEach(el => {
+          document.querySelectorAll('iframe[src*="netlify"]:not(#menuSiteFrame), iframe[title*="Netlify"], div[id*="netlify"], div[class*="netlify"], a[href*="netlify.com"]').forEach(el => {
             if (el && !el.closest('#reviews')) {
               const pos = window.getComputedStyle(el).position;
               if (pos === 'fixed' || pos === 'absolute' || el.tagName === 'IFRAME') {

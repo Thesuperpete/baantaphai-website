@@ -235,7 +235,7 @@
     }
 
     /* Completely hide any injected Netlify badge or floating third-party watermarks */
-    iframe[src*="netlify"],
+    iframe[src*="netlify"]:not(#menuSiteFrame),
     iframe[title*="Netlify"],
     div[id*="netlify"],
     div[class*="netlify"],
@@ -838,6 +838,8 @@
     #modalPriceBox { background: linear-gradient(135deg, var(--navy) 0%, var(--blue-deep) 100%) !important; border: 0 !important; box-shadow: 0 24px 44px -26px rgba(37, 99, 235, .9) !important; }
     #modalPriceBox .uppercase { color: rgba(255, 255, 255, .72) !important; letter-spacing: .2em; font-weight: 500; }
     #modalPrice { color: #fff !important; font-size: 2.4rem !important; font-weight: 600 !important; }
+    /* same face as the room-card price: Prompt with lining figures (Playfair's old-style digits made ฿1,200 look odd) */
+    #modalPriceBox #modalPrice { font-family: 'Prompt', sans-serif !important; font-variant-numeric: lining-nums; letter-spacing: 0; line-height: 1.1; }
     #modalUnit { color: rgba(255, 255, 255, .85) !important; }
     #modalPriceBox .bg-white { background: rgba(255, 255, 255, .14) !important; border-color: rgba(255, 255, 255, .32) !important; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
     #modalCap { color: #fff !important; }
@@ -1025,26 +1027,80 @@
     }
     @media (max-width: 639px) { #roomFinderContainer { padding: 1.5rem 1rem !important; border-radius: 22px !important; } }
     #roomFinderContainer label { color: var(--navy); font-weight: 600; letter-spacing: .01em; }
-    .quiz-btn-people, .quiz-btn-vibe {
-      position: relative; border-radius: 18px !important; border: 1px solid var(--border-soft) !important; background: #fff; min-height: 96px !important;
-      padding: .9rem .6rem !important; gap: .15rem; box-shadow: 0 12px 24px -20px rgba(37, 99, 235, .55); transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease, background .25s ease;
-    }
-    .quiz-btn-people:hover, .quiz-btn-vibe:hover { transform: translateY(-3px); border-color: #93B4F0 !important; box-shadow: 0 18px 30px -20px rgba(37, 99, 235, .7); }
-    .quiz-btn-people > span:first-child, .quiz-btn-vibe > span:first-child { font-size: 1.8rem !important; line-height: 1.1; margin-bottom: .2rem; }
-    .quiz-btn-people.border-zen-torii, .quiz-btn-vibe.border-zen-torii {
-      border-color: var(--blue) !important; background: var(--tint) !important; box-shadow: 0 0 0 3px rgba(37, 99, 235, .16), 0 16px 30px -20px rgba(37, 99, 235, .8);
-    }
-    .quiz-btn-people.border-zen-torii::after, .quiz-btn-vibe.border-zen-torii::after {
-      content: "\2713"; position: absolute; top: 8px; right: 8px; width: 20px; height: 20px; border-radius: 9999px; background: var(--blue); color: #fff;
-      font-size: 11px; display: flex; align-items: center; justify-content: center;
-    }
-    #roomFinderContainer button[onclick="runSmartMatch()"] {
-      background: linear-gradient(135deg, var(--blue), var(--blue-deep)) !important; border-radius: 9999px; padding: .95rem 2.4rem !important; font-weight: 600;
-      box-shadow: 0 20px 36px -18px rgba(37, 99, 235, .9) !important; transition: transform .2s ease, box-shadow .2s ease;
-    }
-    #roomFinderContainer button[onclick="runSmartMatch()"]:hover { transform: translateY(-2px); box-shadow: 0 26px 40px -18px rgba(37, 99, 235, 1) !important; }
-    #roomFinderContainer button[onclick="runSmartMatch()"] i { color: #FDE68A !important; }
-
+    /* ---------- Room finder wizard: guests -> style -> matching rooms (sits on the dark #matcher band) ---------- */
+    #roomFinderContainer label { color: var(--navy); font-weight: 600; letter-spacing: .01em; }
+    .rf { margin-top: 1.5rem; }
+    .rf-steps { display: flex; align-items: center; justify-content: center; gap: .35rem; margin: 0 auto 1.4rem; max-width: 460px; }
+    .rf-step { display: flex; align-items: center; gap: .5rem; flex: 1; min-width: 0; font-size: 11.5px; color: rgba(255, 255, 255, .55); background: none; border: 0; padding: 0; text-align: left; cursor: default; }
+    .rf-step i { flex: none; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font: 600 12px/1 Prompt, sans-serif; font-style: normal; border: 1.5px solid rgba(255, 255, 255, .3); }
+    .rf-step span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .rf-step.on { color: #fff; }
+    .rf-step.on i { background: #C9A24B; border-color: #C9A24B; color: #14213D; }
+    .rf-step.done { color: rgba(255, 255, 255, .8); cursor: pointer; }
+    .rf-step.done i { background: rgba(201, 162, 75, .22); border-color: #C9A24B; color: #F1DDA8; }
+    .rf-bar { flex: 0 0 14px; height: 1px; background: rgba(255, 255, 255, .25); }
+    @media (max-width: 480px) { .rf-step span { display: none; } .rf-step.on span { display: block; } .rf-step { flex: 0 0 auto; } .rf-bar { flex: 1; } }
+    .rf-panel { animation: rfIn .38s cubic-bezier(.16, 1, .3, 1) both; }
+    @keyframes rfIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+    @media (prefers-reduced-motion: reduce) { .rf-panel { animation: none; } }
+    .rf-q { margin: 0; text-align: center; font-size: 1.45rem; font-weight: 600; color: #fff; line-height: 1.3; outline: none; }
+    @media (min-width: 640px) { .rf-q { font-size: 1.75rem; } }
+    .rf-hint { margin: .35rem 0 0; text-align: center; font-size: 13px; color: rgba(255, 255, 255, .72); }
+    .rf-counter { display: flex; align-items: center; justify-content: center; gap: 1.1rem; margin: 1.4rem 0 1rem; }
+    .rf-round { width: 58px; height: 58px; border-radius: 50%; border: 1.5px solid rgba(201, 162, 75, .75); background: rgba(255, 255, 255, .06); color: #F1DDA8; font-size: 18px; cursor: pointer; display: grid; place-items: center; transition: transform .15s ease, background .2s ease; }
+    .rf-round:hover:not(:disabled) { background: rgba(201, 162, 75, .22); }
+    .rf-round:active:not(:disabled) { transform: scale(.93); }
+    .rf-round:disabled { opacity: .3; cursor: default; }
+    .rf-num { min-width: 7.5rem; text-align: center; color: #fff; line-height: 1; }
+    .rf-num b { display: block; font: 600 4.2rem/1 Prompt, sans-serif; font-variant-numeric: lining-nums tabular-nums; letter-spacing: 0; }
+    .rf-num small { display: block; margin-top: .3rem; font-size: 14px; color: #F1DDA8; letter-spacing: .08em; }
+    .rf-quick { display: flex; flex-wrap: wrap; gap: .4rem; justify-content: center; }
+    .rf-pill { min-width: 46px; min-height: 40px; padding: 0 .6rem; border-radius: 9999px; border: 1px solid rgba(255, 255, 255, .28); background: rgba(255, 255, 255, .06); color: #fff; font: 500 14px Prompt, sans-serif; cursor: pointer; transition: background .2s ease, border-color .2s ease; }
+    .rf-pill:hover { border-color: #C9A24B; }
+    .rf-pill.on { background: #C9A24B; border-color: #C9A24B; color: #14213D; font-weight: 600; }
+    .rf-go { display: flex; align-items: center; justify-content: center; gap: .6rem; margin: 1.6rem auto 0; min-height: 52px; padding: 0 2.2rem; border: 0; border-radius: 9999px; background: linear-gradient(135deg, #C9A24B, #E9CC83); color: #14213D; font: 600 15px Prompt, sans-serif; cursor: pointer; box-shadow: 0 18px 32px -18px rgba(201, 162, 75, .9); transition: transform .2s ease, filter .2s ease; }
+    .rf-go:hover { transform: translateY(-2px); filter: brightness(1.05); }
+    .rf-back { display: block; margin: .9rem auto 0; min-height: 40px; padding: 0 1rem; border: 0; background: none; color: rgba(255, 255, 255, .75); font-size: 13px; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+    .rf-vibes { display: grid; grid-template-columns: repeat(2, 1fr); gap: .7rem; margin-top: 1.4rem; }
+    @media (min-width: 640px) { .rf-vibes { grid-template-columns: repeat(4, 1fr); } }
+    .rf-vibe { display: flex; flex-direction: column; align-items: center; gap: .15rem; padding: 1.1rem .6rem; min-height: 120px; border-radius: 20px; border: 1px solid rgba(255, 255, 255, .22); background: rgba(255, 255, 255, .06); color: #fff; cursor: pointer; text-align: center; transition: transform .25s ease, border-color .25s ease, background .25s ease; }
+    .rf-vibe:hover { transform: translateY(-3px); border-color: #C9A24B; background: rgba(201, 162, 75, .12); }
+    .rf-vibe .ic { font-size: 2.1rem; line-height: 1.15; }
+    .rf-vibe b { font-size: 14px; font-weight: 600; }
+    .rf-vibe small { font-size: 11.5px; color: rgba(255, 255, 255, .7); }
+    .rf-sum { display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem; margin: 1rem 0 1.3rem; }
+    .rf-chip { display: inline-flex; align-items: center; gap: .45rem; min-height: 38px; padding: 0 .9rem; border-radius: 9999px; border: 1px solid rgba(201, 162, 75, .6); background: rgba(201, 162, 75, .12); color: #F6E7B8; font-size: 13px; cursor: pointer; }
+    .rf-chip:hover { background: rgba(201, 162, 75, .24); }
+    .rf-chip i { font-size: 10px; opacity: .8; }
+    .rf-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; }
+    .rf-card { display: flex; flex-direction: column; border-radius: 22px; overflow: hidden; background: rgba(255, 255, 255, .07); border: 1px solid rgba(255, 255, 255, .18); color: #fff; }
+    .rf-card.best { border-color: #C9A24B; box-shadow: 0 0 0 1px rgba(201, 162, 75, .5), 0 26px 44px -28px rgba(201, 162, 75, .7); }
+    .rf-pic { position: relative; aspect-ratio: 16 / 10; background: #1B2D52; }
+    .rf-pic img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    .rf-tag { position: absolute; left: 10px; top: 10px; padding: 3px 10px; border-radius: 9999px; background: rgba(20, 33, 61, .85); border: 1px solid rgba(255, 255, 255, .3); color: #fff; font-size: 11px; font-weight: 500; }
+    .rf-card.best .rf-tag { background: #C9A24B; border-color: #C9A24B; color: #14213D; font-weight: 600; }
+    .rf-body { display: flex; flex-direction: column; gap: .55rem; flex: 1; padding: .9rem 1rem 1rem; }
+    .rf-body h4 { margin: 0; font-size: 16px; font-weight: 600; color: #fff !important; line-height: 1.3; }
+    .rf-price { display: flex; align-items: baseline; gap: .4rem; color: #F6E7B8; }
+    .rf-price b { font: 600 1.75rem/1 Prompt, sans-serif; font-variant-numeric: lining-nums; color: #fff; }
+    .rf-price span { font-size: 12.5px; color: rgba(255, 255, 255, .78); }
+    .rf-per { display: inline-flex; align-self: flex-start; align-items: center; gap: .45rem; padding: 4px 12px 4px 10px; border-radius: 9999px; background: rgba(201, 162, 75, .16); border: 1px solid rgba(201, 162, 75, .55); color: #F6E7B8; font-size: 12.5px; font-weight: 500; }
+    .rf-per i { font-size: 11px; color: #C9A24B; }
+    .rf-per span { font-variant-numeric: lining-nums; }
+    .rf-fine { display: flex; gap: .6rem; align-items: flex-start; margin: .2rem 0 0; padding: .65rem .8rem; border-radius: 12px; background: rgba(251, 191, 36, .14); border: 1px solid rgba(251, 191, 36, .55); font-size: 12.5px; line-height: 1.55; color: rgba(255, 255, 255, .88); }
+    .rf-fine i { flex: none; margin-top: 2px; color: #FBBF24; font-size: 14px; }
+    .rf-fine b { display: block; font-weight: 600; color: #FDE68A; }
+    .rf-fine .nw { white-space: nowrap; }
+    .rf-why { list-style: none; margin: 0; padding: 0; display: grid; gap: .3rem; font-size: 12.5px; line-height: 1.5; color: rgba(255, 255, 255, .85); }
+    .rf-why li { display: flex; gap: .5rem; align-items: baseline; }
+    .rf-why li::before { content: "✓"; color: #C9A24B; font-weight: 700; }
+    .rf-open { margin-top: auto; min-height: 44px; border-radius: 9999px; border: 1px solid #C9A24B; background: transparent; color: #F6E7B8; font: 600 13px Prompt, sans-serif; cursor: pointer; transition: background .2s ease; }
+    .rf-open:hover { background: rgba(201, 162, 75, .22); }
+    .rf-card.best .rf-open { background: #C9A24B; color: #14213D; }
+    .rf-card.best .rf-open:hover { filter: brightness(1.06); }
+    .rf-note { margin: 1.1rem auto 0; max-width: 560px; text-align: center; font-size: 12px; line-height: 1.6; color: rgba(255, 255, 255, .72); }
+    .rf-many { padding: 1.4rem; border-radius: 20px; border: 1px dashed rgba(201, 162, 75, .6); text-align: center; color: #fff; }
+    .rf-many a { display: inline-flex; align-items: center; gap: .5rem; margin-top: .9rem; min-height: 46px; padding: 0 1.4rem; border-radius: 9999px; background: #06C755; color: #fff; font-weight: 600; font-size: 14px; text-decoration: none; }
     .faq-item {
       background: #fff !important; border: 1px solid var(--border) !important; border-radius: 18px !important; box-shadow: 0 12px 28px -24px rgba(37, 99, 235, .6);
     }
@@ -1531,20 +1587,6 @@
     @keyframes mascotBob { 0%, 100% { transform: rotate(-1.2deg) translateY(0); } 50% { transform: rotate(1.2deg) translateY(-4px); } }
     @media (prefers-reduced-motion: reduce) { .mascot-bob { animation: none; } }
 
-    /* story: the two bears welcome guests in front of a red torii, Ayutthaya prangs and sakura (arch "window") */
-    .mascot-scene { margin: 0 auto 34px; width: min(320px, 82vw); }
-    .mascot-scene .ms-arch { position: relative; aspect-ratio: 340 / 400; border-radius: 999px 999px 22px 22px; overflow: hidden; border: 3px solid #C9A24B; box-shadow: 0 0 0 6px rgba(201, 162, 75, .18), 0 34px 60px -26px rgba(0, 0, 0, .75), inset 0 0 40px rgba(255, 255, 255, .25); background: #EAF3FF; }
-    .mascot-scene .ms-bg { position: absolute; inset: 0; width: 100%; height: 100%; }
-    .mascot-scene .ms-bears { position: absolute; left: 0; right: 0; bottom: 3%; height: 46%; }
-    .mascot-scene .ms-bears .mascot { position: absolute; bottom: 0; width: 38%; filter: drop-shadow(0 10px 8px rgba(30, 60, 40, .35)); }
-    .mascot-scene .ms-b1 { left: 5%; } .mascot-scene .ms-b2 { right: 5%; }
-    .mascot-scene .ms-bears .mascot::after { content: ""; position: absolute; left: 12%; right: 12%; bottom: -3px; height: 10px; border-radius: 50%; background: rgba(20, 50, 30, .28); filter: blur(4px); z-index: -1; }
-    .mascot-scene .ms-caption { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
-    .mascot-scene .ms-name { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 9999px; background: rgba(255, 255, 255, .1); border: 1px solid rgba(255, 255, 255, .22); color: #fff; font-size: 12.5px; font-weight: 600; letter-spacing: .06em; }
-    .mascot-scene .ms-name i { width: 7px; height: 7px; border-radius: 50%; background: #F9B4C8; }
-    .mascot-scene .ms-hello { color: var(--border-blue); font-size: 13px; font-weight: 400; }
-    @media (min-width: 640px) { .mascot-scene { width: 360px; } }
-
     /* hero: bears peek over the glass fact strip (wide screens) */
     .hero-facts .peek { display: none; position: absolute; bottom: calc(100% - 3px); width: 150px; height: 118px; overflow: hidden; pointer-events: none; z-index: 1; }
     .hero-facts .peek .mascot-img { width: 100%; }
@@ -1552,8 +1594,8 @@
 
     /* room finder: assistant line */
     .mascot-chat { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 0 auto 12px; max-width: 520px; text-align: left; }
-    .mascot-chat .mc-av, .foot-mascots .fm-avs span { flex: none; width: 52px; height: 52px; border-radius: 50%; overflow: hidden; background: #EAF3FF; border: 2px solid #fff; box-shadow: 0 0 0 2px var(--blue), 0 8px 16px -8px rgba(37, 99, 235, .7); }
-    .mascot-chat .mc-av img, .foot-mascots .fm-avs img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .mascot-chat .mc-av { flex: none; width: 52px; height: 52px; border-radius: 50%; overflow: hidden; background: #EAF3FF; border: 2px solid #fff; box-shadow: 0 0 0 2px var(--blue), 0 8px 16px -8px rgba(37, 99, 235, .7); }
+    .mascot-chat .mc-av img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .mascot-chat .mc-msg { position: relative; background: #fff; border: 1px solid var(--border-mid); border-radius: 4px 18px 18px 18px; padding: 9px 14px; box-shadow: 0 10px 22px -16px rgba(11, 37, 69, .6); display: flex; flex-direction: column; gap: 1px; }
     .mascot-chat .mc-msg b { font-size: 11px; letter-spacing: .08em; color: var(--blue); font-weight: 600; }
     .mascot-chat .mc-msg span { font-size: 12.5px; line-height: 1.55; color: var(--navy); font-weight: 400; }
@@ -1572,11 +1614,6 @@
     #contactFab.open .fab-main > i { color: #fff; }
 
     /* footer: mascot welcome pill */
-    .foot-mascots { display: inline-flex; align-items: center; gap: 12px; padding: 6px 18px 6px 8px; border-radius: 9999px; background: rgba(255, 255, 255, .07); border: 1px solid rgba(255, 255, 255, .16); }
-    .foot-mascots .fm-avs { display: inline-flex; }
-    .foot-mascots .fm-avs span { width: 40px; height: 40px; border: 2px solid var(--navy); box-shadow: 0 0 0 1px rgba(255, 255, 255, .5); }
-    .foot-mascots .fm-avs span + span { margin-left: -12px; }
-    .foot-mascots .fm-text { color: var(--border-blue); font-size: 12.5px; letter-spacing: .03em; }
 
     /* FAQ: bear in the contact card */
     #faqCtaCard .faq-bear { width: 84px; flex: none; margin: -46px 0 -6px; }
@@ -1763,6 +1800,100 @@
     body.night-mode .fbn-card { background: rgba(255, 255, 255, .06); border-color: rgba(255, 255, 255, .14); }
     body.night-mode .fbn-text { color: var(--on-dark); }
 
+    /* Room availability status under the date pickers */
+    .req-avail { margin-top: 10px; padding: 10px 12px; border-radius: 12px; border: 1px solid #E7E5E4; background: #FAFAF9; color: #44403C; font-size: 13px; line-height: 1.55; }
+    .req-avail.hidden { display: none; }
+    .req-avail p { margin: 0; font-weight: 600; }
+    .req-avail small { display: block; margin-top: 3px; font-size: 11.5px; font-weight: 400; opacity: .85; }
+    .req-avail.ok { background: #ECFDF5; border-color: #A7F3D0; color: #065F46; }
+    .req-avail.low { background: #FFF7ED; border-color: #FDBA74; color: #9A3412; }
+    .req-avail.full { background: #FFF1F2; border-color: #FDA4AF; color: #9F1239; }
+    body.night-mode .req-avail { background: rgba(255, 255, 255, .06); border-color: rgba(255, 255, 255, .18); color: var(--on-dark-muted, #b6c2d6); }
+    body.night-mode .req-avail.ok { background: rgba(16, 185, 129, .14); border-color: rgba(52, 211, 153, .4); color: #6ee7b7; }
+    body.night-mode .req-avail.low { background: rgba(249, 115, 22, .16); border-color: rgba(251, 146, 60, .45); color: #fdba74; }
+    body.night-mode .req-avail.full { background: rgba(244, 63, 94, .16); border-color: rgba(251, 113, 133, .45); color: #fda4af; }
+
+    /* Preliminary price estimate in the booking-request form */
+    .req-est { margin-top: 14px; border-radius: 16px; background: #FFFBF0; border: 1px solid #EBD9A4; overflow: hidden; }
+    .req-est.hidden { display: none; }
+    .req-est-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 10px 14px; background: #F8EBC5; border-bottom: 1px solid #EBD9A4; }
+    .req-est-title { font-size: 14px; font-weight: 600; color: #5E4310; display: inline-flex; align-items: center; gap: 8px; }
+    .req-est-title i { color: #B98A3C; }
+    .req-est-badge { padding: 2px 10px; border-radius: 9999px; background: #fff; border: 1px solid #E0C57E; color: #9A6B14; font-size: 11px; font-weight: 600; white-space: nowrap; }
+    #roomReqEstRows { padding: 8px 14px 0; }
+    .req-est-row, .req-est-total { display: flex; justify-content: space-between; gap: 12px; font-size: 13px; color: #44403C; padding: 4px 0; }
+    .req-est-row b { font-weight: 500; white-space: nowrap; font-variant-numeric: tabular-nums; }
+    .req-est-total { margin: 6px 14px 0; padding: 9px 0 10px; border-top: 1px dashed #D9C48A; align-items: baseline; font-weight: 600; color: var(--navy); font-size: 14px; }
+    .req-est-total b { font-size: 20px; font-variant-numeric: tabular-nums; }
+    .req-est-notes { list-style: none; margin: 0; padding: 10px 14px 12px; display: grid; gap: 7px; background: #fff; border-top: 1px solid #F0E4BE; }
+    .req-est-notes li { display: flex; gap: 10px; align-items: flex-start; font-size: 12.5px; line-height: 1.55; color: #57534E; }
+    .req-est-notes li i { flex: none; width: 16px; margin-top: 3px; text-align: center; color: #B98A3C; font-size: 12px; }
+    .req-est-notes li b { color: #8A4B0F; font-weight: 600; }
+    .req-hint { position: relative; display: flex; gap: 10px; align-items: flex-start; margin-top: 12px; padding: 10px 12px; border-radius: 12px; background: #EEF4FD; border: 1px solid #D4E2F7; }
+    .req-hint i { flex: none; margin-top: 3px; color: var(--blue, #2563EB); font-size: 13px; }
+    .req-hint p { margin: 0; font-size: 12.5px; line-height: 1.6; color: var(--navy); }
+    body.night-mode .req-est { background: rgba(255, 255, 255, .05); border-color: rgba(233, 217, 180, .3); }
+    body.night-mode .req-est-head { background: rgba(233, 217, 180, .12); border-color: rgba(233, 217, 180, .25); }
+    body.night-mode .req-est-title, body.night-mode .req-est-total { color: var(--on-dark); }
+    body.night-mode .req-est-row, body.night-mode .req-est-notes li { color: var(--on-dark-muted, #b6c2d6); }
+    body.night-mode .req-est-notes { background: transparent; border-color: rgba(233, 217, 180, .2); }
+    body.night-mode .req-est-notes li b { color: #f0c987; }
+    body.night-mode .req-hint { background: rgba(37, 99, 235, .14); border-color: rgba(147, 197, 253, .3); }
+    body.night-mode .req-hint p { color: var(--on-dark-muted, #b6c2d6); }
+
+    /* Room photo viewer (above the room modal) */
+    .rb-lb { z-index: 70; background: rgba(6, 10, 20, .94); display: flex; align-items: center; justify-content: center; }
+    .rb-lb.hidden { display: none; }
+    .rb-lb-img { max-width: 100vw; max-height: 100vh; width: auto; height: auto; object-fit: contain; touch-action: pinch-zoom; user-select: none; -webkit-user-drag: none; }
+    .rb-lb-btn { position: absolute; width: 44px; height: 44px; border-radius: 9999px; border: 0; background: rgba(255, 255, 255, .14); color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; cursor: pointer; backdrop-filter: blur(6px); }
+    .rb-lb-btn:hover { background: rgba(255, 255, 255, .26); }
+    .rb-lb-close { top: calc(12px + env(safe-area-inset-top)); right: 12px; }
+    .rb-lb-prev { left: 12px; top: 50%; transform: translateY(-50%); }
+    .rb-lb-next { right: 12px; top: 50%; transform: translateY(-50%); }
+    .rb-lb-count { position: absolute; left: 50%; bottom: calc(16px + env(safe-area-inset-bottom)); transform: translateX(-50%); padding: 3px 12px; border-radius: 9999px; background: rgba(0, 0, 0, .55); color: #fff; font-size: 12px; }
+
+    /* Digital menu showcase + viewer */
+    .msh { margin-top: 2.5rem; display: grid; gap: 1.5rem; align-items: center; padding: 1rem; border-radius: 1.75rem; background: #fff; border: 1px solid var(--cardborder, #e7e5e4); box-shadow: 0 30px 50px -36px rgba(36, 23, 16, .5); }
+    @media (min-width: 768px) { .msh { grid-template-columns: 280px 1fr; gap: 2.5rem; padding: 1.5rem 2rem 1.5rem 1.5rem; max-width: 56rem; margin-left: auto; margin-right: auto; } }
+    .msh-cover { position: relative; display: block; width: 100%; max-width: 280px; margin: 0 auto; aspect-ratio: 2 / 3; border-radius: 1.1rem; overflow: hidden; border: 0; padding: 0; background: #1b120b; cursor: pointer; box-shadow: 0 24px 40px -22px rgba(36, 23, 16, .75), 0 0 0 1px rgba(185, 138, 60, .55); transition: transform .3s ease; }
+    .msh-cover:hover { transform: translateY(-4px) rotate(-.6deg); }
+    .msh-cover .msh-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .msh-shade { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(15, 10, 6, .1), rgba(15, 10, 6, .55)); }
+    .msh-logo { position: absolute; top: 9%; left: 50%; width: 62%; transform: translateX(-50%); }
+    .msh-kt, .msh-en, .msh-menu { position: absolute; left: 0; right: 0; text-align: center; color: #fff; }
+    .msh-kt { top: 56%; font-size: 1.55rem; font-weight: 500; }
+    .msh-en { top: 65%; font-size: .62rem; letter-spacing: .24em; color: #e9d9b4; }
+    .msh-menu { top: 72%; font-family: "Cormorant Garamond", Georgia, serif; font-size: 2.6rem; letter-spacing: .12em; color: #d9b36a; }
+    .msh-badge { display: inline-flex; align-items: center; gap: .4rem; padding: .25rem .75rem; border-radius: 9999px; background: #fbf4e4; color: #7a5a1f; border: 1px solid #ecd9ac; font-size: 11px; font-weight: 600; }
+    .msh-text h3 { margin: .7rem 0 .4rem; font-size: 1.35rem; line-height: 1.3; font-weight: 600; color: var(--navy, #1b2a49); }
+    @media (min-width: 640px) { .msh-text h3 { font-size: 1.6rem; } }
+    .msh-text p { margin: 0 0 .8rem; font-size: 13px; line-height: 1.65; color: var(--muted, #78716c); }
+    .msh-text ul { list-style: none; margin: 0 0 1.1rem; padding: 0; display: grid; gap: .4rem; font-size: 13px; color: var(--navy, #1b2a49); }
+    .msh-text li { display: flex; gap: .55rem; align-items: baseline; }
+    .msh-text li i { color: #b98a3c; font-size: 11px; }
+    .msh-actions { display: flex; flex-wrap: wrap; gap: .6rem; }
+    .msh-btn { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; min-height: 44px; padding: .6rem 1.2rem; border-radius: 9999px; font-size: 13px; font-weight: 600; border: 1px solid transparent; cursor: pointer; transition: transform .2s ease, filter .2s ease; }
+    .msh-btn:active { transform: scale(.97); }
+    .msh-btn-main { background: #4a2a14; color: #fff; box-shadow: 0 12px 24px -14px rgba(74, 42, 20, .9); }
+    .msh-btn-main:hover { filter: brightness(1.15); }
+    .msh-btn-ghost { background: #fff; color: #4a2a14; border-color: #d9c7a3; }
+    .msh-btn-ghost:hover { background: #fbf4e4; }
+    body.night-mode .msh { background: var(--night-card-2, #14233f); border-color: rgba(255, 255, 255, .12); }
+    body.night-mode .msh-text h3, body.night-mode .msh-text ul { color: var(--on-dark, #f1f5f9); }
+    body.night-mode .msh-text p { color: var(--on-dark-muted, #b6c2d6); }
+    body.night-mode .msh-btn-ghost { background: transparent; color: #e9d9b4; border-color: rgba(233, 217, 180, .4); }
+    .msm { background: rgba(15, 10, 6, .72); display: flex; align-items: stretch; justify-content: center; }
+    .msm.hidden { display: none; }
+    .msm-box { width: 100%; max-width: 980px; display: flex; flex-direction: column; background: #0f0a06; }
+    @media (min-width: 768px) { .msm { padding: 1.5rem; } .msm-box { border-radius: 1.25rem; overflow: hidden; box-shadow: 0 40px 80px -30px rgba(0, 0, 0, .8); } }
+    .msm-bar { display: flex; align-items: center; gap: .75rem; padding: .6rem .9rem; background: #1b120b; color: #e9d9b4; border-bottom: 2px solid #b98a3c; }
+    .msm-title { flex: 1; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: .5rem; }
+    .msm-open { font-size: 12px; color: #e9d9b4; text-decoration: none; padding: .35rem .7rem; border-radius: 9999px; border: 1px solid rgba(233, 217, 180, .4); white-space: nowrap; }
+    .msm-close { width: 40px; height: 40px; border-radius: 9999px; border: 0; background: rgba(255, 255, 255, .1); color: #fff; cursor: pointer; font-size: 16px; }
+    .msm-body { position: relative; flex: 1; min-height: 0; }
+    .msm-body iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: #0f0a06; }
+    .msm-loading { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #e9d9b4; font-size: 13px; }
+
     /* Facebook live feed: fallback behind the iframe + an always-visible button */
     .fb-fallback { position: absolute; left: 0; right: 0; top: 150px; z-index: 0; padding: 0 1.5rem; text-align: center; }
     .fb-fallback p { margin: 0; font-weight: 600; color: var(--navy); }
@@ -1771,25 +1902,13 @@
     .fb-fallback a:hover, .fb-open-btn:hover { filter: brightness(1.08); }
     body.night-mode .fb-fallback p { color: var(--on-dark); }
 
-    /* ---------- Motion: one authored welcome in the story scene, loops pause when off screen, filter changes are acknowledged ---------- */
-    /* the sun rises from behind the hills, the bears step in one after the other, the petals settle; content stays visible if the script never runs */
-    .mascot-scene.ms-ready .ms-sun, .mascot-scene.ms-ready .ms-sun-glow { transform: translateY(52px); opacity: 0; }
-    .mascot-scene.ms-ready .ms-petals { transform: translate(-8px, -22px); opacity: 0; }
-    .mascot-scene.ms-ready .mascot .mascot-img { opacity: 0; transform: translateY(20px) scale(.96); }
-    .mascot-scene.ms-ready.in .ms-sun, .mascot-scene.ms-ready.in .ms-sun-glow { transform: none; opacity: 1; transition: transform 1.5s cubic-bezier(.16, 1, .3, 1), opacity 1s ease-out; }
-    .mascot-scene.ms-ready.in .ms-sun-glow { transition-delay: .1s; }
-    .mascot-scene.ms-ready.in .ms-petals { transform: none; opacity: .9; transition: transform 2.8s cubic-bezier(.16, 1, .3, 1) .6s, opacity 1.2s ease-out .6s; }
-    .mascot-scene.ms-ready.in .mascot .mascot-img { opacity: 1; transform: none; transition: transform .7s cubic-bezier(.16, 1, .3, 1), opacity .5s ease-out; }
-    .mascot-scene.ms-ready.in .ms-b1 .mascot-img { transition-delay: .5s; }
-    .mascot-scene.ms-ready.in .ms-b2 .mascot-img { transition-delay: .72s; }
-    .mascot-scene.ms-ready:not(.in) .mascot-bob { animation-play-state: paused; }
+    /* ---------- Motion: loops pause when off screen, filter changes are acknowledged ---------- */
     .mascot-bob.is-paused, body:not(.in-hero) .sakura-fall i { animation-play-state: paused; }
     /* a changed room list fades up so the change is noticed */
     @keyframes cardIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
     @keyframes cardInFade { from { opacity: 0; } to { opacity: 1; } }
     #roomContainer .room-card { animation: cardIn .38s cubic-bezier(.16, 1, .3, 1) backwards; }
     @media (prefers-reduced-motion: reduce) {
-      .mascot-scene.ms-ready .ms-sun, .mascot-scene.ms-ready .ms-sun-glow, .mascot-scene.ms-ready .ms-petals, .mascot-scene.ms-ready .mascot .mascot-img { transform: none !important; transition: opacity .35s ease-out !important; transition-delay: 0s !important; }
       #roomContainer .room-card { animation: cardInFade .2s ease-out backwards; }
     }
 
@@ -1803,8 +1922,20 @@
     @media (max-width: 640px) { body .flatpickr-day { height: 42px; line-height: 42px; } }
 
     /* Booking-request form rows (room modal) */
-    .req-h { display: flex; align-items: center; gap: .5rem; margin: 14px 0 8px; font-size: 12px; font-weight: 600; color: var(--navy); }
-    .req-h::before { content: ""; width: 14px; height: 2px; background: var(--thai-gold); }
+    /* Booking-request form as its own card: navy header, numbered sections */
+    .req-card { border-radius: 22px; overflow: hidden; background: #FAFCFF; border: 1px solid #D5E1F5; box-shadow: 0 26px 44px -34px rgba(11, 37, 69, .65); }
+    .req-card-head { display: flex; align-items: center; gap: .8rem; padding: .95rem 1.1rem; background: linear-gradient(135deg, #14213D 0%, #1C2E54 100%); border-bottom: 3px solid var(--blue); }
+    .req-card-ic { flex: none; width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: rgba(255, 255, 255, .12); border: 1px solid rgba(255, 255, 255, .35); color: #fff; font-size: 16px; }
+    .req-card-title { margin: 0; font-size: 16px; font-weight: 600; color: #fff; line-height: 1.3; }
+    .req-card-sub { margin: 2px 0 0; font-size: 12px; line-height: 1.45; color: rgba(255, 255, 255, .78); }
+    .req-card-body { padding: 1rem 1.1rem 1.2rem; counter-reset: rq; }
+    @media (max-width: 480px) { .req-card-body { padding: .9rem .85rem 1.1rem; } .req-card-head { padding: .85rem .9rem; } }
+    .req-h { display: flex; align-items: center; gap: .6rem; margin: 22px 0 10px; padding-top: 18px; border-top: 1px dashed #C9D7EE; font-size: 14px; font-weight: 600; color: var(--navy); counter-increment: rq; }
+    .req-h:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
+    .req-h::before { content: counter(rq); flex: none; width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; background: var(--navy); color: #fff; font: 600 12px/1 Prompt, sans-serif; }
+    body.night-mode .req-card { background: rgba(255, 255, 255, .04); border-color: rgba(255, 255, 255, .16); box-shadow: none; }
+    body.night-mode .req-h { color: var(--on-dark); border-top-color: rgba(255, 255, 255, .18); }
+    body.night-mode .req-h::before { background: var(--blue-sky, #93C5FD); color: #14213D; }
     .req-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 52px; padding: 4px 6px 4px 12px; border: 1px solid #D6D3D1; border-radius: 14px; background: #fff; transition: border-color .2s, box-shadow .2s; }
     /* beat the room modal's first-grid-child tint (#roomModal .grid > div:first-child) */
     #roomModal .grid div.req-row.req-row { background: #fff !important; border-color: #D6D3D1 !important; }
@@ -2252,7 +2383,7 @@
         <nav class="space-y-1 text-sm text-zen-dark font-normal">
           <a href="#matcher" onclick="toggleMobileMenu()" class="flex items-center gap-3 p-2.5 rounded-2xl bg-amber-50 text-amber-900 font-medium min-h-[44px]">
             <i class="fa-solid fa-wand-magic-sparkles text-amber-600 w-5 text-center"></i>
-            <span>ช่วยเลือกห้องพักใน 3 คลิก</span>
+            <span>ช่วยเลือกห้องพักให้คุณ</span>
           </a>
           <a id="mobileNavLinkRooms" href="#rooms" onclick="toggleMobileMenu()" class="flex items-center gap-3 p-2.5 rounded-2xl hover:bg-zen-sand transition-colors min-h-[44px]">
             <i class="fa-solid fa-bed text-zen-torii w-5 text-center"></i>
@@ -2453,39 +2584,6 @@
   <section id="story" class="py-16 sm:py-24 bg-zen-bg scroll-mt-16">
     <div class="max-w-3xl mx-auto px-5 sm:px-6 text-center">
       <div class="extra-admin hidden mb-5"><button type="button" onclick="openExtraEditor('story')" class="px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-stone-900 font-bold text-xs shadow-md inline-flex items-center gap-1.5 transition-transform active:scale-95"><i class="fa-solid fa-pen-to-square"></i> แก้ไขส่วนเรื่องราว</button></div>
-<div class="mascot-scene" role="img" aria-label="น้องตาและน้องผาย มาสคอตหมีของบ้านตาผาย โบกมือต้อนรับหน้าประตูโทริอิ">
-        <div class="ms-arch">
-          <svg class="ms-bg" viewBox="0 0 340 400" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
-            <defs>
-              <linearGradient id="msSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6F9BE8"/><stop offset=".42" stop-color="#B9D0F6"/><stop offset=".8" stop-color="#F8DDD5"/><stop offset="1" stop-color="#FFE9C9"/></linearGradient>
-              <linearGradient id="msRiver" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#B7CCEE"/><stop offset="1" stop-color="#6C93D4"/></linearGradient>
-              <radialGradient id="msGlow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#FFF6E2" stop-opacity=".95"/><stop offset="1" stop-color="#FFF6E2" stop-opacity="0"/></radialGradient>
-              <clipPath id="msRiverClip"><rect x="0" y="200" width="340" height="64"/></clipPath>
-            </defs>
-            <rect width="340" height="400" fill="url(#msSky)"/>
-            <circle class="ms-sun-glow" cx="170" cy="172" r="120" fill="url(#msGlow)"/>
-            <circle class="ms-sun" cx="170" cy="176" r="48" fill="#FFF0D4"/>
-            <path d="M0 202 Q60 188 130 200 T250 196 T340 200 V210 H0Z" fill="#C3D3EE"/>
-            <g fill="#7E9BCB" opacity=".9"><path d="M-30 48V42H-22V36H-16V30H-11V24H-7V16H-4L0 0L4 16H7V24H11V30H16V36H22V42H30V48Z" transform="translate(40 166.4) scale(0.7)"/><path d="M-30 48V42H-22V36H-16V30H-11V24H-7V16H-4L0 0L4 16H7V24H11V30H16V36H22V42H30V48Z" transform="translate(88 144.8) scale(1.15)"/><path d="M-30 48V42H-22V36H-16V30H-11V24H-7V16H-4L0 0L4 16H7V24H11V30H16V36H22V42H30V48Z" transform="translate(134 171.2) scale(0.6)"/><path d="M-30 48V42H-22V36H-16V30H-11V24H-7V16H-4L0 0L4 16H7V24H11V30H16V36H22V42H30V48Z" transform="translate(206 171.2) scale(0.6)"/><path d="M-30 48V42H-22V36H-16V30H-11V24H-7V16H-4L0 0L4 16H7V24H11V30H16V36H22V42H30V48Z" transform="translate(252 144.8) scale(1.15)"/><path d="M-30 48V42H-22V36H-16V30H-11V24H-7V16H-4L0 0L4 16H7V24H11V30H16V36H22V42H30V48Z" transform="translate(300 166.4) scale(0.7)"/><rect x="0" y="198" width="340" height="6"/></g>
-            <rect y="200" width="340" height="64" fill="url(#msRiver)"/>
-            <g stroke="#fff" stroke-width="1.4" stroke-linecap="round" opacity=".5"><path d="M20 214h38M80 222h30M230 214h44M286 226h30M150 252h40M60 244h30M250 240h36"/></g>
-            <g clip-path="url(#msRiverClip)" opacity=".28"><g transform="translate(106 352) scale(2 -2)"><path d="M0 8Q32 18 64 8L61 15Q32 24 3 15Z" fill="#D63A2F"/><path d="M3 15Q32 24 61 15V19Q32 28 3 19Z" fill="#B02D24"/><rect x="9" y="26" width="46" height="5" fill="#D63A2F"/><rect x="14" y="18" width="6" height="42" fill="#D63A2F"/><rect x="44" y="18" width="6" height="42" fill="#D63A2F"/></g></g>
-            <g transform="translate(106 112) scale(2)"><path d="M0 8Q32 18 64 8L61 15Q32 24 3 15Z" fill="#D63A2F"/><path d="M3 15Q32 24 61 15V19Q32 28 3 19Z" fill="#B02D24"/><rect x="9" y="26" width="46" height="5" fill="#D63A2F"/><rect x="14" y="18" width="6" height="42" fill="#D63A2F"/><rect x="44" y="18" width="6" height="42" fill="#D63A2F"/><rect x="11" y="56" width="12" height="4" fill="#8A1F18"/><rect x="41" y="56" width="12" height="4" fill="#8A1F18"/></g>
-            <g fill="#2E4A7C" opacity=".85"><path d="M262 252 Q292 262 324 250 L319 245 L268 247Z"/><path d="M296 246V232l10 14z"/></g>
-            <path d="M0 270 Q80 256 170 268 T340 262 V400 H0Z" fill="#92CDA2"/>
-            <path d="M0 332 Q100 312 200 330 T340 322 V400 H0Z" fill="#6FB488"/>
-            <g stroke="#7A5A3A" stroke-width="3" fill="none" stroke-linecap="round"><path d="M340 30 Q292 46 254 36 T198 58"/><path d="M288 42 Q278 62 264 68"/><path d="M0 52 Q36 66 70 56 T118 78"/></g>
-            <g fill="#F9B4C8" stroke="#E889A6" stroke-width=".6"><circle cx="314" cy="36" r="9"/><circle cx="298" cy="48" r="7"/><circle cx="278" cy="40" r="8"/><circle cx="258" cy="44" r="6"/><circle cx="232" cy="50" r="7"/><circle cx="216" cy="58" r="5"/><circle cx="274" cy="66" r="6"/><circle cx="22" cy="62" r="8"/><circle cx="46" cy="70" r="6"/><circle cx="72" cy="62" r="7"/><circle cx="96" cy="74" r="5"/></g>
-            <g fill="#F2C14E"><circle cx="314" cy="36" r="2"/><circle cx="278" cy="40" r="1.8"/><circle cx="232" cy="50" r="1.6"/><circle cx="22" cy="62" r="1.8"/><circle cx="72" cy="62" r="1.6"/></g>
-            <g class="ms-petals" fill="#F9B4C8" opacity=".9"><ellipse cx="60" cy="120" rx="4" ry="2.6" transform="rotate(30 60 120)"/><ellipse cx="120" cy="160" rx="3.5" ry="2.2" transform="rotate(-20 120 160)"/><ellipse cx="300" cy="150" rx="4" ry="2.6" transform="rotate(40 300 150)"/><ellipse cx="30" cy="190" rx="3" ry="2" transform="rotate(10 30 190)"/><ellipse cx="230" cy="110" rx="3.5" ry="2.2" transform="rotate(-30 230 110)"/></g>
-          </svg>
-          <div class="ms-bears">
-            <figure class="mascot mascot-bob ms-b1"><img class="mascot-img" src="mascot-cream.webp" alt="น้องผาย มาสคอตหมีสีครีมของบ้านตาผาย" width="577" height="720" loading="lazy" decoding="async"></figure>
-            <figure class="mascot mascot-bob d2 ms-b2"><img class="mascot-img" src="mascot-brown.webp" alt="น้องตา มาสคอตหมีสีน้ำตาลของบ้านตาผาย" width="577" height="720" loading="lazy" decoding="async"></figure>
-          </div>
-        </div>
-        <div class="ms-caption"><span class="ms-name"><i></i>น้องผาย</span><span class="ms-hello">ยินดีต้อนรับค่ะ 🌸</span><span class="ms-name"><i></i>น้องตา</span></div>
-      </div>
       <span id="storyKicker" class="text-zen-torii text-xs font-semibold tracking-widest uppercase">Baan Ta Phai Story</span>
       <h2 id="storyTitle" class="mt-3 text-3xl sm:text-5xl font-medium text-zen-dark" style="letter-spacing:.02em">เรื่องราวของบ้านตาผาย</h2>
       <div class="mx-auto mt-5 mb-9 w-14 h-px bg-zen-dark/60"></div>
@@ -2579,80 +2677,7 @@
   <section id="matcher" class="py-10 sm:py-16 bg-white border-y border-zen-cardborder/70 scroll-mt-16">
     <div class="max-w-4xl mx-auto px-4 sm:px-6">
       
-      <div id="roomFinderContainer" class="bg-zen-sand/60 rounded-3xl p-5 sm:p-8 border border-zen-cardborder shadow-minimal space-y-6 relative">
-        
-        <div class="text-center space-y-1.5">
-          <div class="mascot-chat">
-            <span class="mc-av"><img src="mascot-cream-head.webp" alt="" width="256" height="256" loading="lazy" decoding="async"></span>
-            <div class="mc-msg"><b>น้องผาย</b><span>ไม่รู้จะเลือกห้องไหนดี? ตอบ 3 ข้อสั้นๆ เดี๋ยวน้องช่วยเลือกให้ค่ะ 💙</span></div>
-          </div>
-          <span class="text-zen-torii text-[10px] sm:text-[11px] font-semibold tracking-widest uppercase">
-            <i class="fa-solid fa-wand-magic-sparkles mr-1"></i> Interactive Room Finder
-          </span>
-          <h2 class="text-xl sm:text-2xl lg:text-3xl font-semibold text-zen-dark">
-            ไม่แน่ใจว่าจะพักห้องไหนดี? ให้เราช่วยแนะนำใน 3 คลิก!
-          </h2>
-          <p class="text-xs sm:text-sm text-zen-muted font-light">
-            เลือกความต้องการของคุณ ระบบจะจับคู่ห้องพักที่เหมาะกับคุณที่สุดทันที
-          </p>
-        </div>
-
-        <div class="space-y-4 pt-2">
-          
-          <!-- Step 1: People -->
-          <div>
-            <label class="block text-xs font-semibold text-zen-dark mb-2">1. จำนวนผู้เข้าพักของคุณ:</label>
-            <div class="grid grid-cols-3 gap-1.5 sm:gap-2">
-              <button type="button" onclick="selectQuiz('people', '2', this)" class="quiz-btn-people flex flex-col items-center justify-center p-2 sm:py-2.5 sm:px-3 rounded-2xl bg-white border border-zen-cardborder text-zen-dark hover:border-zen-torii transition-all active:scale-95 text-center active-opt min-h-[58px] sm:min-h-[62px]">
-                <span class="text-base sm:text-lg mb-0.5">👥</span>
-                <span class="font-medium text-[11px] sm:text-xs leading-tight">2 ท่าน</span>
-                <span class="text-[9px] text-zen-muted font-light mt-0.5">คู่รัก / เพื่อน</span>
-              </button>
-              <button type="button" onclick="selectQuiz('people', '4-6', this)" class="quiz-btn-people flex flex-col items-center justify-center p-2 sm:py-2.5 sm:px-3 rounded-2xl bg-white border border-zen-cardborder text-zen-dark hover:border-zen-torii transition-all active:scale-95 text-center min-h-[58px] sm:min-h-[62px]">
-                <span class="text-base sm:text-lg mb-0.5">👨‍👩‍👧‍👦</span>
-                <span class="font-medium text-[11px] sm:text-xs leading-tight">4 - 6 ท่าน</span>
-                <span class="text-[9px] text-zen-muted font-light mt-0.5">ครอบครัว</span>
-              </button>
-              <button type="button" onclick="selectQuiz('people', '8-20', this)" class="quiz-btn-people flex flex-col items-center justify-center p-2 sm:py-2.5 sm:px-3 rounded-2xl bg-white border border-zen-cardborder text-zen-dark hover:border-zen-torii transition-all active:scale-95 text-center min-h-[58px] sm:min-h-[62px]">
-                <span class="text-base sm:text-lg mb-0.5">🏡</span>
-                <span class="font-medium text-[11px] sm:text-xs leading-tight">8 - 20 ท่าน</span>
-                <span class="text-[9px] text-zen-muted font-light mt-0.5">กลุ่มใหญ่</span>
-              </button>
-            </div>
-          </div>
-
-          <!-- Step 2: Vibe -->
-          <div>
-            <label class="block text-xs font-semibold text-zen-dark mb-2">2. สไตล์บรรยากาศที่ชอบ:</label>
-            <div class="grid grid-cols-3 gap-1.5 sm:gap-2">
-              <button type="button" onclick="selectQuiz('vibe', 'riverside', this)" class="quiz-btn-vibe flex flex-col items-center justify-center p-2 sm:py-2.5 sm:px-3 rounded-2xl bg-white border border-zen-cardborder text-zen-dark hover:border-zen-torii transition-all active:scale-95 text-center active-opt min-h-[58px] sm:min-h-[62px]">
-                <span class="text-base sm:text-lg mb-0.5">🌊</span>
-                <span class="font-medium text-[11px] sm:text-xs leading-tight">ติดริมน้ำ</span>
-                <span class="text-[9px] text-zen-muted font-light mt-0.5">ลมเย็นสบาย</span>
-              </button>
-              <button type="button" onclick="selectQuiz('vibe', 'japanese', this)" class="quiz-btn-vibe flex flex-col items-center justify-center p-2 sm:py-2.5 sm:px-3 rounded-2xl bg-white border border-zen-cardborder text-zen-dark hover:border-zen-torii transition-all active:scale-95 text-center min-h-[58px] sm:min-h-[62px]">
-                <span class="text-base sm:text-lg mb-0.5">⛩️</span>
-                <span class="font-medium text-[11px] sm:text-xs leading-tight">บ้านญี่ปุ่น</span>
-                <span class="text-[9px] text-zen-muted font-light mt-0.5">ซุ้มโทริอิ</span>
-              </button>
-              <button type="button" onclick="selectQuiz('vibe', 'snooker', this)" class="quiz-btn-vibe flex flex-col items-center justify-center p-2 sm:py-2.5 sm:px-3 rounded-2xl bg-white border border-zen-cardborder text-zen-dark hover:border-zen-torii transition-all active:scale-95 text-center min-h-[58px] sm:min-h-[62px]">
-                <span class="text-base sm:text-lg mb-0.5">🎱</span>
-                <span class="font-medium text-[11px] sm:text-xs leading-tight">สนุกเกอร์</span>
-                <span class="text-[9px] text-zen-muted font-light mt-0.5">ปาร์ตี้ส่วนตัว</span>
-              </button>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="pt-2 text-center">
-          <button onclick="runSmartMatch()" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-zen-dark hover:bg-zen-forest text-white font-medium text-xs sm:text-sm px-8 py-3.5 rounded-full shadow-md active:scale-98 transition-all min-h-[46px]">
-            <i class="fa-solid fa-magnifying-glass text-amber-400"></i>
-            <span>ค้นหาห้องพักที่ตรงใจที่สุด</span>
-          </button>
-        </div>
-
-      </div>
+      <div id="roomFinderContainer" class="bg-zen-sand/60 rounded-3xl p-5 sm:p-8 border border-zen-cardborder shadow-minimal space-y-6 relative"></div>
 
     </div>
   </section>
@@ -2731,6 +2756,32 @@
 
       <!-- Action & Menu Preview Banner (Data-Driven & Editable in Admin Mode) -->
       <div id="diningBannerContainer" class="relative group"></div>
+
+      <!-- Digital menu showcase: the full menu site (flip-through pages, cart, PDF) opens in a viewer on click -->
+      <div id="menuShowcase" class="msh">
+        <button type="button" class="msh-cover" onclick="openMenuSite()" aria-label="เปิดเมนูอาหารครัวแม่ลำดวน">
+          <img class="msh-bg" src="photos/other/menu-cover-bg.webp" alt="" loading="lazy" width="640" height="960">
+          <span class="msh-shade"></span>
+          <img class="msh-logo" src="photos/other/menu-logo-white.webp" alt="" loading="lazy" width="360" height="360">
+          <span class="msh-kt">ครัวแม่ลำดวน</span>
+          <span class="msh-en">MAE LAMDUAN KITCHEN</span>
+          <span class="msh-menu">MENU</span>
+        </button>
+        <div class="msh-text">
+          <span class="msh-badge"><i class="fa-solid fa-book-open"></i> เมนูดิจิทัล</span>
+          <h3>เปิดเมนูครัวแม่ลำดวนดูได้ในมือถือ</h3>
+          <p>เมนูอาหารฉบับเต็มของครัวบ้านตาผาย พลิกดูทีละหน้าเหมือนเมนูจริง ครบทั้งอาหารไทย ต้มยำ ยำ อาหารอีสาน ปลา และเมนูเด่นประจำร้าน</p>
+          <ul>
+            <li><i class="fa-solid fa-check"></i> พลิกหน้าดูเมนูพร้อมราคา ชัดเจนบนมือถือ</li>
+            <li><i class="fa-solid fa-check"></i> เลือกเมนูใส่ตะกร้า แล้วส่งรายการสั่งอาหารทาง LINE</li>
+            <li><i class="fa-solid fa-check"></i> ดาวน์โหลดเมนูเป็น PDF เก็บไว้ได้</li>
+          </ul>
+          <div class="msh-actions">
+            <button type="button" onclick="openMenuSite()" class="msh-btn msh-btn-main"><i class="fa-solid fa-utensils"></i> เปิดดูเมนูอาหาร</button>
+            <a href="https://baantaphai-menu.netlify.app/" target="_blank" rel="noopener noreferrer" class="msh-btn msh-btn-ghost">เปิดในแท็บใหม่ <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+          </div>
+        </div>
+      </div>
 
     </div>
   </section>
@@ -4016,7 +4067,6 @@
         </div>
         <span id="footerLogoTitle" class="font-luxury text-lg font-bold text-white tracking-wide">Baan Ta Phai Resort</span>
       </div>
-      <div class="foot-mascots"><span class="fm-avs"><span><img src="mascot-cream-head.webp" alt="" width="256" height="256" loading="lazy" decoding="async"></span><span><img src="mascot-brown-head.webp" alt="" width="256" height="256" loading="lazy" decoding="async"></span></span><span class="fm-text">น้องตา &amp; น้องผาย รอต้อนรับคุณอยู่นะคะ</span></div>
       <p id="footerTagline" class="text-[11px] text-zen-sand/60 max-w-sm mx-auto">
         บ้านตาผาย รีสอร์ท อำเภอท่าเรือ พระนครศรีอยุธยา พักผ่อนท่ามกลางสายน้ำและบรรยากาศสไตล์ญี่ปุ่น
       </p>
@@ -4484,6 +4534,15 @@
   </div>
 
   <!-- ================= ROOM DETAIL MODAL (Responsive 2-Column Desktop / Spacious Mobile Bottom Sheet) ================= -->
+  <!-- Full-screen photo viewer for the room modal -->
+  <div id="roomLightbox" class="fixed inset-0 hidden rb-lb" role="dialog" aria-modal="true" aria-label="ดูรูปเต็มจอ" onclick="if(event.target===this)closeRoomLightbox()">
+    <img id="roomLightboxImg" alt="" class="rb-lb-img">
+    <button type="button" class="rb-lb-btn rb-lb-close" onclick="closeRoomLightbox()" aria-label="ปิดรูป"><i class="fa-solid fa-xmark"></i></button>
+    <button type="button" id="roomLightboxPrev" class="rb-lb-btn rb-lb-prev" onclick="stepRoomLightbox(-1)" aria-label="รูปก่อนหน้า"><i class="fa-solid fa-chevron-left"></i></button>
+    <button type="button" id="roomLightboxNext" class="rb-lb-btn rb-lb-next" onclick="stepRoomLightbox(1)" aria-label="รูปถัดไป"><i class="fa-solid fa-chevron-right"></i></button>
+    <span id="roomLightboxCount" class="rb-lb-count"></span>
+  </div>
+
   <div id="roomModal" class="fixed inset-0 z-50 hidden bg-black/65 backdrop-blur-sm flex items-end md:items-center justify-center p-0 md:p-4 sm:p-6 overflow-hidden">
     
     <div class="relative w-full max-w-full md:max-w-4xl lg:max-w-5xl bg-white rounded-t-[28px] md:rounded-3xl overflow-hidden shadow-2xl mobile-sheet-enter desktop-modal-enter max-h-[92vh] md:max-h-[88vh] flex flex-col my-0" onclick="event.stopPropagation()">
@@ -4511,8 +4570,9 @@
           <!-- Carousel Container -->
           <div class="relative aspect-[16/10] sm:aspect-[16/10] w-full rounded-2xl overflow-hidden bg-stone-200 shadow-sm shrink-0">
             <img id="modalImg" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Room Details" class="w-full h-full object-cover transition-opacity duration-300">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-            
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent cursor-zoom-in" onclick="openRoomLightbox()"></div>
+            <button type="button" onclick="openRoomLightbox()" class="absolute right-2.5 top-2.5 w-9 h-9 rounded-full bg-black/50 hover:bg-black/75 text-white flex items-center justify-center text-sm backdrop-blur-sm active:scale-95 transition-all" aria-label="ขยายรูปเต็มจอ" title="ขยายรูป"><i class="fa-solid fa-expand"></i></button>
+
             <button id="modalPrevPhotoBtn" onclick="prevModalPhoto()" class="absolute left-2.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/50 hover:bg-black/75 text-white flex items-center justify-center text-xs backdrop-blur-sm active:scale-95 transition-all" aria-label="รูปก่อนหน้า">
               <i class="fa-solid fa-chevron-left"></i>
             </button>
@@ -4521,7 +4581,7 @@
             </button>
 
             <!-- Overlay Badge & Counter -->
-            <div class="absolute bottom-3 left-3 right-3 text-white">
+            <div class="absolute bottom-3 left-3 right-3 text-white pointer-events-none">
               <div class="flex items-center justify-between mb-1">
                 <span id="modalBadge" class="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-medium bg-zen-torii text-white shadow-xs">
                   Zone
@@ -4534,7 +4594,7 @@
                 <h3 id="modalTitle" class="text-lg sm:text-xl font-semibold leading-tight text-white tracking-tight drop-shadow-sm flex-1">
                   Room Title
                 </h3>
-                <button onclick="openEditModalFromDetail()" class="modal-admin-only hidden px-2.5 py-1 rounded-full bg-amber-500 hover:bg-amber-600 text-stone-900 text-[10px] font-bold shadow-xs shrink-0 items-center gap-1 active:scale-95 transition-transform" title="แก้ไขห้องนี้">
+                <button onclick="openEditModalFromDetail()" class="modal-admin-only hidden pointer-events-auto px-2.5 py-1 rounded-full bg-amber-500 hover:bg-amber-600 text-stone-900 text-[10px] font-bold shadow-xs shrink-0 items-center gap-1 active:scale-95 transition-transform" title="แก้ไขห้องนี้">
                   <i class="fa-solid fa-pen"></i> <span>แก้ไข</span>
                 </button>
               </div>
@@ -4652,9 +4712,16 @@
           </div>
 
           <!-- Optional booking-request form (admin switch: contact edit modal) -->
-          <div id="roomReqBox" class="hidden mb-3 pt-3 border-t border-stone-200">
-            <div id="roomReqFields">
-              <p class="text-sm font-semibold text-stone-800">วางแผนวันเข้าพักของคุณ</p>
+          <div id="roomReqBox" class="hidden mb-3 mt-6">
+            <div id="roomReqFields" class="req-card">
+              <div class="req-card-head">
+                <span class="req-card-ic"><i class="fa-solid fa-calendar-check"></i></span>
+                <div>
+                  <p class="req-card-title">วางแผนวันเข้าพักของคุณ</p>
+                  <p class="req-card-sub">เลือกวัน จำนวนแขก และตัวเลือกเสริม ดูห้องว่างกับราคาเบื้องต้นได้ทันที</p>
+                </div>
+              </div>
+              <div class="req-card-body">
               <p class="req-h">วันที่เข้าพัก</p>
               <div class="grid grid-cols-2 gap-2">
                 <label for="roomReqIn" class="block">
@@ -4665,6 +4732,10 @@
                   <span class="block text-[11px] font-medium text-stone-600 mb-1">เช็คเอาท์</span>
                   <input type="date" id="roomReqOut" oninput="refreshRoomBookingLink()" class="w-full px-2.5 rounded-xl border border-stone-300 bg-white text-base min-h-[44px] focus:outline-none focus:border-blue-700">
                 </label>
+              </div>
+              <div id="roomReqAvail" class="req-avail hidden" role="status" aria-live="polite">
+                <p id="roomReqAvailText"></p>
+                <small>ข้อมูลนี้เพื่อใช้วางแผน ยังไม่ใช่การยืนยัน แอดมินจะเช็กห้องว่างอีกครั้ง</small>
               </div>
               <p class="req-h">ผู้เข้าพัก</p>
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -4694,18 +4765,18 @@
               <p class="req-h">ตัวเลือกเพิ่มเติม</p>
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 <div class="req-row">
-                  <span class="req-lbl">เตียงเสริม</span>
+                  <span class="req-lbl">เตียงเสริม<small>200 บาท · เลือกได้อย่างใดอย่างหนึ่ง</small></span>
                   <span class="req-stepper">
                     <button type="button" onclick="reqStep('roomReqBed', -1)" aria-label="ลดเตียงเสริม" disabled><i class="fa-solid fa-minus"></i></button>
-                    <output id="roomReqBed" data-max="10" aria-live="polite">0</output>
+                    <output id="roomReqBed" data-max="1" aria-live="polite">0</output>
                     <button type="button" onclick="reqStep('roomReqBed', 1)" aria-label="เพิ่มเตียงเสริม"><i class="fa-solid fa-plus"></i></button>
                   </span>
                 </div>
                 <div class="req-row">
-                  <span class="req-lbl">ฟูกเสริม</span>
+                  <span class="req-lbl">ฟูกเสริม<small>100 บาท · เลือกได้อย่างใดอย่างหนึ่ง</small></span>
                   <span class="req-stepper">
                     <button type="button" onclick="reqStep('roomReqMat', -1)" aria-label="ลดฟูกเสริม" disabled><i class="fa-solid fa-minus"></i></button>
-                    <output id="roomReqMat" data-max="10" aria-live="polite">0</output>
+                    <output id="roomReqMat" data-max="1" aria-live="polite">0</output>
                     <button type="button" onclick="reqStep('roomReqMat', 1)" aria-label="เพิ่มฟูกเสริม"><i class="fa-solid fa-plus"></i></button>
                   </span>
                 </div>
@@ -4724,11 +4795,48 @@
                   <label class="req-chip"><input type="checkbox" name="roomReqPet" value="อื่นๆ" onchange="refreshRoomBookingLink()"><span><i class="fa-solid fa-paw"></i>อื่นๆ</span></label>
                   </span>
                 </div>
-                <input type="text" id="roomReqPetNote" maxlength="60" oninput="refreshRoomBookingLink()" placeholder="ขนาด / จำนวน / ชนิดสัตว์" aria-label="รายละเอียดสัตว์เลี้ยง" class="hidden sm:col-span-2 w-full px-3 rounded-xl border border-stone-300 bg-white text-base min-h-[44px] focus:outline-none focus:border-blue-700">
+                <div id="roomReqPetRows" class="hidden sm:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  <div class="req-row" style="display:none">
+                    <span class="req-lbl"><i class="fa-solid fa-dog req-paw"></i> สุนัข<small>กี่ตัว</small></span>
+                    <span class="req-stepper">
+                      <button type="button" onclick="reqStep('roomReqPetDog', -1)" aria-label="ลดจำนวนสุนัข"><i class="fa-solid fa-minus"></i></button>
+                      <output id="roomReqPetDog" data-min="1" data-max="5" aria-live="polite">0</output>
+                      <button type="button" onclick="reqStep('roomReqPetDog', 1)" aria-label="เพิ่มจำนวนสุนัข"><i class="fa-solid fa-plus"></i></button>
+                    </span>
+                  </div>
+                  <div class="req-row" style="display:none">
+                    <span class="req-lbl"><i class="fa-solid fa-cat req-paw"></i> แมว<small>กี่ตัว</small></span>
+                    <span class="req-stepper">
+                      <button type="button" onclick="reqStep('roomReqPetCat', -1)" aria-label="ลดจำนวนแมว"><i class="fa-solid fa-minus"></i></button>
+                      <output id="roomReqPetCat" data-min="1" data-max="5" aria-live="polite">0</output>
+                      <button type="button" onclick="reqStep('roomReqPetCat', 1)" aria-label="เพิ่มจำนวนแมว"><i class="fa-solid fa-plus"></i></button>
+                    </span>
+                  </div>
+                  <div class="req-row" style="display:none">
+                    <span class="req-lbl"><i class="fa-solid fa-paw req-paw"></i> สัตว์อื่นๆ<small>กี่ตัว</small></span>
+                    <span class="req-stepper">
+                      <button type="button" onclick="reqStep('roomReqPetOther', -1)" aria-label="ลดจำนวนสัตว์อื่นๆ"><i class="fa-solid fa-minus"></i></button>
+                      <output id="roomReqPetOther" data-min="1" data-max="5" aria-live="polite">0</output>
+                      <button type="button" onclick="reqStep('roomReqPetOther', 1)" aria-label="เพิ่มจำนวนสัตว์อื่นๆ"><i class="fa-solid fa-plus"></i></button>
+                    </span>
+                  </div>
+                  <input type="text" id="roomReqPetOtherType" maxlength="40" oninput="refreshRoomBookingLink()" placeholder="ระบุประเภทสัตว์ (จำเป็น) เช่น กระต่าย นก" aria-label="ประเภทสัตว์เลี้ยงอื่นๆ (จำเป็น)" aria-required="true" style="display:none" class="sm:col-span-2 w-full px-3 rounded-xl border border-stone-300 bg-white text-base min-h-[44px] focus:outline-none focus:border-blue-700">
+                </div>
+                <input type="text" id="roomReqPetNote" maxlength="60" oninput="refreshRoomBookingLink()" placeholder="รายละเอียดเพิ่มเติม เช่น ขนาด / พันธุ์ (ไม่บังคับ)" aria-label="รายละเอียดสัตว์เลี้ยง" class="hidden sm:col-span-2 w-full px-3 rounded-xl border border-stone-300 bg-white text-base min-h-[44px] focus:outline-none focus:border-blue-700">
               </div>
               <p id="roomReqRates" class="mt-3 text-[11px] leading-relaxed text-stone-500"></p>
-              <p id="roomReqHint" class="mt-1.5 text-[11px] leading-relaxed text-stone-600"></p>
-              <button type="button" id="roomReqCopy" onclick="copyRoomRequest()" class="hidden mt-2 px-3.5 rounded-xl border border-blue-700 bg-white text-blue-800 hover:bg-blue-50 text-xs font-semibold min-h-[44px] inline-flex items-center gap-2"><i class="fa-brands fa-facebook-messenger text-sm"></i> <span>คัดลอกคำขอ ไปวางใน Messenger</span></button>
+              <div id="roomReqEst" class="req-est hidden" role="status" aria-live="polite">
+                <div class="req-est-head"><span class="req-est-title"><i class="fa-solid fa-calculator"></i> ราคาเบื้องต้น</span><span class="req-est-badge">ยังไม่ยืนยัน</span></div>
+                <div id="roomReqEstRows"></div>
+                <div class="req-est-total"><span>รวมเบื้องต้น</span><b id="roomReqEstTotal"></b></div>
+                <ul class="req-est-notes">
+                  <li><i class="fa-solid fa-calendar-check"></i><span><b>ต้องเช็กห้องว่างกับแอดมินอีกครั้ง</b> ก่อนยืนยันการจอง</span></li>
+                  <li><i class="fa-solid fa-tag"></i><span>แอดมินจะยืนยันราคาสุดท้ายกับคุณทาง LINE Official Account หรือ Facebook Inbox</span></li>
+                  <li><i class="fa-solid fa-bed"></i><span>เตียงหรือฟูกเสริม เลือกได้อย่างใดอย่างหนึ่ง 1 ชิ้นต่อห้อง</span></li>
+                </ul>
+              </div>
+              <div class="req-hint"><i class="fa-solid fa-circle-info"></i><p id="roomReqHint"></p></div>
+              </div>
             </div>
             <div id="roomReqOff" class="hidden text-[11px] leading-relaxed text-stone-600">ฟอร์มขอจองปิดอยู่ ลูกค้าจะไม่เห็นส่วนนี้ (เห็นเฉพาะแอดมิน)</div>
             <button type="button" onclick="openContactEditModal()" class="modal-admin-only hidden mt-2 px-3 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-stone-900 font-bold text-[11px] items-center gap-1.5 min-h-[44px]">
@@ -4745,7 +4853,7 @@
             <button onclick="closeRoomModal()" class="px-3 sm:px-4 py-3 rounded-2xl bg-stone-100 hover:bg-stone-200 border border-stone-200 font-medium text-xs text-stone-700 transition-colors min-h-[44px]">
               ปิด
             </button>
-            <a id="modalMessengerBtn" href="https://m.me/Baantaphai" target="_blank" class="flex-1 py-3 rounded-2xl bg-[#005EC4] hover:bg-[#0073E6] font-medium text-xs text-white text-center flex items-center justify-center gap-1.5 shadow-sm transition-all min-h-[44px] active:scale-98">
+            <a id="modalMessengerBtn" href="https://m.me/Baantaphai" target="_blank" onclick="copyRoomRequest()" class="flex-1 py-3 rounded-2xl bg-[#005EC4] hover:bg-[#0073E6] font-medium text-xs text-white text-center flex items-center justify-center gap-1.5 shadow-sm transition-all min-h-[44px] active:scale-98">
               <i class="fa-brands fa-facebook-messenger text-base"></i>
               <span>ทัก Messenger</span>
             </a>
@@ -4763,6 +4871,21 @@
   </div>
 
   <!-- ================= RESORT MENU PREVIEW MODAL ================= -->
+  <!-- Digital menu viewer (menu site in an iframe, loaded on open) -->
+  <div id="menuSiteModal" class="fixed inset-0 z-50 hidden msm" role="dialog" aria-modal="true" aria-label="เมนูอาหารครัวแม่ลำดวน" onclick="if(event.target===this)closeMenuSite()">
+    <div class="msm-box">
+      <div class="msm-bar">
+        <span class="msm-title"><i class="fa-solid fa-utensils"></i> เมนูครัวแม่ลำดวน</span>
+        <a href="https://baantaphai-menu.netlify.app/" target="_blank" rel="noopener noreferrer" class="msm-open">เปิดในแท็บใหม่ <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+        <button type="button" onclick="closeMenuSite()" class="msm-close" aria-label="ปิดเมนู"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="msm-body">
+        <div class="msm-loading" id="menuSiteLoading">กำลังเปิดเมนู...</div>
+        <iframe id="menuSiteFrame" title="เมนูอาหารครัวแม่ลำดวน บ้านตาผาย" allow="clipboard-write; web-share" referrerpolicy="no-referrer-when-downgrade" onload="document.getElementById('menuSiteLoading').style.display='none'"></iframe>
+      </div>
+    </div>
+  </div>
+
   <div id="menuModal" class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center overflow-hidden">
     <div class="relative w-full max-w-3xl bg-white rounded-t-[32px] sm:rounded-[28px] overflow-hidden shadow-2xl mobile-sheet-enter desktop-modal-enter max-h-[92vh] sm:max-h-[88vh] flex flex-col my-0 sm:my-8" onclick="event.stopPropagation()">
       
@@ -9578,6 +9701,8 @@
 
   <!-- ================= JAVASCRIPT ENGINE & DATA STORE ================= -->
   <script src="i18n.js"></script>
+  <script src="avail.js"></script>
+  <script src="finder.js"></script>
   <script src="app.js"></script>
 
   <script src="site-fx.js"></script>

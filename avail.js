@@ -32,7 +32,7 @@
     var f = opts.fetchFn || root.fetch.bind(root);
     var ctl = typeof AbortController !== 'undefined' ? new AbortController() : null;
     var timer, timedOut = new Promise(function (res) {
-      timer = setTimeout(function () { if (ctl) ctl.abort(); res(null); }, opts.timeoutMs || 8000);
+      timer = setTimeout(function () { if (ctl) ctl.abort(); res(null); }, opts.timeoutMs || 15000);
     });
     var url = opts.baseUrl + '?action=availability&in=' + encodeURIComponent(inStr) + '&out=' + encodeURIComponent(outStr);
     var request = Promise.resolve().then(function () { return f(url, ctl ? { signal: ctl.signal } : undefined); })
