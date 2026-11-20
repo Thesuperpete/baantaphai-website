@@ -101,7 +101,7 @@
   "hasMap": "https://maps.app.goo.gl/QZnssrZgScjpk9cJ8",
   "sameAs": [
     "https://www.facebook.com/Baantaphai",
-    "https://line.me/R/ti/p/@baantaphairesort"
+    "https://line.me/R/ti/p/@taphai"
   ]
 }
   </script>
@@ -1062,7 +1062,8 @@
     .rf-go:hover { transform: translateY(-2px); filter: brightness(1.05); }
     .rf-back { display: block; margin: .9rem auto 0; min-height: 40px; padding: 0 1rem; border: 0; background: none; color: rgba(255, 255, 255, .75); font-size: 13px; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
     .rf-vibes { display: grid; grid-template-columns: repeat(2, 1fr); gap: .7rem; margin-top: 1.4rem; }
-    @media (min-width: 640px) { .rf-vibes { grid-template-columns: repeat(4, 1fr); } }
+    .rf-vibes .rf-vibe:last-child:nth-child(odd) { grid-column: 1 / -1; }
+    @media (min-width: 640px) { .rf-vibes { grid-template-columns: repeat(5, 1fr); } .rf-vibes .rf-vibe:last-child:nth-child(odd) { grid-column: auto; } }
     .rf-vibe { display: flex; flex-direction: column; align-items: center; gap: .15rem; padding: 1.1rem .6rem; min-height: 120px; border-radius: 20px; border: 1px solid rgba(255, 255, 255, .22); background: rgba(255, 255, 255, .06); color: #fff; cursor: pointer; text-align: center; transition: transform .25s ease, border-color .25s ease, background .25s ease; }
     .rf-vibe:hover { transform: translateY(-3px); border-color: #C9A24B; background: rgba(201, 162, 75, .12); }
     .rf-vibe .ic { font-size: 2.1rem; line-height: 1.15; }
@@ -1075,22 +1076,32 @@
     .rf-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; }
     .rf-card { display: flex; flex-direction: column; border-radius: 22px; overflow: hidden; background: rgba(255, 255, 255, .07); border: 1px solid rgba(255, 255, 255, .18); color: #fff; }
     .rf-card.best { border-color: #C9A24B; box-shadow: 0 0 0 1px rgba(201, 162, 75, .5), 0 26px 44px -28px rgba(201, 162, 75, .7); }
-    .rf-pic { position: relative; aspect-ratio: 16 / 10; background: #1B2D52; }
-    .rf-pic img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    .rf-pic { position: relative; aspect-ratio: 16 / 10; background: #1B2D52; overflow: hidden; }
+    .rf-pic img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; }
     .rf-tag { position: absolute; left: 10px; top: 10px; padding: 3px 10px; border-radius: 9999px; background: rgba(20, 33, 61, .85); border: 1px solid rgba(255, 255, 255, .3); color: #fff; font-size: 11px; font-weight: 500; }
     .rf-card.best .rf-tag { background: #C9A24B; border-color: #C9A24B; color: #14213D; font-weight: 600; }
     .rf-body { display: flex; flex-direction: column; gap: .55rem; flex: 1; padding: .9rem 1rem 1rem; }
     .rf-body h4 { margin: 0; font-size: 16px; font-weight: 600; color: #fff !important; line-height: 1.3; }
+    .rf-cap { display: flex; align-items: center; gap: .65rem; padding: .5rem .75rem .5rem .55rem; border-radius: 14px; background: rgba(255, 255, 255, .1); border: 1px solid rgba(255, 255, 255, .24); }
+    .rf-cap i { flex: none; width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; background: rgba(255, 255, 255, .16); color: #fff; font-size: 13px; }
+    .rf-cap b { display: block; font-size: 14.5px; font-weight: 600; color: #fff; line-height: 1.25; font-variant-numeric: lining-nums; }
+    .rf-cap small { display: block; font-size: 11.5px; color: rgba(255, 255, 255, .72); }
     .rf-price { display: flex; align-items: baseline; gap: .4rem; color: #F6E7B8; }
     .rf-price b { font: 600 1.75rem/1 Prompt, sans-serif; font-variant-numeric: lining-nums; color: #fff; }
     .rf-price span { font-size: 12.5px; color: rgba(255, 255, 255, .78); }
     .rf-per { display: inline-flex; align-self: flex-start; align-items: center; gap: .45rem; padding: 4px 12px 4px 10px; border-radius: 9999px; background: rgba(201, 162, 75, .16); border: 1px solid rgba(201, 162, 75, .55); color: #F6E7B8; font-size: 12.5px; font-weight: 500; }
     .rf-per i { font-size: 11px; color: #C9A24B; }
     .rf-per span { font-variant-numeric: lining-nums; }
-    .rf-fine { display: flex; gap: .6rem; align-items: flex-start; margin: .2rem 0 0; padding: .65rem .8rem; border-radius: 12px; background: rgba(251, 191, 36, .14); border: 1px solid rgba(251, 191, 36, .55); font-size: 12.5px; line-height: 1.55; color: rgba(255, 255, 255, .88); }
-    .rf-fine i { flex: none; margin-top: 2px; color: #FBBF24; font-size: 14px; }
+    .rf-fine { display: grid; gap: .6rem; margin: .2rem 0 0; padding: .65rem .8rem; border-radius: 12px; background: rgba(251, 191, 36, .14); border: 1px solid rgba(251, 191, 36, .55); font-size: 12.5px; line-height: 1.55; color: rgba(255, 255, 255, .88); }
+    .rf-fine-row { display: flex; gap: .6rem; align-items: flex-start; }
+    .rf-fine-row i { flex: none; margin-top: 2px; color: #FBBF24; font-size: 14px; }
     .rf-fine b { display: block; font-weight: 600; color: #FDE68A; }
     .rf-fine .nw { white-space: nowrap; }
+    .rf-fine .rf-fine-2 { padding-top: .6rem; border-top: 1px dashed rgba(251, 191, 36, .45); }
+    .rf-std { display: flex; align-items: flex-start; gap: .65rem; padding: .65rem .8rem; border-radius: 14px; background: rgba(147, 197, 253, .14); border: 1px solid rgba(147, 197, 253, .55); }
+    .rf-std i { flex: none; margin-top: 2px; color: #93C5FD; font-size: 15px; }
+    .rf-std b { display: block; font-size: 13.5px; font-weight: 600; color: #fff; line-height: 1.4; }
+    .rf-std small { display: block; margin-top: 2px; font-size: 12px; line-height: 1.5; color: rgba(255, 255, 255, .82); }
     .rf-why { list-style: none; margin: 0; padding: 0; display: grid; gap: .3rem; font-size: 12.5px; line-height: 1.5; color: rgba(255, 255, 255, .85); }
     .rf-why li { display: flex; gap: .5rem; align-items: baseline; }
     .rf-why li::before { content: "✓"; color: #C9A24B; font-weight: 700; }
@@ -1841,6 +1852,76 @@
     body.night-mode .req-hint { background: rgba(37, 99, 235, .14); border-color: rgba(147, 197, 253, .3); }
     body.night-mode .req-hint p { color: var(--on-dark-muted, #b6c2d6); }
 
+    /* Admin: show / hide a whole section */
+    .vis-bar { max-width: 44rem; margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: .8rem; flex-wrap: wrap; padding: .6rem .9rem; border-radius: 14px; background: #ECFDF5; border: 1px solid #A7F3D0; color: #065F46; font-size: 12.5px; }
+    .vis-bar.hidden { display: none; }
+    .vis-bar.is-hidden { background: #FFF1F2; border-color: #FDA4AF; color: #9F1239; }
+    .vis-btn { display: inline-flex; align-items: center; gap: .5rem; min-height: 40px; padding: 0 1rem; border-radius: 9999px; border: 1px solid currentColor; background: #fff; color: inherit; font-size: 12.5px; font-weight: 600; cursor: pointer; }
+    .sec-hidden-admin { outline: 2px dashed #FDA4AF; outline-offset: -8px; }
+    .sec-hidden-admin .max-w-7xl > :not(.vis-bar):not(#menuShowcase) { opacity: .45; }
+    .sec-part-hidden .msh { margin-top: 0; }
+    #dining.sec-part-hidden { padding-top: 2rem; padding-bottom: 2.5rem; }
+
+    /* Infographic: activities + nearby places */
+    .ia-card { margin: 2rem auto 0; max-width: 62rem; border-radius: 24px; overflow: hidden; background: #fff; border: 1px solid #D5E1F5; box-shadow: 0 30px 50px -36px rgba(11, 37, 69, .6); }
+    .ia-head { display: flex; align-items: center; gap: .8rem; padding: .9rem 1.1rem; background: linear-gradient(135deg, #14213D 0%, #1C2E54 100%); border-bottom: 3px solid var(--blue); }
+    .ia-ic { flex: none; width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: rgba(255, 255, 255, .12); border: 1px solid rgba(255, 255, 255, .35); color: #fff; font-size: 16px; }
+    .ia-title { margin: 0; font-size: 16px; font-weight: 600; color: #fff; line-height: 1.35; }
+    .ia-title span { display: block; font-size: 13px; font-weight: 400; color: rgba(255, 255, 255, .85); }
+    @media (min-width: 640px) { .ia-title span { display: inline; margin-left: .5rem; } }
+    .ia-sub { margin: 2px 0 0; font-size: 12px; line-height: 1.5; color: rgba(255, 255, 255, .72); }
+    .ia-pic { position: relative; display: block; width: 100%; padding: 0; border: 0; background: #EAF1FB; cursor: zoom-in; aspect-ratio: 3 / 2; }
+    .ia-pic img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+    .ia-zoom { position: absolute; right: 12px; bottom: 12px; display: inline-flex; align-items: center; gap: .45rem; padding: .4rem .85rem; border-radius: 9999px; background: rgba(11, 37, 69, .8); color: #fff; font-size: 12.5px; font-weight: 500; }
+    .ia-foot { display: flex; align-items: center; justify-content: space-between; gap: .8rem; padding: .7rem 1rem .8rem; }
+    .ia-foot p { margin: 0; font-size: 12px; color: var(--muted, #78716c); }
+    .ia-link { display: inline-flex; align-items: center; gap: .45rem; margin-top: .35rem; min-height: 44px; padding: 0 1rem; border-radius: 9999px; border: 1px solid #C9D7EE; background: #fff; color: var(--navy); font-size: 12.5px; font-weight: 500; cursor: pointer; }
+    .ia-link:hover { background: #EEF4FD; }
+    body.night-mode .ia-card { background: rgba(255, 255, 255, .05); border-color: rgba(255, 255, 255, .16); box-shadow: none; }
+    body.night-mode .ia-foot p { color: var(--on-dark-muted, #b6c2d6); }
+    body.night-mode .ia-link { background: transparent; color: var(--on-dark, #f1f5f9); border-color: rgba(255, 255, 255, .3); }
+
+    /* Rate cards */
+    .rc-sec { padding: 3.5rem 0 3rem; background: linear-gradient(180deg, #F4F8FF 0%, #fff 100%); border-top: 1px solid var(--cardborder, #e7e5e4); }
+    @media (min-width: 640px) { .rc-sec { padding: 5rem 0 4rem; } }
+    .rc-badge { display: inline-flex; align-items: center; gap: .45rem; padding: .25rem .8rem; border-radius: 9999px; background: #EEF4FD; border: 1px solid #D4E2F7; color: var(--blue-deep, #1D4FBF); font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
+    .rc-title { margin: .5rem 0 0; font-size: 1.6rem; font-weight: 600; color: var(--navy); line-height: 1.25; }
+    @media (min-width: 640px) { .rc-title { font-size: 2.2rem; } }
+    .rc-sub { margin: .4rem 0 0; font-size: 13px; line-height: 1.6; color: var(--muted, #78716c); }
+    .rc-wrap { position: relative; }
+    .rc-track { display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 6px 4px 18px; scrollbar-width: none; -webkit-overflow-scrolling: touch; outline: none; }
+    .rc-track::-webkit-scrollbar { display: none; }
+    .rc-card { flex: 0 0 86%; scroll-snap-align: center; border-radius: 22px; overflow: hidden; background: #fff; border: 1px solid #D5E1F5; box-shadow: 0 24px 40px -30px rgba(11, 37, 69, .6); display: flex; flex-direction: column; }
+    @media (min-width: 640px) { .rc-card { flex-basis: 46%; } }
+    @media (min-width: 1024px) { .rc-card { flex-basis: calc((100% - 32px) / 3); scroll-snap-align: start; } }
+    .rc-pic { position: relative; display: block; width: 100%; padding: 0; border: 0; background: #EAF1FB; cursor: zoom-in; aspect-ratio: 3 / 2; }
+    .rc-pic img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+    .rc-zoom { position: absolute; right: 10px; bottom: 10px; width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: rgba(11, 37, 69, .78); color: #fff; font-size: 14px; }
+    .rc-meta { display: flex; align-items: center; justify-content: space-between; gap: .6rem; padding: .7rem .9rem .8rem; }
+    .rc-meta b { font-size: 14.5px; font-weight: 600; color: var(--navy); line-height: 1.3; }
+    .rc-acts { display: inline-flex; gap: .4rem; flex: none; }
+    .rc-act { display: inline-flex; align-items: center; gap: .4rem; white-space: nowrap; min-height: 40px; padding: 0 .85rem; border-radius: 9999px; border: 1px solid #C9D7EE; background: #fff; color: var(--navy); font-size: 12.5px; font-weight: 500; text-decoration: none; cursor: pointer; }
+    .rc-act:hover { background: #EEF4FD; }
+    .rc-nav { display: none; position: absolute; top: calc(50% - 30px); width: 46px; height: 46px; border-radius: 50%; border: 1px solid #C9D7EE; background: #fff; color: var(--navy); box-shadow: 0 14px 26px -14px rgba(11, 37, 69, .6); cursor: pointer; z-index: 2; place-items: center; font-size: 15px; }
+    .rc-nav:hover { background: #EEF4FD; }
+    .rc-prev { left: -14px; } .rc-next { right: -14px; }
+    @media (min-width: 1024px) { .rc-nav { display: grid; } }
+    .rc-note { margin: .6rem auto 0; max-width: 560px; text-align: center; font-size: 12px; line-height: 1.6; color: var(--muted, #78716c); }
+    .rc-modal-btn { display: flex; align-items: center; justify-content: center; gap: .6rem; width: 100%; min-height: 46px; margin-top: .6rem; padding: 0 1rem; border-radius: 9999px; border: 1px solid var(--navy); background: #fff; color: var(--navy); font-size: 13.5px; font-weight: 600; cursor: pointer; transition: background .2s ease; }
+    .rc-modal-btn:hover { background: #EEF4FD; }
+    .rc-modal-btn.hidden { display: none; }
+    .rc-modal-btn-ic { font-size: 12px; opacity: .7; }
+    .rb-lb-dl { top: calc(12px + env(safe-area-inset-top)); right: 68px; text-decoration: none; }
+    .rb-lb-share { top: calc(12px + env(safe-area-inset-top)); right: 124px; }
+    body.night-mode .rc-sec { background: linear-gradient(180deg, #0E1729 0%, #0B1424 100%); border-color: rgba(255, 255, 255, .1); }
+    body.night-mode .rc-title { color: var(--on-dark, #f1f5f9); }
+    body.night-mode .rc-sub, body.night-mode .rc-note { color: var(--on-dark-muted, #b6c2d6); }
+    body.night-mode .rc-card { background: rgba(255, 255, 255, .06); border-color: rgba(255, 255, 255, .16); box-shadow: none; }
+    body.night-mode .rc-meta b { color: var(--on-dark, #f1f5f9); }
+    body.night-mode .rc-act { background: transparent; color: var(--on-dark, #f1f5f9); border-color: rgba(255, 255, 255, .3); }
+    body.night-mode .rc-nav { background: #16233D; color: #fff; border-color: rgba(255, 255, 255, .25); }
+    body.night-mode .rc-modal-btn { background: transparent; color: var(--on-dark, #f1f5f9); border-color: rgba(255, 255, 255, .4); }
+
     /* Room photo viewer (above the room modal) */
     .rb-lb { z-index: 70; background: rgba(6, 10, 20, .94); display: flex; align-items: center; justify-content: center; }
     .rb-lb.hidden { display: none; }
@@ -1853,17 +1934,28 @@
     .rb-lb-count { position: absolute; left: 50%; bottom: calc(16px + env(safe-area-inset-bottom)); transform: translateX(-50%); padding: 3px 12px; border-radius: 9999px; background: rgba(0, 0, 0, .55); color: #fff; font-size: 12px; }
 
     /* Digital menu showcase + viewer */
-    .msh { margin-top: 2.5rem; display: grid; gap: 1.5rem; align-items: center; padding: 1rem; border-radius: 1.75rem; background: #fff; border: 1px solid var(--cardborder, #e7e5e4); box-shadow: 0 30px 50px -36px rgba(36, 23, 16, .5); }
-    @media (min-width: 768px) { .msh { grid-template-columns: 280px 1fr; gap: 2.5rem; padding: 1.5rem 2rem 1.5rem 1.5rem; max-width: 56rem; margin-left: auto; margin-right: auto; } }
-    .msh-cover { position: relative; display: block; width: 100%; max-width: 280px; margin: 0 auto; aspect-ratio: 2 / 3; border-radius: 1.1rem; overflow: hidden; border: 0; padding: 0; background: #1b120b; cursor: pointer; box-shadow: 0 24px 40px -22px rgba(36, 23, 16, .75), 0 0 0 1px rgba(185, 138, 60, .55); transition: transform .3s ease; }
-    .msh-cover:hover { transform: translateY(-4px) rotate(-.6deg); }
-    .msh-cover .msh-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-    .msh-shade { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(15, 10, 6, .1), rgba(15, 10, 6, .55)); }
-    .msh-logo { position: absolute; top: 9%; left: 50%; width: 62%; transform: translateX(-50%); }
-    .msh-kt, .msh-en, .msh-menu { position: absolute; left: 0; right: 0; text-align: center; color: #fff; }
-    .msh-kt { top: 56%; font-size: 1.55rem; font-weight: 500; }
-    .msh-en { top: 65%; font-size: .62rem; letter-spacing: .24em; color: #e9d9b4; }
-    .msh-menu { top: 72%; font-family: "Cormorant Garamond", Georgia, serif; font-size: 2.6rem; letter-spacing: .12em; color: #d9b36a; }
+    .msh { margin: 2.5rem auto 0; max-width: 56rem; border-radius: 1.75rem; overflow: hidden; background: #fff; border: 1px solid var(--cardborder, #e7e5e4); box-shadow: 0 30px 50px -36px rgba(36, 23, 16, .5); }
+    /* the menu as an open book on a dark wooden table */
+    .msh-stage { padding: 2.2rem 1.1rem 1.5rem; text-align: center; background: radial-gradient(ellipse at 50% 22%, #5a3519 0%, #2b1a0e 55%, #170e07 100%); }
+    .msh-book { position: relative; display: grid; grid-template-columns: 1fr 1fr; width: min(100%, 620px); aspect-ratio: 1588 / 1062; margin: 0 auto; padding: 0; border: 0; background: #fbf7ee; cursor: pointer; border-radius: 6px;
+      box-shadow: 0 0 0 7px #3d2514, 0 0 0 8px rgba(185, 138, 60, .85), 0 9px 0 8px #e9dec6, 0 11px 0 8px #cbbd9d, 0 44px 50px -16px rgba(0, 0, 0, .8); transform: perspective(1400px) rotateX(7deg); transform-origin: 50% 100%; transition: transform .45s cubic-bezier(.16, 1, .3, 1); }
+    .msh-book:hover { transform: perspective(1400px) rotateX(2deg) translateY(-4px); }
+    .msh-pg { position: relative; display: block; overflow: hidden; }
+    .msh-pg img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+    .msh-pg-l { border-radius: 6px 0 0 6px; } .msh-pg-r { border-radius: 0 6px 6px 0; }
+    /* page shading toward the spine, and the crease itself */
+    .msh-pg-l::after, .msh-pg-r::after { content: ""; position: absolute; top: 0; bottom: 0; width: 22%; pointer-events: none; }
+    .msh-pg-l::after { right: 0; background: linear-gradient(90deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, .38)); }
+    .msh-pg-r::after { left: 0; background: linear-gradient(270deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, .38)); }
+    .msh-book::before { content: ""; position: absolute; z-index: 2; top: 0; bottom: 0; left: calc(50% - 1px); width: 2px; background: rgba(0, 0, 0, .55); box-shadow: 0 0 12px 3px rgba(0, 0, 0, .35); pointer-events: none; }
+    /* the lower right corner lifts a little when you hover, like a page about to turn */
+    .msh-curl { position: absolute; z-index: 3; right: 0; bottom: 0; width: 34px; height: 34px; border-radius: 0 0 6px 0; background: linear-gradient(135deg, rgba(0, 0, 0, 0) 50%, #e8dcc2 50%, #fbf7ee 100%); box-shadow: -4px -4px 10px -4px rgba(0, 0, 0, .45); transition: width .35s ease, height .35s ease; pointer-events: none; }
+    .msh-book:hover .msh-curl { width: 68px; height: 68px; }
+    .msh-hint { margin: 1.1rem 0 0; font-size: 12.5px; color: rgba(233, 217, 180, .85); display: flex; align-items: center; justify-content: center; gap: .5rem; }
+    @media (prefers-reduced-motion: reduce) { .msh-book, .msh-curl { transition: none; } }
+    .msh-text { padding: 1.6rem 1.3rem 1.8rem; max-width: 38rem; margin: 0 auto; text-align: center; }
+    .msh-text ul { justify-items: center; }
+    .msh-actions { justify-content: center; }
     .msh-badge { display: inline-flex; align-items: center; gap: .4rem; padding: .25rem .75rem; border-radius: 9999px; background: #fbf4e4; color: #7a5a1f; border: 1px solid #ecd9ac; font-size: 11px; font-weight: 600; }
     .msh-text h3 { margin: .7rem 0 .4rem; font-size: 1.35rem; line-height: 1.3; font-weight: 600; color: var(--navy, #1b2a49); }
     @media (min-width: 640px) { .msh-text h3 { font-size: 1.6rem; } }
@@ -2069,7 +2161,7 @@
       </div>
       <div class="admin-group">
         <h4><i class="fa-solid fa-utensils"></i> อาหาร & กิจกรรม</h4>
-        <button type="button" class="admin-tool" onclick="openMenuModal()"><span class="ico">🍽️</span><span class="lbl">เมนูอาหาร & คาเฟ่</span></button><button type="button" class="admin-tool" onclick="openDiningHeaderEditModal()"><span class="ico">☕</span><span class="lbl">หัวข้อคาเฟ่ & จุดเด่น</span></button><button type="button" class="admin-tool" onclick="openDiningBannerEditModal()"><span class="ico">🛎️</span><span class="lbl">แถบสั่งอาหาร</span></button><button type="button" class="admin-tool" onclick="openActivitiesHeaderEditModal()"><span class="ico">🛶</span><span class="lbl">กิจกรรมฟรี</span></button><button type="button" class="admin-tool" onclick="openPhotoSpotsHeaderEditModal()"><span class="ico">📸</span><span class="lbl">มุมถ่ายรูป</span></button><button type="button" class="admin-tool" onclick="openOmikujiManagerModal()"><span class="ico">🎋</span><span class="lbl">เซียมซี & อัตราออกรางวัล</span></button>
+        <button type="button" class="admin-tool" onclick="openMenuModal()"><span class="ico">🍽️</span><span class="lbl">เมนูอาหาร & คาเฟ่</span></button><button type="button" class="admin-tool" onclick="openDiningHeaderEditModal()"><span class="ico">☕</span><span class="lbl">หัวข้อคาเฟ่ & จุดเด่น</span></button><button type="button" class="admin-tool" onclick="openDiningBannerEditModal()"><span class="ico">🛎️</span><span class="lbl">แถบสั่งอาหาร</span></button><button type="button" class="admin-tool" onclick="toggleSectionVisibility('dining')"><span class="ico">👁️</span><span class="lbl">ซ่อน/แสดงส่วนคาเฟ่ &amp; อาหาร</span></button><button type="button" class="admin-tool" onclick="openActivitiesHeaderEditModal()"><span class="ico">🛶</span><span class="lbl">กิจกรรมฟรี</span></button><button type="button" class="admin-tool" onclick="openPhotoSpotsHeaderEditModal()"><span class="ico">📸</span><span class="lbl">มุมถ่ายรูป</span></button><button type="button" class="admin-tool" onclick="openOmikujiManagerModal()"><span class="ico">🎋</span><span class="lbl">เซียมซี & อัตราออกรางวัล</span></button>
       </div>
       <div class="admin-group">
         <h4><i class="fa-solid fa-star"></i> รีวิว & ชุมชน</h4>
@@ -2318,7 +2410,7 @@
           <span id="navMessengerText">Messenger</span>
         </a>
 
-        <a id="navLineBtn" href="https://line.me/R/ti/p/@baantaphairesort" target="_blank" class="inline-flex items-center justify-center gap-1.5 sm:gap-2 bg-zen-line hover:bg-emerald-600 text-white text-xs sm:text-sm font-medium h-9 sm:h-10 px-3.5 sm:px-4 min-w-[110px] sm:min-w-[120px] rounded-full shadow-sm hover:shadow transition-all transform active:scale-95" title="ติดต่อทาง LINE Official">
+        <a id="navLineBtn" href="https://line.me/R/ti/p/@taphai" target="_blank" class="inline-flex items-center justify-center gap-1.5 sm:gap-2 bg-zen-line hover:bg-emerald-600 text-white text-xs sm:text-sm font-medium h-9 sm:h-10 px-3.5 sm:px-4 min-w-[110px] sm:min-w-[120px] rounded-full shadow-sm hover:shadow transition-all transform active:scale-95" title="ติดต่อทาง LINE Official">
           <i class="fa-brands fa-line text-base"></i>
           <span id="navLineText">ทัก LINE</span>
         </a>
@@ -2387,7 +2479,7 @@
           </a>
           <a id="mobileNavLinkRooms" href="#rooms" onclick="toggleMobileMenu()" class="flex items-center gap-3 p-2.5 rounded-2xl hover:bg-zen-sand transition-colors min-h-[44px]">
             <i class="fa-solid fa-bed text-zen-torii w-5 text-center"></i>
-            <span id="mobileNavRoomsText">แบบห้องพักทั้งหมด (10 แบบ)</span>
+            <span id="mobileNavRoomsText">แบบห้องพักทั้งหมด (9 แบบ)</span>
           </a>
           <a id="mobileNavLinkDining" href="#dining" onclick="toggleMobileMenu()" class="flex items-center gap-3 p-2.5 rounded-2xl bg-amber-50/70 text-amber-950 font-medium hover:bg-amber-100/70 transition-colors min-h-[44px]">
             <i class="fa-solid fa-mug-saucer text-amber-700 w-5 text-center"></i>
@@ -2427,7 +2519,7 @@
         <a id="mobileMenuPhoneLink" href="tel:0624605863" class="w-full py-3 rounded-xl bg-zen-sand text-zen-dark font-medium flex items-center justify-center gap-2 border border-zen-cardborder min-h-[44px] active:scale-98">
           <i class="fa-solid fa-phone text-zen-torii"></i> <span id="mobileMenuPhoneText">โทร 062-460-5863</span>
         </a>
-        <a id="mobileMenuLineLink" href="https://line.me/R/ti/p/@baantaphairesort" target="_blank" class="w-full py-3 rounded-xl bg-zen-line text-white font-medium flex items-center justify-center gap-2 shadow-sm min-h-[44px] active:scale-98">
+        <a id="mobileMenuLineLink" href="https://line.me/R/ti/p/@taphai" target="_blank" class="w-full py-3 rounded-xl bg-zen-line text-white font-medium flex items-center justify-center gap-2 shadow-sm min-h-[44px] active:scale-98">
           <i class="fa-brands fa-line text-base"></i> <span id="mobileMenuLineText">จองผ่าน LINE Official</span>
         </a>
         <a id="mobileMenuMessengerLink" href="https://m.me/Baantaphai" target="_blank" class="w-full py-3 rounded-xl bg-[#005EC4] text-white font-medium flex items-center justify-center gap-2 shadow-sm min-h-[44px] active:scale-98">
@@ -2502,7 +2594,7 @@
         </div>
 
         <!-- Pet Friendly: one of the two things nearby resorts cannot copy (asks on LINE with the question already typed) -->
-        <a id="heroPetBadge" href="https://line.me/R/oaMessage/@baantaphairesort/?%E0%B8%AA%E0%B8%AD%E0%B8%9A%E0%B8%96%E0%B8%B2%E0%B8%A1%E0%B9%80%E0%B8%A3%E0%B8%B7%E0%B9%88%E0%B8%AD%E0%B8%87%E0%B8%9E%E0%B8%B2%E0%B8%AA%E0%B8%B1%E0%B8%95%E0%B8%A7%E0%B9%8C%E0%B9%80%E0%B8%A5%E0%B8%B5%E0%B9%89%E0%B8%A2%E0%B8%87%E0%B9%80%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%9E%E0%B8%B1%E0%B8%81%E0%B8%84%E0%B9%88%E0%B8%B0" target="_blank" rel="noopener noreferrer" class="hero-rise d3 pet-badge"><i class="fa-solid fa-paw"></i><span>พาสัตว์เลี้ยงมาพักได้ (Pet Friendly)</span><em>ทักถามทาง LINE</em></a>
+        <a id="heroPetBadge" href="https://line.me/R/oaMessage/@taphai/?%E0%B8%AA%E0%B8%AD%E0%B8%9A%E0%B8%96%E0%B8%B2%E0%B8%A1%E0%B9%80%E0%B8%A3%E0%B8%B7%E0%B9%88%E0%B8%AD%E0%B8%87%E0%B8%9E%E0%B8%B2%E0%B8%AA%E0%B8%B1%E0%B8%95%E0%B8%A7%E0%B9%8C%E0%B9%80%E0%B8%A5%E0%B8%B5%E0%B9%89%E0%B8%A2%E0%B8%87%E0%B9%80%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%9E%E0%B8%B1%E0%B8%81%E0%B8%84%E0%B9%88%E0%B8%B0" target="_blank" rel="noopener noreferrer" class="hero-rise d3 pet-badge"><i class="fa-solid fa-paw"></i><span>พาสัตว์เลี้ยงมาพักได้ (Pet Friendly)</span><em>ทักถามทาง LINE</em></a>
 
         <!-- Quick Highlight Chips (rendered by JS) -->
         <div class="hero-rise d3 relative pt-1">
@@ -2644,7 +2736,7 @@
       <!-- Touch-Friendly Filter Tabs with Snap Scrolling on Mobile -->
       <div class="flex items-center justify-start sm:justify-center gap-2 overflow-x-auto no-scrollbar pb-3 mb-8 sm:mb-10 px-1 -mx-4 sm:mx-0 px-4 sm:px-0">
         <button onclick="filterRooms('all', this)" class="filter-pill active shrink-0 px-4 sm:px-5 py-2.5 rounded-full text-xs font-normal transition-all shadow-minimal bg-zen-dark text-white border border-zen-dark active:scale-95">
-          ทั้งหมด (10 รูปแบบ)
+          ทั้งหมด (9 รูปแบบ)
         </button>
         <button onclick="filterRooms('riverside', this)" class="filter-pill shrink-0 px-4 sm:px-5 py-2.5 rounded-full text-xs font-normal transition-all shadow-minimal bg-white text-zen-dark hover:bg-zen-sand border border-zen-cardborder active:scale-95">
           🌊 โซนริมน้ำ
@@ -2657,7 +2749,7 @@
         </button>
         <button onclick="openComparisonModal()" class="filter-pill shrink-0 px-4 sm:px-5 py-2.5 rounded-full text-xs font-medium transition-all shadow-minimal bg-blue-50 text-blue-900 hover:bg-blue-100 border border-blue-300 flex items-center gap-1.5 active:scale-95">
           <i class="fa-solid fa-table-columns text-blue-700 text-xs"></i>
-          <span>📊 เปรียบเทียบห้องพัก (10 แบบ)</span>
+          <span>📊 เปรียบเทียบห้องพัก (9 แบบ)</span>
         </button>
         <a href="#dining" class="filter-pill shrink-0 px-4 sm:px-5 py-2.5 rounded-full text-xs font-medium transition-all shadow-minimal bg-amber-50/90 text-amber-900 hover:bg-amber-100 border border-amber-300 flex items-center gap-1.5 active:scale-95">
           <i class="fa-solid fa-mug-saucer text-amber-700 text-xs"></i>
@@ -2670,6 +2762,23 @@
         <!-- Javascript dynamically populates room cards here -->
       </div>
 
+    </div>
+  </section>
+
+  <!-- ================= RATE CARDS (images made by the owner; prices are part of the image) ================= -->
+  <section id="ratecards" class="rc-sec scroll-mt-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-8 sm:mb-10 space-y-2">
+        <span class="rc-badge"><i class="fa-solid fa-tags"></i> Rate Card</span>
+        <h2 class="rc-title">เรทราคาห้องพักทุกแบบ</h2>
+        <p class="rc-sub">แตะการ์ดเพื่อขยายดูเต็มจอ บันทึกรูปไว้ หรือส่งให้เพื่อนในกลุ่ม LINE ได้เลย</p>
+      </div>
+      <div class="rc-wrap">
+        <button type="button" class="rc-nav rc-prev" onclick="rcScroll(-1)" aria-label="ก่อนหน้า"><i class="fa-solid fa-chevron-left"></i></button>
+        <div id="rcTrack" class="rc-track" tabindex="0" aria-label="เรทการ์ดห้องพัก"></div>
+        <button type="button" class="rc-nav rc-next" onclick="rcScroll(1)" aria-label="ถัดไป"><i class="fa-solid fa-chevron-right"></i></button>
+      </div>
+      <p class="rc-note">เรทการ์ดเป็นภาษาไทย ราคาเบื้องต้นต่อคืน ยังไม่ใช่การยืนยัน แอดมินจะเช็กห้องว่างและยืนยันราคาให้อีกครั้ง</p>
     </div>
   </section>
 
@@ -2705,8 +2814,28 @@
       <div id="activitiesGridContainer" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
         <!-- Javascript dynamically populates activity cards here -->
       </div>
+
+      <!-- Infographic: activities in the resort + places nearby (made by the owner; Thai only) -->
+      <div class="ia-card" id="activitiesInfographic">
+        <div class="ia-head">
+          <span class="ia-ic"><i class="fa-solid fa-map-location-dot"></i></span>
+          <div>
+            <p class="ia-title">กิจกรรม &amp; แหล่งท่องเที่ยว <span>สนุกได้ ครบจบในที่เดียว</span></p>
+            <p class="ia-sub">ภาพรวมกิจกรรมฟรีในรีสอร์ท และแหล่งท่องเที่ยวใกล้บ้านตาผาย พร้อมระยะทางและเวลาเดินทาง</p>
+          </div>
+        </div>
+        <button type="button" class="ia-pic" onclick="openInfoImage()" aria-label="ขยายภาพกิจกรรมและแหล่งท่องเที่ยว">
+          <img src="photos/info/activities-attractions.webp" alt="กิจกรรมและแหล่งท่องเที่ยว ครบจบในที่เดียว บ้านตาผาย" loading="lazy" decoding="async" width="1536" height="1024">
+          <span class="ia-zoom"><i class="fa-solid fa-expand"></i> <span>แตะเพื่อขยาย</span></span>
+        </button>
+        <div class="ia-foot">
+          <p>ภาพเป็นภาษาไทย เวลาเดินทางเป็นค่าประมาณ</p>
+          <a class="rc-act" href="photos/info/activities-attractions-full.jpg" download="BaanTaPhai-Activities-Attractions.jpg" target="_blank" rel="noopener"><i class="fa-solid fa-download"></i><span>บันทึกรูป</span></a>
+        </div>
+      </div>
+
       <div class="mt-7 text-center">
-        <a href="https://line.me/R/oaMessage/@baantaphairesort/?%E0%B8%AA%E0%B8%AD%E0%B8%9A%E0%B8%96%E0%B8%B2%E0%B8%A1%E0%B9%80%E0%B8%A3%E0%B8%B7%E0%B9%88%E0%B8%AD%E0%B8%87%E0%B8%9E%E0%B8%B2%E0%B8%AA%E0%B8%B1%E0%B8%95%E0%B8%A7%E0%B9%8C%E0%B9%80%E0%B8%A5%E0%B8%B5%E0%B9%89%E0%B8%A2%E0%B8%87%E0%B9%80%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%9E%E0%B8%B1%E0%B8%81%E0%B8%84%E0%B9%88%E0%B8%B0" target="_blank" rel="noopener noreferrer" class="pet-badge pet-badge-light"><i class="fa-solid fa-paw"></i><span>พาสัตว์เลี้ยงมาพักได้ (Pet Friendly)</span><em>ทักถามทาง LINE</em></a>
+        <a href="https://line.me/R/oaMessage/@taphai/?%E0%B8%AA%E0%B8%AD%E0%B8%9A%E0%B8%96%E0%B8%B2%E0%B8%A1%E0%B9%80%E0%B8%A3%E0%B8%B7%E0%B9%88%E0%B8%AD%E0%B8%87%E0%B8%9E%E0%B8%B2%E0%B8%AA%E0%B8%B1%E0%B8%95%E0%B8%A7%E0%B9%8C%E0%B9%80%E0%B8%A5%E0%B8%B5%E0%B9%89%E0%B8%A2%E0%B8%87%E0%B9%80%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%9E%E0%B8%B1%E0%B8%81%E0%B8%84%E0%B9%88%E0%B8%B0" target="_blank" rel="noopener noreferrer" class="pet-badge pet-badge-light"><i class="fa-solid fa-paw"></i><span>พาสัตว์เลี้ยงมาพักได้ (Pet Friendly)</span><em>ทักถามทาง LINE</em></a>
       </div>
 
     </div>
@@ -2719,6 +2848,12 @@
     <div class="absolute bottom-0 left-0 w-80 h-80 bg-stone-100/70 rounded-full -z-10 pointer-events-none"></div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <!-- Admin switch: show / hide this whole section for customers -->
+      <div id="diningVisBar" class="extra-admin hidden vis-bar">
+        <span class="vis-state">ส่วนนี้แสดงให้ลูกค้าเห็นทั้งหมด</span>
+        <button type="button" class="vis-btn" onclick="toggleSectionVisibility('dining')"><i class="fa-solid fa-eye-slash"></i> <span>ซ่อนส่วนนี้จากลูกค้า</span></button>
+      </div>
       
       <!-- Section Header -->
       <div id="diningHeaderContainer" class="text-center max-w-2xl mx-auto space-y-2 mb-10 sm:mb-14 relative">
@@ -2752,21 +2887,21 @@
       </div>
 
       <!-- 4 SHOWCASE CARDS GRID (Data-Driven & Editable in Admin Mode) -->
-      <div id="diningCardsContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6 mb-10 sm:mb-12"></div>
+      <div id="diningCardsContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 mb-10 sm:mb-12"></div>
 
       <!-- Action & Menu Preview Banner (Data-Driven & Editable in Admin Mode) -->
       <div id="diningBannerContainer" class="relative group"></div>
 
       <!-- Digital menu showcase: the full menu site (flip-through pages, cart, PDF) opens in a viewer on click -->
       <div id="menuShowcase" class="msh">
-        <button type="button" class="msh-cover" onclick="openMenuSite()" aria-label="เปิดเมนูอาหารครัวแม่ลำดวน">
-          <img class="msh-bg" src="photos/other/menu-cover-bg.webp" alt="" loading="lazy" width="640" height="960">
-          <span class="msh-shade"></span>
-          <img class="msh-logo" src="photos/other/menu-logo-white.webp" alt="" loading="lazy" width="360" height="360">
-          <span class="msh-kt">ครัวแม่ลำดวน</span>
-          <span class="msh-en">MAE LAMDUAN KITCHEN</span>
-          <span class="msh-menu">MENU</span>
-        </button>
+        <div class="msh-stage">
+          <button type="button" class="msh-book" onclick="openMenuSite()" aria-label="เปิดเมนูอาหารครัวแม่ลำดวน (ตัวอย่างหน้าเมนู)">
+            <span class="msh-pg msh-pg-l"><img src="photos/menu/spread-left.webp" alt="ตัวอย่างหน้าเมนูเด่นประจำร้าน ครัวแม่ลำดวน" loading="lazy" decoding="async" width="794" height="1062"></span>
+            <span class="msh-pg msh-pg-r"><img src="photos/menu/spread-right.webp" alt="ตัวอย่างหน้าเมนูอาหารทานเล่นและยำ ครัวแม่ลำดวน" loading="lazy" decoding="async" width="794" height="1062"></span>
+            <span class="msh-curl" aria-hidden="true"></span>
+          </button>
+          <p class="msh-hint"><i class="fa-solid fa-hand-pointer"></i> ตัวอย่างหน้าเมนู · แตะเพื่อเปิดอ่านฉบับเต็ม</p>
+        </div>
         <div class="msh-text">
           <span class="msh-badge"><i class="fa-solid fa-book-open"></i> เมนูดิจิทัล</span>
           <h3>เปิดเมนูครัวแม่ลำดวนดูได้ในมือถือ</h3>
@@ -3460,7 +3595,7 @@
                 </div>
                 <div>
                   <div class="flex items-center gap-1.5 flex-wrap">
-                    <h3 id="fbPageName" class="text-xs sm:text-sm font-bold text-zen-dark leading-tight">บ้านตาผาย Baan Ta Phai</h3>
+                    <h3 id="fbPageName" class="text-xs sm:text-sm font-bold text-zen-dark leading-tight">บ้านตาผาย บ้านพักแนวชนบท Baan Ta Phai Country house</h3>
                     <i class="fa-solid fa-circle-check text-[#1465D8] text-[11px]" title="เพจทางการ Verified"></i>
                   </div>
                   <p id="fbPageHandle" class="text-[10px] sm:text-[11px] text-zen-muted font-light mt-0.5">
@@ -3575,7 +3710,7 @@
                   allowfullscreen="true" 
                   allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
                   loading="lazy"
-                  title="Facebook Page Feed บ้านตาผาย @Baantaphai">
+                  title="Facebook Page Feed บ้านตาผาย บ้านพักแนวชนบท Baan Ta Phai Country house">
                 </iframe>
               </div>
 
@@ -3732,6 +3867,7 @@
           <span id="attractionsMapsBtnText">ดูพิกัดบน Google Maps</span>
           <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
         </a>
+        <button type="button" onclick="openInfoImage()" class="ia-link"><i class="fa-solid fa-images"></i> ดูภาพรวมแหล่งท่องเที่ยวและกิจกรรม (รูป)</button>
       </div>
 
       <div id="attractionsGridContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
@@ -3839,7 +3975,7 @@
         <p class="text-sm font-semibold text-zen-dark">ไม่พบคำถามที่ตรงกับคำค้นหาของคุณ</p>
         <p class="text-xs text-zen-muted max-w-sm mx-auto">สอบถามข้อมูลเพิ่มเติมกับเจ้าหน้าที่รีสอร์ทโดยตรงผ่าน Facebook Messenger หรือ LINE ได้เลยครับ</p>
         <div class="pt-2">
-          <a href="https://line.me/R/ti/p/@baantaphairesort" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-zen-line text-white text-xs font-semibold shadow-sm hover:bg-emerald-600 transition-colors">
+          <a href="https://line.me/R/ti/p/@taphai" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-zen-line text-white text-xs font-semibold shadow-sm hover:bg-emerald-600 transition-colors">
             <i class="fa-brands fa-line text-base"></i> ทักแชท LINE ถามได้เลย
           </a>
         </div>
@@ -3864,7 +4000,7 @@
             <i class="fa-brands fa-facebook-messenger text-base"></i>
             <span>ทัก Messenger</span>
           </a>
-          <a href="https://line.me/R/ti/p/@baantaphairesort" target="_blank" class="px-4 py-3 rounded-2xl bg-zen-line hover:bg-emerald-600 text-white font-medium text-xs flex items-center gap-2 shadow-sm shrink-0 active:scale-95 transition-all">
+          <a href="https://line.me/R/ti/p/@taphai" target="_blank" class="px-4 py-3 rounded-2xl bg-zen-line hover:bg-emerald-600 text-white font-medium text-xs flex items-center gap-2 shadow-sm shrink-0 active:scale-95 transition-all">
             <i class="fa-brands fa-line text-lg"></i>
             <span>ทัก LINE</span>
           </a>
@@ -4007,7 +4143,7 @@
                 </span>
                 <div>
                   <p class="text-[10px] sm:text-[11px] text-zen-muted mb-0.5">Facebook Messenger & เพจหลัก</p>
-                  <p id="contactFbText" class="text-xs sm:text-sm font-bold text-zen-dark group-hover:text-[#005EC4] transition-colors">บ้านตาผาย (@Baantaphai)</p>
+                  <p id="contactFbText" class="text-xs sm:text-sm font-bold text-zen-dark group-hover:text-[#005EC4] transition-colors">บ้านตาผาย บ้านพักแนวชนบท Baan Ta Phai Country house</p>
                 </div>
               </div>
               <span class="text-[11px] font-medium text-[#005EC4] px-2.5 py-1 rounded-full bg-[#005EC4]/10 group-hover:bg-[#005EC4] group-hover:text-white transition-colors flex items-center gap-1">
@@ -4016,14 +4152,14 @@
               </span>
             </a>
 
-            <a id="contactLine" href="https://line.me/R/ti/p/@baantaphairesort" target="_blank" class="flex items-center justify-between p-3 sm:p-3.5 rounded-2xl bg-zen-sand/40 hover:bg-zen-sand border border-zen-cardborder/70 transition-all active:scale-98 group">
+            <a id="contactLine" href="https://line.me/R/ti/p/@taphai" target="_blank" class="flex items-center justify-between p-3 sm:p-3.5 rounded-2xl bg-zen-sand/40 hover:bg-zen-sand border border-zen-cardborder/70 transition-all active:scale-98 group">
               <div class="flex items-center gap-3">
                 <span class="w-9 h-9 rounded-xl bg-zen-line/15 text-zen-line flex items-center justify-center shrink-0 text-base group-hover:scale-105 transition-transform">
                   <i class="fa-brands fa-line"></i>
                 </span>
                 <div>
                   <p class="text-[10px] sm:text-[11px] text-zen-muted mb-0.5">LINE Official Account</p>
-                  <p id="contactLineText" class="text-xs sm:text-sm font-bold text-zen-dark group-hover:text-emerald-700 transition-colors">@baantaphairesort</p>
+                  <p id="contactLineText" class="text-xs sm:text-sm font-bold text-zen-dark group-hover:text-emerald-700 transition-colors">@taphai</p>
                 </div>
               </div>
               <span class="text-[11px] font-medium text-emerald-700 px-2.5 py-1 rounded-full bg-zen-line/10 group-hover:bg-zen-line group-hover:text-white transition-colors flex items-center gap-1">
@@ -4081,9 +4217,9 @@
           <i class="fa-brands fa-facebook-messenger text-[#005EC4]"></i>
           <span>Messenger</span>
         </a>
-        <a href="https://line.me/R/ti/p/@baantaphairesort" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 hover:bg-emerald-500/20 text-zen-sand hover:text-white border border-white/10 transition-colors">
+        <a href="https://line.me/R/ti/p/@taphai" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 hover:bg-emerald-500/20 text-zen-sand hover:text-white border border-white/10 transition-colors">
           <i class="fa-brands fa-line text-emerald-400"></i>
-          <span>@baantaphairesort</span>
+          <span>@taphai</span>
         </a>
         <a id="footerPhoneLink" href="tel:0624605863" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 hover:bg-amber-500/20 text-zen-sand hover:text-white border border-white/10 transition-colors">
           <i class="fa-solid fa-phone text-amber-400 text-[10px]"></i>
@@ -4146,7 +4282,7 @@
       <i class="fa-brands fa-facebook-messenger text-sm"></i>
       <span>แชท Messenger</span>
     </a>
-    <a id="mobileLineBtn" href="https://line.me/R/ti/p/@baantaphairesort" target="_blank" class="flex-[1.2] inline-flex items-center justify-center gap-1.5 py-2.5 px-2.5 rounded-2xl bg-zen-line text-white font-medium text-[11px] shadow-md active:scale-95 transition-transform min-h-[44px]">
+    <a id="mobileLineBtn" href="https://line.me/R/ti/p/@taphai" target="_blank" class="flex-[1.2] inline-flex items-center justify-center gap-1.5 py-2.5 px-2.5 rounded-2xl bg-zen-line text-white font-medium text-[11px] shadow-md active:scale-95 transition-transform min-h-[44px]">
       <i class="fa-brands fa-line text-base"></i>
       <span>จองผ่าน LINE</span>
     </a>
@@ -4315,7 +4451,7 @@
             <span>เขย่ากระบอกเซียมซี (1 สิทธิ์)</span>
           </button>
           
-          <a id="claimLineBtn" href="https://line.me/R/ti/p/@baantaphairesort" target="_blank" class="hidden w-full py-3 rounded-2xl bg-zen-line hover:bg-emerald-600 text-white font-medium text-xs sm:text-sm shadow-md flex items-center justify-center gap-2 active:scale-95 transition-all">
+          <a id="claimLineBtn" href="https://line.me/R/ti/p/@taphai" target="_blank" class="hidden w-full py-3 rounded-2xl bg-zen-line hover:bg-emerald-600 text-white font-medium text-xs sm:text-sm shadow-md flex items-center justify-center gap-2 active:scale-95 transition-all">
             <i class="fa-brands fa-line text-lg"></i>
             <span id="claimLineBtnText">แจ้งรับสิทธิ์ทาง LINE Official</span>
           </a>
@@ -4448,7 +4584,7 @@
           <i class="fa-brands fa-facebook-messenger text-sm"></i>
           <span>แชท Messenger</span>
         </a>
-        <a id="actModalLineBtn" href="https://line.me/R/ti/p/@baantaphairesort" target="_blank" class="flex-1 py-2.5 px-3 rounded-xl bg-zen-line hover:bg-emerald-600 text-white font-medium text-xs flex items-center justify-center gap-1.5 shadow-sm min-h-[44px] active:scale-98">
+        <a id="actModalLineBtn" href="https://line.me/R/ti/p/@taphai" target="_blank" class="flex-1 py-2.5 px-3 rounded-xl bg-zen-line hover:bg-emerald-600 text-white font-medium text-xs flex items-center justify-center gap-1.5 shadow-sm min-h-[44px] active:scale-98">
           <i class="fa-brands fa-line text-base"></i>
           <span>ทักถาม LINE</span>
         </a>
@@ -4538,6 +4674,8 @@
   <div id="roomLightbox" class="fixed inset-0 hidden rb-lb" role="dialog" aria-modal="true" aria-label="ดูรูปเต็มจอ" onclick="if(event.target===this)closeRoomLightbox()">
     <img id="roomLightboxImg" alt="" class="rb-lb-img">
     <button type="button" class="rb-lb-btn rb-lb-close" onclick="closeRoomLightbox()" aria-label="ปิดรูป"><i class="fa-solid fa-xmark"></i></button>
+    <a id="roomLightboxDl" class="rb-lb-btn rb-lb-dl" download target="_blank" rel="noopener" aria-label="บันทึกรูป" title="บันทึกรูป" style="display:none"><i class="fa-solid fa-download"></i></a>
+    <button type="button" id="roomLightboxShare" class="rb-lb-btn rb-lb-share" onclick="shareRateCard()" aria-label="แชร์" title="แชร์" style="display:none"><i class="fa-solid fa-share-nodes"></i></button>
     <button type="button" id="roomLightboxPrev" class="rb-lb-btn rb-lb-prev" onclick="stepRoomLightbox(-1)" aria-label="รูปก่อนหน้า"><i class="fa-solid fa-chevron-left"></i></button>
     <button type="button" id="roomLightboxNext" class="rb-lb-btn rb-lb-next" onclick="stepRoomLightbox(1)" aria-label="รูปถัดไป"><i class="fa-solid fa-chevron-right"></i></button>
     <span id="roomLightboxCount" class="rb-lb-count"></span>
@@ -4605,6 +4743,11 @@
           <div id="modalThumbnailsBar" class="flex items-center gap-2 py-2.5 overflow-x-auto no-scrollbar shrink-0">
             <!-- Dynamic thumbnails -->
           </div>
+
+          <!-- Rate card of this room (hidden when the room has none) -->
+          <button type="button" id="modalRateCardBtn" onclick="openRateCard(currentModalRoom && currentModalRoom.id)" class="rc-modal-btn hidden">
+            <i class="fa-solid fa-tags"></i> <span>ดูเรทการ์ดห้องนี้</span> <i class="fa-solid fa-expand rc-modal-btn-ic"></i>
+          </button>
 
           <!-- Share / Copy Card (On desktop stays in left column, on mobile flows naturally) -->
           <div class="mt-2 sm:mt-4 p-3 rounded-2xl bg-emerald-50/70 border border-emerald-200/80 flex items-center justify-between gap-3 text-xs">
@@ -4857,7 +5000,7 @@
               <i class="fa-brands fa-facebook-messenger text-base"></i>
               <span>ทัก Messenger</span>
             </a>
-            <a id="modalBookingBtn" href="https://line.me/R/ti/p/@baantaphairesort" target="_blank" class="flex-1 py-3 rounded-2xl bg-zen-line hover:bg-emerald-600 font-medium text-xs text-white text-center flex items-center justify-center gap-1.5 shadow-sm transition-all min-h-[44px] active:scale-98">
+            <a id="modalBookingBtn" href="https://line.me/R/ti/p/@taphai" target="_blank" class="flex-1 py-3 rounded-2xl bg-zen-line hover:bg-emerald-600 font-medium text-xs text-white text-center flex items-center justify-center gap-1.5 shadow-sm transition-all min-h-[44px] active:scale-98">
               <i class="fa-brands fa-line text-lg"></i>
               <span id="modalBookingLabel">จองผ่าน LINE</span>
             </a>
@@ -4993,7 +5136,7 @@
           <i class="fa-brands fa-facebook-messenger text-base"></i>
           <span>ทัก Messenger</span>
         </a>
-        <a href="https://line.me/R/ti/p/@baantaphairesort" target="_blank" class="flex-1 py-3 rounded-2xl bg-zen-line hover:bg-emerald-600 font-medium text-xs text-white text-center flex items-center justify-center gap-1.5 shadow-sm transition-colors min-h-[44px] active:scale-98">
+        <a href="https://line.me/R/ti/p/@taphai" target="_blank" class="flex-1 py-3 rounded-2xl bg-zen-line hover:bg-emerald-600 font-medium text-xs text-white text-center flex items-center justify-center gap-1.5 shadow-sm transition-colors min-h-[44px] active:scale-98">
           <i class="fa-brands fa-line text-lg"></i>
           <span>ทัก LINE สั่งอาหาร</span>
         </a>
@@ -5023,7 +5166,7 @@
             </div>
             <div>
               <h3 id="compHeaderTitle" class="text-lg sm:text-xl font-bold text-zen-dark">
-                ตารางเปรียบเทียบห้องพักทั้ง 10 แบบ (Room Comparison Matrix)
+                ตารางเปรียบเทียบห้องพักทั้ง 9 แบบ (Room Comparison Matrix)
               </h3>
               <p id="compHeaderSubtitle" class="text-[11px] sm:text-xs text-zen-muted font-light">
                 เปรียบเทียบราคา ขนาดเตียง จำนวนผู้เข้าพัก วิว และสิ่งอำนวยความสะดวก เพื่อให้คุณตัดสินใจได้ง่ายที่สุด
@@ -5078,7 +5221,7 @@
             <i class="fa-brands fa-facebook-messenger text-base"></i>
             <span>แชท Messenger</span>
           </a>
-          <a href="https://line.me/R/ti/p/@baantaphairesort" target="_blank" class="flex-1 sm:flex-none px-4 py-2.5 rounded-xl bg-zen-line hover:bg-emerald-600 font-medium text-xs text-white text-center flex items-center justify-center gap-1.5 shadow-sm transition-colors min-h-[44px] active:scale-98">
+          <a href="https://line.me/R/ti/p/@taphai" target="_blank" class="flex-1 sm:flex-none px-4 py-2.5 rounded-xl bg-zen-line hover:bg-emerald-600 font-medium text-xs text-white text-center flex items-center justify-center gap-1.5 shadow-sm transition-colors min-h-[44px] active:scale-98">
             <i class="fa-brands fa-line text-lg"></i>
             <span>ทัก LINE</span>
           </a>
@@ -5847,10 +5990,10 @@
             </div>
             <!-- V3 -->
             <div class="space-y-1.5 bg-white p-2.5 rounded-xl border border-stone-200">
-              <span class="text-[10px] font-bold text-amber-800">สไตล์ที่ 3 (สนุกเกอร์)</span>
-              <input type="text" id="editFinderV3Icon" class="w-full p-2 rounded-lg border border-stone-300 text-xs" placeholder="ไอคอน เช่น 🎱">
-              <input type="text" id="editFinderV3Title" class="w-full p-2 rounded-lg border border-stone-300 text-xs font-semibold" placeholder="สนุกเกอร์">
-              <input type="text" id="editFinderV3Sub" class="w-full p-2 rounded-lg border border-stone-300 text-xs" placeholder="ปาร์ตี้ส่วนตัว">
+              <span class="text-[10px] font-bold text-amber-800">สไตล์ที่ 3 (บรรยากาศเงียบสงบ → แนะนำ Sky View)</span>
+              <input type="text" id="editFinderV3Icon" class="w-full p-2 rounded-lg border border-stone-300 text-xs" placeholder="ไอคอน เช่น 🌿">
+              <input type="text" id="editFinderV3Title" class="w-full p-2 rounded-lg border border-stone-300 text-xs font-semibold" placeholder="บรรยากาศเงียบสงบ">
+              <input type="text" id="editFinderV3Sub" class="w-full p-2 rounded-lg border border-stone-300 text-xs" placeholder="ส่วนตัว ไร้เสียงรบกวน">
             </div>
           </div>
         </div>
@@ -8193,7 +8336,7 @@
             </div>
             <div>
               <label class="block text-[10px] text-stone-500 mb-0.5">ลิงก์แอด LINE (URL)</label>
-              <input type="text" id="editHeaderLineUrl" class="w-full p-2 rounded-lg border border-stone-300 text-xs" placeholder="https://line.me/R/ti/p/@baantaphairesort">
+              <input type="text" id="editHeaderLineUrl" class="w-full p-2 rounded-lg border border-stone-300 text-xs" placeholder="https://line.me/R/ti/p/@taphai">
             </div>
           </div>
         </div>
@@ -8358,7 +8501,7 @@
               </div>
               <div>
                 <label class="block text-[10px] text-stone-500 mb-0.5">ลิงก์ URL ปลายทาง</label>
-                <input type="text" id="editDiningBannerLineUrl" class="w-full p-2 rounded-lg border border-stone-300 focus:outline-none focus:border-amber-600 text-xs" placeholder="https://line.me/R/ti/p/@baantaphairesort" oninput="updateDiningBannerLivePreview()">
+                <input type="text" id="editDiningBannerLineUrl" class="w-full p-2 rounded-lg border border-stone-300 focus:outline-none focus:border-amber-600 text-xs" placeholder="https://line.me/R/ti/p/@taphai" oninput="updateDiningBannerLivePreview()">
               </div>
             </div>
           </div>
@@ -8530,7 +8673,7 @@
       <div class="p-4 sm:p-5 space-y-3.5 overflow-y-auto flex-1 text-xs">
         <div>
           <label class="block font-semibold text-stone-700 mb-1">หัวข้อตาราง (Title)</label>
-          <input type="text" id="editCompTitle" class="w-full p-2.5 rounded-xl border border-stone-300 focus:outline-none focus:border-amber-600 text-xs font-bold" placeholder="ตารางเปรียบเทียบห้องพักทั้ง 10 แบบ (Room Comparison Matrix)">
+          <input type="text" id="editCompTitle" class="w-full p-2.5 rounded-xl border border-stone-300 focus:outline-none focus:border-amber-600 text-xs font-bold" placeholder="ตารางเปรียบเทียบห้องพักทั้ง 9 แบบ (Room Comparison Matrix)">
         </div>
         <div>
           <label class="block font-semibold text-stone-700 mb-1">คำอธิบายใต้หัวข้อ (Subtitle / Description)</label>
@@ -8656,7 +8799,6 @@
             <option value="jp_connect">Japanese Connecting Room</option>
             <option value="jp_2king">Japanese Two King Bed</option>
             <option value="jp_king">Japanese King Size Bed</option>
-            <option value="jp_notoilet">Japanese King (No Toilet)</option>
             <option value="country_house">Country House (เหมาหลัง 2 ชั้น)</option>
           </select>
         </div>
@@ -9357,7 +9499,7 @@
 
         <div>
           <label class="block font-semibold text-stone-700 mb-1">ข้อความบนปุ่ม (Button Label)</label>
-          <input type="text" id="editFooterBtnLabel" class="w-full p-2.5 rounded-xl border border-stone-300 focus:outline-none focus:border-amber-600 text-xs font-bold" placeholder="เช่น Facebook เพจหลัก, Messenger, @baantaphairesort, 062-460-5863">
+          <input type="text" id="editFooterBtnLabel" class="w-full p-2.5 rounded-xl border border-stone-300 focus:outline-none focus:border-amber-600 text-xs font-bold" placeholder="เช่น Facebook เพจหลัก, Messenger, @taphai, 062-460-5863">
         </div>
 
         <div>
@@ -9514,11 +9656,11 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
             <label class="block font-semibold text-stone-700 mb-1">LINE ID</label>
-            <input type="text" id="editContactLineId" class="w-full p-2.5 rounded-xl border border-stone-300 focus:outline-none focus:border-amber-600 text-xs font-bold" placeholder="@baantaphairesort">
+            <input type="text" id="editContactLineId" class="w-full p-2.5 rounded-xl border border-stone-300 focus:outline-none focus:border-amber-600 text-xs font-bold" placeholder="@taphai">
           </div>
           <div>
             <label class="block font-semibold text-stone-700 mb-1">ลิงก์เพิ่มเพื่อน LINE</label>
-            <input type="text" id="editContactLineUrl" class="w-full p-2.5 rounded-xl border border-stone-300 focus:outline-none focus:border-amber-600 text-xs" placeholder="https://line.me/R/ti/p/@baantaphairesort">
+            <input type="text" id="editContactLineUrl" class="w-full p-2.5 rounded-xl border border-stone-300 focus:outline-none focus:border-amber-600 text-xs" placeholder="https://line.me/R/ti/p/@taphai">
           </div>
         </div>
         <div>

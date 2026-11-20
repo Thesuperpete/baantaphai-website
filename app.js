@@ -132,7 +132,7 @@
         badge: "🌊 โซนริมน้ำ • ดีไซน์ 1.5 ชั้น",
         price: "฿1,200",
         unit: "/ คืน (รวม 2 ท่าน)",
-        cap: "2 - 4 ท่าน (เตียง King 6 ฟุต 1 หลัง)",
+        cap: "2 - 3 ท่าน (เตียง King 6 ฟุต 1 หลัง)",
         images: [
           "photos/rooms/lake_view/1.webp",
           "photos/rooms/lake_view/2.webp",
@@ -160,7 +160,7 @@
         badge: "🌊 โซนริมน้ำ • ดาดฟ้าชมดาว",
         price: "฿1,200",
         unit: "/ คืน (รวม 2 ท่าน)",
-        cap: "2 - 4 ท่าน (เตียง King 6 ฟุต 1 หลัง)",
+        cap: "2 - 3 ท่าน (เตียง King 6 ฟุต 1 หลัง)",
         images: [
           "photos/rooms/sky_view/1.webp",
           "photos/rooms/sky_view/2.webp",
@@ -199,7 +199,7 @@
         badge: "🌊 โซนริมน้ำ • มินิมอล",
         price: "฿800",
         unit: "/ คืน (รวม 2 ท่าน)",
-        cap: "2 - 4 ท่าน (เตียง King 6 ฟุต 1 หลัง)",
+        cap: "2 - 3 ท่าน (เตียง King 6 ฟุต 1 หลัง)",
         images: [
           "photos/rooms/rock_view/1.webp",
           "photos/rooms/rock_view/2.webp",
@@ -289,7 +289,7 @@
         badge: "⛩️ โซนญี่ปุ่น • ห้องใหญ่ 2 เตียงใหญ่",
         price: "฿1,500",
         unit: "/ คืน (รวม 4 ท่าน)",
-        cap: "4 - 6 ท่าน (2 เตียง King 6 ฟุต)",
+        cap: "4 - 5 ท่าน (2 เตียง King 6 ฟุต)",
         images: [
           "photos/rooms/jp_2king/1.webp",
           "photos/rooms/jp_2king/2.webp",
@@ -341,27 +341,6 @@
           "เตียง King Size 6 ฟุต หนานุ่ม นอนหลับสบาย",
           "สิ่งอำนวยความสะดวกครบ: แอร์ ทีวี ตู้เย็น ไดร์เป่าผม กาน้ำร้อน",
           "ที่จอดรถส่วนตัวบริเวณห้องพัก และรวมอาหารเช้า 2 ท่าน"
-        ]
-      },
-      jp_notoilet: {
-        id: "jp_notoilet",
-        cat: "japanese",
-        title: "Japanese | King Bed (No Toilet)",
-        badge: "⛩️ โซนญี่ปุ่น • ราคาสุดประหยัด",
-        price: "฿800",
-        unit: "/ คืน (รวม 2 ท่าน)",
-        cap: "2 ท่าน (1 เตียง King 6 ฟุต)",
-        images: [
-          "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&w=1000&q=80",
-          "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1000&q=80",
-          "https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=1000&q=80"
-        ],
-        desc: "ห้องพักสไตล์ญี่ปุ่นราคาประหยัด เตียง 6 ฟุต นอนสบาย ใช้ห้องน้ำรวมแยกส่วนที่สะอาดและสะดวก",
-        highlights: [
-          "ราคาเริ่มต้นสุดประหยัด เพียง 800.- รวมอาหารเช้า 2 ท่าน",
-          "เตียง King Size 6 ฟุต นอนสบาย แอร์เย็นฉ่ำ มีตู้เย็นและทีวี",
-          "ห้องน้ำส่วนกลางสะอาด แยกเป็นสัดส่วน สะดวก ปลอดภัย",
-          "เพลิดเพลินกับสวนญี่ปุ่น ซุ้มโทริอิ และเรือคายัคฟรี"
         ]
       },
       country_house: {
@@ -417,7 +396,7 @@
 
     // 1.05 MASTER COMPARISON MATRIX DATA
     const DEFAULT_COMP_HEADER = {
-      title: "ตารางเปรียบเทียบห้องพักทั้ง 10 แบบ (Room Comparison Matrix)",
+      title: "ตารางเปรียบเทียบห้องพักทั้ง 9 แบบ (Room Comparison Matrix)",
       subtitle: "เปรียบเทียบราคา ขนาดเตียง จำนวนผู้เข้าพัก วิว และสิ่งอำนวยความสะดวก เพื่อให้คุณตัดสินใจได้ง่ายที่สุด",
       footerNote: "*ทุกห้องพักรวมอาหารเช้าฟรี และสิทธิ์เล่นเรือคายัค จักรยานฟรีตลอดการเข้าพัก",
       fontOverride: ""
@@ -445,7 +424,7 @@
         zone: "ริมน้ำ",
         zoneColor: "blue",
         price: "฿1,200",
-        guests: "2 - 4 ท่าน",
+        guests: "2 - 3 ท่าน",
         beds: "เตียง King 6 ฟุต 1 หลัง",
         bathrooms: "✓ ห้องน้ำในตัว",
         highlights: "ดีไซน์เล่นระดับ 1.5 ชั้น เตียงนอนชั้นลอยสุดอบอุ่นและมีสไตล์"
@@ -458,7 +437,7 @@
         zone: "ริมน้ำ",
         zoneColor: "blue",
         price: "฿1,200",
-        guests: "2 - 4 ท่าน",
+        guests: "2 - 3 ท่าน",
         beds: "เตียง King 6 ฟุต 1 หลัง",
         bathrooms: "✓ ห้องน้ำในตัว",
         highlights: "ดาดฟ้าชมวิวส่วนตัว สามารถนั่งดูดาวและชมวิวคุ้งน้ำรอบด้าน"
@@ -471,7 +450,7 @@
         zone: "ริมน้ำ",
         zoneColor: "blue",
         price: "฿800",
-        guests: "2 - 4 ท่าน",
+        guests: "2 - 3 ท่าน",
         beds: "เตียง King 6 ฟุต 1 หลัง",
         bathrooms: "✓ ห้องน้ำในตัว",
         highlights: "เก้าอี้นั่งริมน้ำสำหรับนั่งห้อยขาและชมวิวแบบใกล้ชิด"
@@ -510,7 +489,7 @@
         zone: "ญี่ปุ่น",
         zoneColor: "rose",
         price: "฿1,500",
-        guests: "4 - 6 ท่าน",
+        guests: "4 - 5 ท่าน",
         beds: "2 เตียง King 6 ฟุต",
         bathrooms: "✓ ห้องน้ำในตัว",
         highlights: "ห้องใหญ่พิเศษ นอนรวมกัน 4 ท่านสบาย สไตล์เรียวกัง"
@@ -527,19 +506,6 @@
         beds: "1 เตียง King 6 ฟุต",
         bathrooms: "✓ ห้องน้ำในตัว",
         highlights: "เรียบง่าย อบอุ่น บรรยากาศเงียบสงบ มินิมอลสไตล์ญี่ปุ่น"
-      },
-      {
-        id: "comp_9",
-        roomId: "jp_notoilet",
-        icon: "⛩️",
-        name: "Japanese King (No Toilet)",
-        zone: "ญี่ปุ่น",
-        zoneColor: "rose",
-        price: "฿800",
-        guests: "2 ท่าน",
-        beds: "1 เตียง King 6 ฟุต",
-        bathrooms: "ห้องน้ำรวมแยกส่วน",
-        highlights: "ราคาสุดประหยัด รวมอาหารเช้า 2 ท่าน สะอาด สะดวก"
       },
       {
         id: "comp_10",
@@ -571,7 +537,8 @@
       vibeOptions: [
         { value: "riverside", icon: "🌊", title: "ติดริมน้ำ", sub: "ลมเย็นสบาย" },
         { value: "japanese", icon: "⛩️", title: "บ้านญี่ปุ่น", sub: "ซุ้มโทริอิ" },
-        { value: "snooker", icon: "🎱", title: "สนุกเกอร์", sub: "ปาร์ตี้ส่วนตัว" }
+        { value: "quiet", icon: "🌿", title: "บรรยากาศเงียบสงบ", sub: "ส่วนตัว ไร้เสียงรบกวน" },
+        { value: "budget", icon: "💰", title: "ห้องพักราคาประหยัด", sub: "คุ้มค่า เริ่ม ฿800" }
       ],
       buttonText: "ค้นหาห้องพักที่ตรงใจที่สุด"
     };
@@ -599,15 +566,6 @@
         img: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80",
         desc: "คัดสรรเมล็ดกาแฟอาราบิก้าแท้ คั่วหอมกรุ่น ทั้งเอสเพรสโซ อเมริกาโน ลาเต้ ชาเขียวมัทฉะเข้มข้น ชาไทยโบราณ และอิตาเลียนโซดาคลายร้อนริมคุ้งน้ำ",
         tags: ["เมนูกาแฟสด & Non-Coffee", "บริการเบเกอรี่ & ของหวาน"]
-      },
-      {
-        id: "thai",
-        title: "Riverside Thai Kitchen",
-        badge: "🍲 ครัวไทยอยุธยารสเด็ด",
-        price: "เริ่มต้น ฿80.-",
-        img: "https://images.unsplash.com/photo-1559847844-5315695dadae?auto=format&fit=crop&w=800&q=80",
-        desc: "อาหารไทยรสจัดจ้านสูตรดั้งเดิม ต้มยำกุ้งแม่น้ำ กะเพราโบราณหมูสับ/หมูกรอบ ปีกไก่ทอดน้ำปลา ข้าวผัดกุ้ง และกับข้าวแสนอร่อย ปรุงสดใหม่จานต่อจาน",
-        tags: ["เมนูอาหารจานเดียว & กับข้าว", "สั่งทานมื้อกลางวันและมื้อค่ำ"]
       },
       {
         id: "breakfast",
@@ -644,7 +602,7 @@
       btnMessengerUrl: "https://m.me/Baantaphai",
       showBtnLine: true,
       btnLineText: "ทัก LINE สั่งอาหาร",
-      btnLineUrl: "https://line.me/R/ti/p/@baantaphairesort"
+      btnLineUrl: "https://line.me/R/ti/p/@taphai"
     };
 
     let SITE_DINING_BANNER = (() => {
@@ -737,6 +695,15 @@
       } catch(e) {}
       return JSON.parse(JSON.stringify(DEFAULT_COMP_MATRIX));
     })();
+
+    // Rooms the owner no longer promotes (2026-11-20: Japanese King, No Toilet). The cloud still holds copies and the admin has no delete for rooms,
+    // so they are dropped here: before the room grid / comparison table render, and so the next publish saves the list without them.
+    const RETIRED_ROOM_IDS = ['jp_notoilet'];
+    function dropRetiredRooms() {
+      RETIRED_ROOM_IDS.forEach(id => { delete SITE_ROOMS[id]; });
+      SITE_COMP_MATRIX = (SITE_COMP_MATRIX || []).filter(r => !RETIRED_ROOM_IDS.includes(r.roomId));
+    }
+    dropRetiredRooms();
 
     let SITE_ROOM_FINDER = (() => {
       try {
@@ -1022,7 +989,7 @@
       messengerUrl: "https://m.me/Baantaphai",
       showLine: true,
       lineText: "ทัก LINE",
-      lineUrl: "https://line.me/R/ti/p/@baantaphairesort"
+      lineUrl: "https://line.me/R/ti/p/@taphai"
     };
 
     let SITE_HEADER_ACTIONS = (() => {
@@ -1210,7 +1177,7 @@
       badgeIcon: "fa-brands fa-facebook",
       title: "อัปเดตบรรยากาศ & สิทธิพิเศษจากเพจ Facebook",
       desc: "เกาะติดภาพถ่ายบรรยากาศคุ้งน้ำอยุธยาวันนี้ โปรโมชั่นพิเศษ และกิจกรรมสนุกๆ ส่งตรงจากเพจทางการ @Baantaphai",
-      pageName: "บ้านตาผาย Baan Ta Phai",
+      pageName: "บ้านตาผาย บ้านพักแนวชนบท Baan Ta Phai Country house",
       pageHandle: "@Baantaphai • ผู้ติดตาม 8,270+ คน • ตอบกลับใน 5 นาที",
       pageUrl: "https://www.facebook.com/Baantaphai",
       postBadge: "โพสต์เด่น",
@@ -1323,7 +1290,7 @@
         {
           id: "btn_line",
           label: "ทัก LINE",
-          url: "https://line.me/R/ti/p/@baantaphairesort",
+          url: "https://line.me/R/ti/p/@taphai",
           icon: "fa-brands fa-line",
           colorTheme: "line"
         }
@@ -1393,10 +1360,10 @@
       address: "35 หมู่ 7 ต.หนองขนาก อ.ท่าเรือ จ.พระนครศรีอยุธยา 13130",
       phone1: "062-460-5863",
       phone2: "097-175-2714",
-      facebookName: "บ้านตาผาย (@Baantaphai)",
+      facebookName: "บ้านตาผาย บ้านพักแนวชนบท Baan Ta Phai Country house",
       facebookUrl: "https://m.me/Baantaphai",
-      lineId: "@baantaphairesort",
-      lineUrl: "https://line.me/R/ti/p/@baantaphairesort",
+      lineId: "@taphai",
+      lineUrl: "https://line.me/R/ti/p/@taphai",
       mapsUrl: "https://maps.app.goo.gl/QZnssrZgScjpk9cJ8",
       bookingRequestEnabled: true
     };
@@ -1577,8 +1544,8 @@
         },
         {
           id: "footer_line",
-          label: "@baantaphairesort",
-          url: "https://line.me/R/ti/p/@baantaphairesort",
+          label: "@taphai",
+          url: "https://line.me/R/ti/p/@taphai",
           icon: "fa-brands fa-line",
           colorTheme: "line"
         },
@@ -2089,6 +2056,7 @@
       renderExtraFab();
       renderExtraReviews();
       document.querySelectorAll('.extra-admin').forEach(el => el.classList.toggle('hidden', !isAdminMode));
+      applySectionVisibility();
     }
 
     // ---------- admin editor (one generic modal) ----------
@@ -2426,6 +2394,56 @@
       return { en: {} };
     })();
 
+    // Sections the admin can hide from customers: { hidden: ['dining', ...] } (kept with the site data, so it is saved / published like any other edit).
+    // The admin still sees a hidden section (dimmed, with a switch); customers and the "preview as customer" mode do not.
+    // keep: ids inside the section that stay visible when it is hidden (dining keeps the digital menu card, so its menu link stays too).
+    const HIDEABLE_SECTIONS = { dining: { name: 'คาเฟ่ & อาหาร', keep: ['menuShowcase'] } };
+    let SITE_SECTION_VIS = (() => {
+      try {
+        const o = JSON.parse(localStorage.getItem('baantaphai_section_vis_v3') || 'null');
+        return { hidden: ((o && Array.isArray(o.hidden)) ? o.hidden : []).filter(id => HIDEABLE_SECTIONS[id]) };
+      } catch(e) {}
+      return { hidden: [] };
+    })();
+    function applySectionVisibility() {
+      Object.keys(HIDEABLE_SECTIONS).forEach(id => {
+        const cfg = HIDEABLE_SECTIONS[id], hidden = SITE_SECTION_VIS.hidden.includes(id);
+        const asCustomer = !isAdminMode || isPreviewOnlyMode, hideNow = hidden && asCustomer;
+        const sec = document.getElementById(id);
+        if (sec) {
+          if (cfg.keep) {              // hide the section's content except the parts to keep
+            const wrap = sec.firstElementChild && sec.querySelector(':scope > .max-w-7xl');
+            if (wrap) [...wrap.children].forEach(ch => { if (!ch.classList.contains('vis-bar') && !cfg.keep.includes(ch.id)) ch.style.display = hideNow ? 'none' : ''; });
+            sec.classList.toggle('sec-part-hidden', hideNow);
+          } else {
+            sec.style.display = hideNow ? 'none' : '';
+          }
+          sec.classList.toggle('sec-hidden-admin', hidden && !asCustomer);
+        }
+        // links to a section that is gone entirely go too (a section that keeps something keeps its links)
+        if (!cfg.keep) document.querySelectorAll(`a[href="#${id}"]`).forEach(a => {
+          if (a.closest('#adminBar, #adminToolsPanel')) return;
+          a.style.display = hideNow ? 'none' : '';
+        });
+        const bar = document.getElementById(id + 'VisBar');
+        if (bar) {
+          const keepNote = cfg.keep ? ' (เมนูดิจิทัลยังแสดงตามปกติ)' : '';
+          bar.classList.toggle('is-hidden', hidden);
+          bar.querySelector('.vis-state').textContent = hidden ? `ซ่อนหัวข้อและการ์ดส่วนนี้จากลูกค้าแล้ว${keepNote} · คุณเห็นเพราะอยู่ในโหมดแก้ไข` : 'ส่วนนี้แสดงให้ลูกค้าเห็นทั้งหมด';
+          bar.querySelector('.vis-btn span').textContent = hidden ? 'แสดงส่วนนี้ให้ลูกค้า' : 'ซ่อนส่วนนี้จากลูกค้า';
+          bar.querySelector('.vis-btn i').className = hidden ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash';
+        }
+      });
+    }
+    function toggleSectionVisibility(id) {
+      if (!HIDEABLE_SECTIONS[id] || blockSaveInEnglish()) return;
+      const nowHidden = !SITE_SECTION_VIS.hidden.includes(id);
+      SITE_SECTION_VIS = { hidden: nowHidden ? SITE_SECTION_VIS.hidden.concat(id) : SITE_SECTION_VIS.hidden.filter(x => x !== id) };
+      try { localStorage.setItem('baantaphai_section_vis_v3', JSON.stringify(SITE_SECTION_VIS)); } catch(e) {}
+      applySectionVisibility();
+      handleSectionSave('sectionVis', `${nowHidden ? 'ซ่อน' : 'แสดง'}ส่วน "${HIDEABLE_SECTIONS[id].name}"`, false);
+    }
+
     let SITE_OMIKUJI_HEADER = (() => {
       try {
         const saved = localStorage.getItem('baantaphai_omikuji_header_v3');
@@ -2493,6 +2511,24 @@
       }
     }
 
+    // Site data saved earlier carries two things the owner has since corrected, so fix them as the data comes in
+    // (publishing from the admin then saves the corrected values):
+    //  - the LINE Official Account is @taphai (older data points at @baantaphairesort; the TikTok / Instagram handles are other accounts and stay)
+    //  - the Facebook page is named "บ้านตาผาย บ้านพักแนวชนบท Baan Ta Phai Country house"
+    function fixSavedSiteData(o) {
+      if (typeof o === 'string') return o.replace(/(line\.me\/R\/(?:ti\/p|oaMessage)\/)@baantaphairesort/g, '$1@taphai').replace('ห้องพักทั้ง 10 แบบ', 'ห้องพักทั้ง 9 แบบ');
+      if (Array.isArray(o)) return o.map(fixSavedSiteData);
+      if (o && typeof o === 'object') {
+        const out = {};
+        Object.keys(o).forEach(k => { out[k] = fixSavedSiteData(o[k]); });
+        if (out.lineId === '@baantaphairesort') out.lineId = '@taphai';
+        if (out.label === '@baantaphairesort' && /line\.me/.test(out.url || '')) out.label = '@taphai';
+        if (out.facebookName === 'บ้านตาผาย (@Baantaphai)') out.facebookName = 'บ้านตาผาย บ้านพักแนวชนบท Baan Ta Phai Country house';
+        if (out.pageName === 'บ้านตาผาย Baan Ta Phai') out.pageName = 'บ้านตาผาย บ้านพักแนวชนบท Baan Ta Phai Country house';
+        return out;
+      }
+      return o;
+    }
     async function fetchCloudData(silent = true) {
       // 1. Guard: If currently pushing data to cloud, NEVER fetch concurrently to prevent race condition
       if (isPushingCloudData) {
@@ -2542,7 +2578,7 @@
           }
 
           if (result.data) {
-            const d = result.data;
+            const d = fixSavedSiteData(result.data);
             const cloudTime = d.updatedAt ? new Date(d.updatedAt).getTime() : 0;
             // Guard: If the cloud data is OLDER than our last local edit timestamp, IGNORE it completely
             if (cloudTime && lastLocalEditTimestamp && cloudTime <= lastLocalEditTimestamp) {
@@ -2610,7 +2646,7 @@
                 const modalUnit = document.getElementById('modalUnit');
                 if (modalUnit) modalUnit.textContent = updated.unit || '/ คืน';
                 const modalCap = document.getElementById('modalCap');
-                if (modalCap) modalCap.textContent = updated.cap;
+                if (modalCap) modalCap.textContent = roomCapText(updated.cap, updated.id);
                 const modalDesc = document.getElementById('modalDesc');
                 if (modalDesc) modalDesc.textContent = updated.desc;
                 refreshRoomBookingLink(updated.title, updated.price, updated.unit, updated.cap, updated.id);
@@ -2736,6 +2772,11 @@
             try { localStorage.setItem('baantaphai_comp_matrix_v3', JSON.stringify(SITE_COMP_MATRIX)); } catch(e){}
             renderComparisonTable();
           }
+          if (d.sectionVis && typeof d.sectionVis === 'object' && Array.isArray(d.sectionVis.hidden) && isDiff(d.sectionVis, SITE_SECTION_VIS)) {
+            SITE_SECTION_VIS = { hidden: d.sectionVis.hidden.filter(id => HIDEABLE_SECTIONS[id]) };
+            try { localStorage.setItem('baantaphai_section_vis_v3', JSON.stringify(SITE_SECTION_VIS)); } catch(e){}
+            applySectionVisibility();
+          }
           if (d.i18n && typeof d.i18n === 'object' && isDiff(d.i18n, SITE_I18N)) {
             SITE_I18N = { en: d.i18n.en || {} };
             try { localStorage.setItem('baantaphai_i18n_v3', JSON.stringify(SITE_I18N)); } catch(e){}
@@ -2822,6 +2863,7 @@
       const payload = {
         ...buildSiteData(),
         i18n: SITE_I18N,
+        sectionVis: SITE_SECTION_VIS,
         updatedAt: new Date().toISOString(),
         updatedReason: reason
       };
@@ -3062,7 +3104,8 @@
       findUs: { name: 'หัวข้อค้นหาเรา & แผนที่ Google', icon: '📍' },
       reviewItems: { name: 'รีวิวลูกค้า (สไลด์ & การ์ด)', icon: '💬' },
       contactFab: { name: 'ปุ่มติดต่อลอย (ติดต่อเรา)', icon: '💬' },
-      i18n: { name: 'คำแปลภาษาอังกฤษ', icon: '🌐' }
+      i18n: { name: 'คำแปลภาษาอังกฤษ', icon: '🌐' },
+      sectionVis: { name: 'ซ่อน/แสดงส่วนต่างๆ ของหน้าเว็บ', icon: '👁️' }
     };
 
     let draftManifest = (() => {
@@ -3126,6 +3169,7 @@
           SITE_FOOTER,
           SITE_EXTRA,
           SITE_I18N,
+          SITE_SECTION_VIS,
           timestamp: new Date().toISOString()
         };
         localStorage.setItem('baantaphai_published_snapshot_v3', JSON.stringify(snapshot));
@@ -3203,6 +3247,7 @@
         if (snap.SITE_FOOTER) { SITE_FOOTER = snap.SITE_FOOTER; localStorage.setItem('baantaphai_footer_v3', JSON.stringify(SITE_FOOTER)); }
         if (snap.SITE_EXTRA) { restoreExtraFromSnapshot(snap.SITE_EXTRA); }
         if (snap.SITE_I18N) { SITE_I18N = snap.SITE_I18N; localStorage.setItem('baantaphai_i18n_v3', JSON.stringify(SITE_I18N)); }
+        if (snap.SITE_SECTION_VIS) { SITE_SECTION_VIS = snap.SITE_SECTION_VIS; localStorage.setItem('baantaphai_section_vis_v3', JSON.stringify(SITE_SECTION_VIS)); }
 
         clearDraftManifest();
         renderAllSiteSections();
@@ -3239,6 +3284,7 @@
       renderOmikujiModal();
       renderFooterSection();
       renderExtraSections();
+      applySectionVisibility();
     }
 
     function updateDraftUI() {
@@ -3494,6 +3540,7 @@
           footer: () => { if (snap.SITE_FOOTER) { SITE_FOOTER = snap.SITE_FOOTER; localStorage.setItem('baantaphai_footer_v3', JSON.stringify(SITE_FOOTER)); } },
           compMatrix: () => { if (snap.SITE_COMP_MATRIX) { SITE_COMP_MATRIX = snap.SITE_COMP_MATRIX; localStorage.setItem('baantaphai_comp_matrix_v3', JSON.stringify(SITE_COMP_MATRIX)); } },
           compHeader: () => { if (snap.SITE_COMP_HEADER) { SITE_COMP_HEADER = snap.SITE_COMP_HEADER; localStorage.setItem('baantaphai_comp_header_v3', JSON.stringify(SITE_COMP_HEADER)); } },
+          sectionVis: () => { if (snap.SITE_SECTION_VIS) { SITE_SECTION_VIS = snap.SITE_SECTION_VIS; localStorage.setItem('baantaphai_section_vis_v3', JSON.stringify(SITE_SECTION_VIS)); applySectionVisibility(); } },
           i18n: () => { if (snap.SITE_I18N) { SITE_I18N = snap.SITE_I18N; localStorage.setItem('baantaphai_i18n_v3', JSON.stringify(SITE_I18N)); } },
           topBar: () => { if (snap.SITE_TOP_BAR) { SITE_TOP_BAR = snap.SITE_TOP_BAR; localStorage.setItem('baantaphai_topbar_v3', JSON.stringify(SITE_TOP_BAR)); } },
           omikuji: () => {
@@ -3679,6 +3726,8 @@
 
     // 3. RENDER ROOM CARDS (High-Performance Single-Frame Batch Render)
     function renderRoomCards() {
+      dropRetiredRooms();
+      renderRateCards();
       const container = document.getElementById('roomContainer');
       if (!container) return;
       container.innerHTML = '';
@@ -3719,7 +3768,7 @@
                   </span>
                 </div>
                 <div class="absolute bottom-3.5 right-3.5 px-2.5 py-1 rounded-full text-[10px] sm:text-xs font-light bg-black/75 text-white shadow-xs">
-                  <i class="fa-solid fa-users text-[10px] mr-1"></i> ${room.cap}
+                  <i class="fa-solid fa-users text-[10px] mr-1"></i> ${roomCapText(room.cap, room.id)}
                 </div>
               </div>
               <div class="lg:col-span-6 p-5 sm:p-8 flex flex-col justify-between">
@@ -3751,7 +3800,7 @@
                   <button onclick="openRoomModal('${room.id}')" class="py-3 px-4 rounded-2xl bg-zen-sand text-zen-dark text-xs font-medium hover:bg-zen-sanddark transition-colors flex items-center justify-center gap-1.5 min-h-[44px] active:scale-98">
                     <i class="fa-regular fa-eye"></i> ดูข้อมูลและรูปภาพ (${(room.images||[]).length} รูป)
                   </button>
-                  <a href="https://line.me/R/ti/p/@baantaphairesort" target="_blank" class="py-3 px-4 rounded-2xl bg-zen-line hover:bg-emerald-600 text-white text-xs font-medium transition-colors flex items-center justify-center gap-2 shadow-sm min-h-[44px] active:scale-98">
+                  <a href="https://line.me/R/ti/p/@taphai" target="_blank" class="py-3 px-4 rounded-2xl bg-zen-line hover:bg-emerald-600 text-white text-xs font-medium transition-colors flex items-center justify-center gap-2 shadow-sm min-h-[44px] active:scale-98">
                     <i class="fa-brands fa-line text-base"></i> จองเหมาหลังผ่าน LINE
                   </a>
                 </div>
@@ -3772,7 +3821,7 @@
               <span class="room-chip absolute top-3 left-3">${room.badge}</span>
               <div class="absolute bottom-3.5 left-3.5 right-3.5 flex items-end justify-between gap-2 text-white">
                 <div class="min-w-0">
-                  <span class="room-chip"><i class="fa-solid fa-user-group text-[9px] mr-1"></i> ${room.cap.split('(')[0].trim()}</span>
+                  <span class="room-chip"><i class="fa-solid fa-user-group text-[9px] mr-1"></i> ${roomCapText(room.cap, room.id).split('(')[0].trim()}</span>
                   ${photoCount > 1 ? `<span class="room-chip ml-1.5"><i class="fa-regular fa-images text-[9px] mr-1"></i> ${photoCount}</span>` : ''}
                 </div>
                 <div class="room-price text-right shrink-0">
@@ -3802,7 +3851,7 @@
                 <button onclick="openRoomModal('${room.id}')" class="room-btn-ghost w-full py-2.5 px-3 text-xs font-medium flex items-center justify-center gap-1.5 min-h-[46px] active:scale-95">
                   <i class="fa-regular fa-eye"></i> ดูข้อมูลเต็ม
                 </button>
-                <a href="https://line.me/R/ti/p/@baantaphairesort" target="_blank" class="w-full py-2.5 px-3 rounded-2xl bg-zen-line hover:bg-emerald-600 text-white text-xs font-medium transition-colors flex items-center justify-center gap-1.5 shadow-sm min-h-[46px] active:scale-95">
+                <a href="https://line.me/R/ti/p/@taphai" target="_blank" class="w-full py-2.5 px-3 rounded-2xl bg-zen-line hover:bg-emerald-600 text-white text-xs font-medium transition-colors flex items-center justify-center gap-1.5 shadow-sm min-h-[46px] active:scale-95">
                   <i class="fa-brands fa-line text-sm"></i> จองผ่าน LINE
                 </a>
               </div>
@@ -3904,12 +3953,6 @@
       }).catch(() => {});
     }
 
-    // Standard guests = "รวม N ท่าน" in the price unit; the room's maximum is the top of its capacity range.
-    function roomCapacity(cap, unit) {
-      const nums = ((cap || '').split('(')[0].match(/\d+/g) || []).map(Number);
-      const incl = ((unit || '').match(/รวม\s*(\d+)\s*ท่าน/) || [])[1];
-      return { std: incl ? +incl : (nums.length ? Math.min(...nums) : 0), max: nums.length ? Math.max(...nums) : 0 };
-    }
     // Preliminary-price rates (same as FAQ faq_4 and the staff quick calculator): bed and mattress are charged once per stay (a room takes one or the other), the rest per night.
     const EST = { bed: 200, mat: 100, guest: 50, bkfAdult: 100, bkfKid: 50, pet: 100 };
     const reqN = id => parseInt(document.getElementById(id).textContent, 10) || 0;
@@ -3971,7 +4014,7 @@
         outEl.min = inEl.value && inEl.value >= today ? inEl.value : today;
 
         // headcount: never above the room's maximum; guests over the standard count become "extra guests" automatically
-        const { std, max } = roomCapacity(roomReqArgs.cap, roomReqArgs.unit);
+        const { std, max } = finderCapacity(roomReqArgs.cap, roomReqArgs.unit, roomReqArgs.id);
         const set = (id, v) => { document.getElementById(id).textContent = v; };
         while (max && reqN('roomReqAdults') + reqN('roomReqKids') > max) set(reqN('roomReqKids') ? 'roomReqKids' : 'roomReqAdults', (reqN('roomReqKids') || reqN('roomReqAdults')) - 1);
         const adults = reqN('roomReqAdults'), kids = reqN('roomReqKids');
@@ -4098,7 +4141,7 @@
       }
       if (petIncomplete) valid = false;
       roomReqLastMsg = valid ? msg : '';
-      btn.href = `https://line.me/R/oaMessage/@baantaphairesort/?${encodeURIComponent(msg)}`;
+      btn.href = `https://line.me/R/oaMessage/@taphai/?${encodeURIComponent(msg)}`;
       const label = document.getElementById('modalBookingLabel');
       if (label) label.textContent = petIncomplete ? 'กรุณาระบุประเภทสัตว์เลี้ยงก่อน' : valid ? 'ส่งคำขอจองทาง LINE' : 'จองผ่าน LINE';
       btn.style.pointerEvents = petIncomplete ? 'none' : '';
@@ -4119,11 +4162,12 @@
       const cleanPrice = rawPrice.replace(/^ราคาเริ่มต้น\s*/i, '').trim();
       document.getElementById('modalPrice').textContent = cleanPrice || rawPrice;
       document.getElementById('modalUnit').textContent = data.unit || '/ คืน';
-      document.getElementById('modalCap').textContent = data.cap;
+      document.getElementById('modalCap').textContent = roomCapText(data.cap, data.id || roomId);
       document.getElementById('modalDesc').textContent = data.desc;
 
       updateModalPhoto();
       renderModalThumbnails();
+      document.getElementById('modalRateCardBtn').classList.toggle('hidden', !RATE_CARDS.includes(roomId));
 
       const hlContainer = document.getElementById('modalHighlights');
       if (hlContainer) {
@@ -4233,7 +4277,20 @@
     }
 
     // Full-screen viewer for the room modal's photos; stays in sync with the modal's carousel.
+    // The viewer shows either the open room's photos, or one rate card (lbRate set): then no arrows, plus save / share buttons.
+    let lbRate = null;
     function roomLightboxPaint() {
+      const dl = document.getElementById('roomLightboxDl'), sh = document.getElementById('roomLightboxShare');
+      if (lbRate) {
+        document.getElementById('roomLightboxImg').src = lbRate.full;
+        document.getElementById('roomLightboxCount').textContent = lbRate.title;
+        document.getElementById('roomLightboxPrev').style.display = 'none';
+        document.getElementById('roomLightboxNext').style.display = 'none';
+        dl.href = lbRate.dl || lbRate.full; dl.setAttribute('download', lbRate.file || `BaanTaPhai-RateCard-${lbRate.id}.jpg`); dl.style.display = 'flex';
+        sh.style.display = navigator.share ? 'flex' : 'none';
+        return;
+      }
+      dl.style.display = 'none'; sh.style.display = 'none';
       const imgs = (currentModalRoom && (currentModalRoom.images || [currentModalRoom.img])) || [];
       document.getElementById('roomLightboxImg').src = imgs[currentPhotoIndex] || imgs[0] || '';
       document.getElementById('roomLightboxCount').textContent = `${currentPhotoIndex + 1} / ${imgs.length}`;
@@ -4243,15 +4300,54 @@
     }
     function openRoomLightbox() {
       if (!currentModalRoom) return;
+      lbRate = null;
       roomLightboxPaint();
       document.getElementById('roomLightbox').classList.remove('hidden');
     }
     function closeRoomLightbox() {
+      lbRate = null;
       document.getElementById('roomLightbox').classList.add('hidden');
     }
     function stepRoomLightbox(d) {
+      if (lbRate) return;
       if (d > 0) nextModalPhoto(); else prevModalPhoto();
       roomLightboxPaint();
+    }
+
+    // ---- Rate cards: made by the owner (photos/ratecards/<roomId>.webp to show, <roomId>-full.jpg to enlarge / save) ----
+    const RATE_CARDS = ['family_house', 'lake_view', 'sky_view', 'rock_view', 'jp_full', 'jp_2king', 'jp_king', 'country_house'];
+    const rateCardTitle = id => T((SITE_ROOMS[id] && SITE_ROOMS[id].title) || id);
+    function openRateCard(id) {
+      if (!RATE_CARDS.includes(id)) return;
+      lbRate = { id, full: `photos/ratecards/${id}-full.jpg`, title: tt('เรทการ์ด {0}', rateCardTitle(id)) };
+      roomLightboxPaint();
+      document.getElementById('roomLightbox').classList.remove('hidden');
+    }
+    // The activities + nearby places infographic shares the same full-screen viewer (view the webp, save the jpg)
+    function openInfoImage() {
+      lbRate = { id: 'activities-attractions', full: 'photos/info/activities-attractions.webp', dl: 'photos/info/activities-attractions-full.jpg', file: 'BaanTaPhai-Activities-Attractions.jpg', title: tt('กิจกรรม & แหล่งท่องเที่ยว สนุกได้ ครบจบในที่เดียว') };
+      roomLightboxPaint();
+      document.getElementById('roomLightbox').classList.remove('hidden');
+    }
+    function shareRateCard() {
+      if (!lbRate || !navigator.share) return;
+      navigator.share({ title: lbRate.title, text: tt('บ้านตาผาย รีสอร์ท'), url: new URL(lbRate.dl || lbRate.full, location.href).href }).catch(() => {});
+    }
+    function rcScroll(dir) {
+      const t = document.getElementById('rcTrack'), c = t && t.querySelector('.rc-card');
+      if (t && c) t.scrollBy({ left: dir * (c.getBoundingClientRect().width + 16), behavior: 'smooth' });
+    }
+    function renderRateCards() {
+      const track = document.getElementById('rcTrack');
+      if (!track) return;
+      track.innerHTML = RATE_CARDS.filter(id => SITE_ROOMS[id]).map(id => {
+        const title = rateCardTitle(id), alt = tt('เรทการ์ด {0}', title);
+        return `<article class="rc-card">
+          <button type="button" class="rc-pic" onclick="openRateCard('${id}')" aria-label="${escapeHtml(alt)}"><img src="photos/ratecards/${id}.webp" alt="${escapeHtml(alt)}" loading="lazy" decoding="async" width="1200" height="800"><span class="rc-zoom"><i class="fa-solid fa-expand"></i></span></button>
+          <div class="rc-meta"><b>${escapeHtml(title)}</b>
+            <span class="rc-acts"><a class="rc-act" href="photos/ratecards/${id}-full.jpg" download="BaanTaPhai-RateCard-${id}.jpg" target="_blank" rel="noopener"><i class="fa-solid fa-download"></i><span>บันทึกรูป</span></a></span>
+          </div></article>`;
+      }).join('');
     }
 
     // While the viewer is open its keys win: Esc closes only the viewer, arrows flip photos.
@@ -4292,6 +4388,11 @@
     let finderState = { step: 1, guests: 2, vibe: 'any' };
     const RF_QUICK = [2, 3, 4, 6, 8, 12];
     const RF_VIBE_ANY = { value: 'any', icon: '✨', title: 'ไม่เจาะจง', sub: 'ดูทุกแบบที่เหมาะ' };
+    // The styles are fixed in code (finder.js knows what each means); the admin can only reword riverside / japanese / quiet. Old saved data (e.g. "snooker") is ignored.
+    function rfVibes() {
+      const saved = SITE_ROOM_FINDER.vibeOptions || [];
+      return DEFAULT_ROOM_FINDER_DATA.vibeOptions.map(d => ({ ...d, ...(saved.find(o => o.value === d.value) || {}) })).concat([RF_VIBE_ANY]);
+    }
 
     function rfGo(step, focus) {
       finderState.step = step;
@@ -4340,7 +4441,7 @@
           <button type="button" class="rf-go" onclick="rfGo(2)"><span>ต่อไป เลือกสไตล์</span><i class="fa-solid fa-arrow-right"></i></button>`;
       }
       if (finderState.step === 2) {
-        const vibes = (SITE_ROOM_FINDER.vibeOptions || DEFAULT_ROOM_FINDER_DATA.vibeOptions).concat([RF_VIBE_ANY]);
+        const vibes = rfVibes();
         return `
           <h3 class="rf-q" tabindex="-1">ชอบบรรยากาศแบบไหน?</h3>
           <p class="rf-hint">${escapeHtml(tt('สำหรับ {0} ท่าน — เลือกได้เลย เดี๋ยวน้องหาห้องให้', n))}</p>
@@ -4351,7 +4452,7 @@
           <button type="button" class="rf-back" onclick="rfGo(1)">← ย้อนกลับไปแก้จำนวนแขก</button>`;
       }
       // step 3: results
-      const vibes = (SITE_ROOM_FINDER.vibeOptions || DEFAULT_ROOM_FINDER_DATA.vibeOptions).concat([RF_VIBE_ANY]);
+      const vibes = rfVibes();
       const vibe = vibes.find(v => v.value === finderState.vibe) || RF_VIBE_ANY;
       const res = finderOptions(n, finderState.vibe, Object.values(SITE_ROOMS));
       const sum = `<div class="rf-sum">
@@ -4361,27 +4462,41 @@
       if (res.tooMany) {
         return `${'<h3 class="rf-q" tabindex="-1">' + escapeHtml(tt('กลุ่ม {0} ท่าน ใหญ่กว่าห้องเดียวของเรา', n)) + '</h3>'}${sum}
           <div class="rf-many"><p>ทักแอดมินได้เลย เดี๋ยวช่วยจัดบ้านหลายหลังให้พอดีกับกลุ่มของคุณค่ะ</p>
-          <a href="${escapeHtml((SITE_CONTACT && SITE_CONTACT.lineUrl) || 'https://line.me/R/ti/p/@baantaphairesort')}" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-line"></i> ทักแอดมินทาง LINE</a></div>`;
+          <a href="${escapeHtml((SITE_CONTACT && SITE_CONTACT.lineUrl) || 'https://line.me/R/ti/p/@taphai')}" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-line"></i> ทักแอดมินทาง LINE</a></div>`;
       }
       const g1 = Math.ceil(n / 2), g2 = n - g1, baht = x => '฿' + x.toLocaleString('en-US');
       const cards = res.options.map((o, idx) => {
         const r = SITE_ROOMS[o.roomId] || {};
         const img = (r.images && r.images[0]) || r.img || '';
-        const best = idx === 0 && o.vibeMatch && o.count === 1;
-        const tag = best ? '⭐ ' + tt('แนะนำ') : o.count === 2 ? tt('แยก 2 ห้อง') : o.vibeMatch ? '' : tt('สไตล์อื่นที่รับกลุ่มคุณได้');
-        const why = [];
-        if (o.count === 2) why.push(tt('แบ่งเป็น {0} + {1} ท่าน คนละห้อง ได้ความเป็นส่วนตัว', g1, g2));
-        else if (!o.extra) why.push(tt('ราคานี้รวมผู้เข้าพัก {0} ท่านแล้ว', o.std));
-        if (o.extra) why.push(tt('รวมค่าผู้เข้าพักเสริม {0} ท่านแล้ว (+฿{1})', o.extra, o.extra * 50));
+        const best = idx === 0 && o.vibeMatch;
+        const tag = best ? '⭐ ' + tt('แนะนำ') : o.count === 2 ? tt('แยก 2 ห้อง') : o.vibeMatch ? '' : tt(res.matched ? 'ตัวเลือกอื่นที่น่าสนใจ' : 'สไตล์อื่นที่รับกลุ่มคุณได้');
+        const lo = o.std * o.count, hi = o.max * o.count;
+        const cap = lo === hi ? tt('รองรับ {0} ท่าน', hi) : tt('รองรับ {0} – {1} ท่าน', lo, hi);
+        const capSub = o.count === 2 ? tt('2 ห้อง · ราคารวม {0} ท่าน', lo) : tt('ราคารวม {0} ท่าน', lo);
+        // the standard guest count the price is for, spelled out; extra guests / the room maximum underneath
+        const stdHead = o.count === 2 ? tt('2 ห้อง · ห้องละ {0} ท่านมาตรฐาน', o.std)
+          : o.extra ? tt('ผู้เข้าพักมาตรฐาน {0} ท่าน + ท่านเสริม {1} ท่าน', o.std, o.extra)
+          : tt('ราคามาตรฐาน สำหรับ {0} ท่าน', o.std);
+        // breakfast is included for the standard guests only; extra guests may add it
+        const bkf = !o.extra ? '' : (o.count === 1 && o.extra === 1) ? tt('ยังไม่รวมอาหารเช้าท่านที่ {0}', o.std + 1) : tt('ยังไม่รวมอาหารเช้าของท่านเสริม {0} ท่าน', o.extra);
+        const stdSub = [];
+        if (o.count === 2) stdSub.push(tt('แบ่งเป็น {0} + {1} ท่าน คนละห้อง ได้ความเป็นส่วนตัว', g1, g2));
+        if (o.extra) stdSub.push(tt('ท่านเสริมคิดท่านละ ฿{0} / คืน (รวม +฿{1} ในราคานี้แล้ว)', EST.guest, o.extra * EST.guest));
+        else if (o.max > o.std) stdSub.push(tt('ท่านที่เกิน {0} ท่านต่อห้อง คิดเพิ่มท่านละ ฿{1} / คืน (สูงสุด {2} ท่านต่อห้อง)', o.std, EST.guest, o.max));
+        else stdSub.push(tt('รับได้ไม่เกิน {0} ท่านต่อห้อง', o.max));
         const title = o.count === 2 ? tt('{0} × 2 ห้อง', T(r.title || o.roomId)) : T(r.title || o.roomId);
         return `<article class="rf-card${best ? ' best' : ''}">
           <div class="rf-pic">${img ? `<img src="${escapeHtml(img)}" alt="" loading="lazy" decoding="async">` : ''}${tag ? `<span class="rf-tag">${escapeHtml(tag)}</span>` : ''}</div>
           <div class="rf-body">
             <h4>${escapeHtml(title)}</h4>
+            <div class="rf-cap"><i class="fa-solid fa-users"></i><div><b>${escapeHtml(cap)}</b><small>${escapeHtml(capSub)}</small></div></div>
             <div class="rf-price"><b>${baht(o.total)}</b><span>${escapeHtml(tt('/ คืน'))}</span></div>
             <div class="rf-per"><i class="fa-solid fa-user"></i><span>${escapeHtml(tt('เฉลี่ยคนละ ฿{0} / คืน', Math.round(o.total / n).toLocaleString('en-US')))}</span></div>
-            <ul class="rf-why">${why.map(w => `<li>${escapeHtml(w)}</li>`).join('')}</ul>
-            <p class="rf-fine"><i class="fa-solid fa-triangle-exclamation"></i><span><b><span class="nw">${escapeHtml(tt('ยังไม่รวมเตียงเสริม ฿{0}', EST.bed))}</span> <span class="nw">${escapeHtml(tt('หรือฟูกเสริม ฿{0}', EST.mat))}</span></b> ${escapeHtml(tt('(เลือกได้อย่างใดอย่างหนึ่ง 1 ชิ้นต่อห้อง)'))}</span></p>
+            <div class="rf-std"><i class="fa-solid fa-user-check"></i><div><b>${escapeHtml(stdHead)}</b>${stdSub.map(t => `<small>${escapeHtml(t)}</small>`).join('')}</div></div>
+            <div class="rf-fine">
+              <div class="rf-fine-row"><i class="fa-solid fa-triangle-exclamation"></i><span><b><span class="nw">${escapeHtml(tt('ยังไม่รวมเตียงเสริม ฿{0}', EST.bed))}</span> <span class="nw">${escapeHtml(tt('หรือฟูกเสริม ฿{0}', EST.mat))}</span></b> ${escapeHtml(tt('(เลือกได้อย่างใดอย่างหนึ่ง 1 ชิ้นต่อห้อง)'))}</span></div>
+              ${bkf ? `<div class="rf-fine-row rf-fine-2"><i class="fa-solid fa-triangle-exclamation"></i><span><b>${escapeHtml(bkf)}</b> ${escapeHtml(tt('เลือกรับหรือไม่รับก็ได้ (ผู้ใหญ่ ฿{0} / เด็กเล็ก ฿{1} ต่อท่านต่อคืน)', EST.bkfAdult, EST.bkfKid))}</span></div>` : ''}
+            </div>
             <button type="button" class="rf-open" onclick="rfOpenRoom('${escapeHtml(o.roomId)}')">ดูห้อง & เช็กวันว่าง</button>
           </div></article>`;
       }).join('');
@@ -4469,9 +4584,10 @@
       document.getElementById('editFinderV2Title').value = v[1]?.title || 'บ้านญี่ปุ่น';
       document.getElementById('editFinderV2Sub').value = v[1]?.sub || 'ซุ้มโทริอิ';
 
-      document.getElementById('editFinderV3Icon').value = v[2]?.icon || '🎱';
-      document.getElementById('editFinderV3Title').value = v[2]?.title || 'สนุกเกอร์';
-      document.getElementById('editFinderV3Sub').value = v[2]?.sub || 'ปาร์ตี้ส่วนตัว';
+      const vq = v.find(o => o.value === 'quiet') || DEFAULT_ROOM_FINDER_DATA.vibeOptions.find(o => o.value === 'quiet');
+      document.getElementById('editFinderV3Icon').value = vq.icon || '🌿';
+      document.getElementById('editFinderV3Title').value = vq.title || 'บรรยากาศเงียบสงบ';
+      document.getElementById('editFinderV3Sub').value = vq.sub || 'ส่วนตัว ไร้เสียงรบกวน';
 
       document.getElementById('editFinderButtonText').value = rf.buttonText || 'ค้นหาห้องพักที่ตรงใจที่สุด';
 
@@ -4538,11 +4654,13 @@
             sub: document.getElementById('editFinderV2Sub').value.trim() || 'ซุ้มโทริอิ'
           },
           {
-            value: "snooker",
-            icon: document.getElementById('editFinderV3Icon').value.trim() || '🎱',
-            title: document.getElementById('editFinderV3Title').value.trim() || 'สนุกเกอร์',
-            sub: document.getElementById('editFinderV3Sub').value.trim() || 'ปาร์ตี้ส่วนตัว'
-          }
+            value: "quiet",
+            icon: document.getElementById('editFinderV3Icon').value.trim() || '🌿',
+            title: document.getElementById('editFinderV3Title').value.trim() || 'บรรยากาศเงียบสงบ',
+            sub: document.getElementById('editFinderV3Sub').value.trim() || 'ส่วนตัว ไร้เสียงรบกวน'
+          },
+          // "budget" has no editor slot: keep what is saved (or the default)
+          (SITE_ROOM_FINDER.vibeOptions || []).find(o => o.value === 'budget') || DEFAULT_ROOM_FINDER_DATA.vibeOptions.find(o => o.value === 'budget')
         ],
         buttonText
       };
@@ -4850,7 +4968,7 @@
         const encodedText = encodeURIComponent(
           tt(`สวัสดีครับ/ค่ะ สุ่มได้เซียมซีบ้านตาผาย "{0}" (เลขอ้างอิงดิจิทัล: {1})\nขอแจ้งรับสิทธิ์เพื่อจองห้องพัก/ใช้บริการครับ`, T(data.title), data.ticketNo || 'TP-VERIFIED')
         );
-        claimLineBtn.href = `https://line.me/R/ti/p/@baantaphairesort?text=${encodedText}`;
+        claimLineBtn.href = `https://line.me/R/ti/p/@taphai?text=${encodedText}`;
         document.getElementById('claimLineBtnText').textContent = 'แจ้งรับสิทธิ์ทาง LINE Official';
 
         const claimMessengerBtn = document.getElementById('claimMessengerBtn');
@@ -7803,6 +7921,7 @@
         if (isAdminMode) navMenuAdminTrigger.classList.remove('hidden');
         else navMenuAdminTrigger.classList.add('hidden');
       }
+      applySectionVisibility();
     }
 
     function openNavMenuEditModal() {
@@ -7944,7 +8063,7 @@
       const mLineLink = document.getElementById('mobileMenuLineLink');
       const mLineText = document.getElementById('mobileMenuLineText');
       const lineText = cfg.lineText || 'ทัก LINE';
-      const lineUrl = cfg.lineUrl || 'https://line.me/R/ti/p/@baantaphairesort';
+      const lineUrl = cfg.lineUrl || 'https://line.me/R/ti/p/@taphai';
 
       if (navLineText) navLineText.textContent = lineText;
       if (navLineBtn) {
@@ -7990,7 +8109,7 @@
 
       setCheck('editHeaderShowLine', cfg.showLine !== false);
       setVal('editHeaderLineText', cfg.lineText || 'ทัก LINE');
-      setVal('editHeaderLineUrl', cfg.lineUrl || 'https://line.me/R/ti/p/@baantaphairesort');
+      setVal('editHeaderLineUrl', cfg.lineUrl || 'https://line.me/R/ti/p/@taphai');
 
       const modal = document.getElementById('editHeaderActionsModal');
       if (modal) modal.classList.remove('hidden');
@@ -8033,7 +8152,7 @@
         messengerUrl: getVal('editHeaderMessengerUrl', 'https://m.me/Baantaphai'),
         showLine: getCheck('editHeaderShowLine', true),
         lineText: getVal('editHeaderLineText', 'ทัก LINE'),
-        lineUrl: getVal('editHeaderLineUrl', 'https://line.me/R/ti/p/@baantaphairesort')
+        lineUrl: getVal('editHeaderLineUrl', 'https://line.me/R/ti/p/@taphai')
       };
 
       try {
@@ -9649,6 +9768,7 @@
     // 📊 ROOM COMPARISON MATRIX RENDERING & CONTROLLERS
     // ========================================================
     function renderComparisonTable() {
+      dropRetiredRooms();
       // 1. Header, Subtitle, Footer Note & Font Override
       const compModal = document.getElementById('comparisonModal');
       if (compModal) {
@@ -9714,7 +9834,7 @@
             <span class="px-2.5 py-1 rounded-full ${badgeClass} text-[10.5px] font-medium whitespace-nowrap">${row.zone || ''}</span>
           </td>
           <td class="p-3 whitespace-nowrap"><span class="comp-price">${row.price || ''}</span></td>
-          <td class="p-3 whitespace-nowrap text-stone-700">${row.guests || ''}</td>
+          <td class="p-3 whitespace-nowrap text-stone-700">${roomCapText(row.guests || '', row.roomId)}</td>
           <td class="p-3 min-w-[150px] text-stone-700">${row.beds || ''}</td>
           <td class="p-3 min-w-[120px] whitespace-nowrap">${toiletHtml}</td>
           <td class="p-3 text-stone-600 font-light max-w-xs truncate" title="${(row.highlights || '').replace(/"/g, '&quot;')}">${row.highlights || ''}</td>
@@ -10665,12 +10785,14 @@
       handleSectionSave('diningHeader', 'อัปเดตหัวข้อคาเฟ่และจุดเด่น', isDirectPublish);
     }
 
+    // Cards the owner removed (2026-11-20: Riverside Thai Kitchen). The admin cannot delete dining cards, so copies saved in the cloud are hidden here.
+    const RETIRED_DINING_CARDS = ['thai'];
     function renderDiningCards() {
       const container = document.getElementById('diningCardsContainer');
       if (!container) return;
       container.innerHTML = '';
       
-      SITE_DINING.forEach(card => {
+      SITE_DINING.filter(card => !RETIRED_DINING_CARDS.includes(card.id)).forEach(card => {
         const cardEl = document.createElement('div');
         cardEl.className = 'dine-card flex flex-col group relative';
         
@@ -10758,7 +10880,7 @@
       ` : '';
 
       const btnLineHtml = d.showBtnLine !== false ? `
-        <a href="${escapeHtml(d.btnLineUrl || 'https://line.me/R/ti/p/@baantaphairesort')}" target="_blank" class="w-full sm:w-auto px-4 py-3 rounded-2xl bg-zen-line hover:bg-emerald-600 text-white font-medium text-xs transition-all flex items-center justify-center gap-2 shadow-sm active:scale-95">
+        <a href="${escapeHtml(d.btnLineUrl || 'https://line.me/R/ti/p/@taphai')}" target="_blank" class="w-full sm:w-auto px-4 py-3 rounded-2xl bg-zen-line hover:bg-emerald-600 text-white font-medium text-xs transition-all flex items-center justify-center gap-2 shadow-sm active:scale-95">
           <i class="fa-brands fa-line text-base"></i>
           <span>${escapeHtml(d.btnLineText || 'ทัก LINE สั่งอาหาร')}</span>
         </a>
@@ -10832,7 +10954,7 @@
       if (lineTextEl) lineTextEl.value = d.btnLineText || 'ทัก LINE สั่งอาหาร';
 
       const lineUrlEl = document.getElementById('editDiningBannerLineUrl');
-      if (lineUrlEl) lineUrlEl.value = d.btnLineUrl || 'https://line.me/R/ti/p/@baantaphairesort';
+      if (lineUrlEl) lineUrlEl.value = d.btnLineUrl || 'https://line.me/R/ti/p/@taphai';
 
       updateDiningBannerLivePreview();
 
@@ -10925,7 +11047,7 @@
 
       const showLine = document.getElementById('editDiningBannerShowLine')?.checked ?? true;
       const lineText = document.getElementById('editDiningBannerLineText')?.value.trim() || 'ทัก LINE สั่งอาหาร';
-      const lineUrl = document.getElementById('editDiningBannerLineUrl')?.value.trim() || 'https://line.me/R/ti/p/@baantaphairesort';
+      const lineUrl = document.getElementById('editDiningBannerLineUrl')?.value.trim() || 'https://line.me/R/ti/p/@taphai';
 
       SITE_DINING_BANNER = {
         showBanner: show,
@@ -12107,7 +12229,7 @@
         if (themeInput) themeInput.value = 'messenger';
       } else if (presetType === 'line') {
         if (labelInput) labelInput.value = 'ทัก LINE';
-        if (urlInput) urlInput.value = 'https://line.me/R/ti/p/@baantaphairesort';
+        if (urlInput) urlInput.value = 'https://line.me/R/ti/p/@taphai';
         if (iconInput) iconInput.value = 'fa-brands fa-line';
         if (themeInput) themeInput.value = 'line';
       } else if (presetType === 'phone') {
@@ -12247,8 +12369,8 @@
       line: {
         containerClass: "bg-white/5 hover:bg-emerald-500/20 text-zen-sand hover:text-white border-white/10",
         iconClass: "text-emerald-400",
-        defaultLabel: "@baantaphairesort",
-        defaultUrl: "https://line.me/R/ti/p/@baantaphairesort",
+        defaultLabel: "@taphai",
+        defaultUrl: "https://line.me/R/ti/p/@taphai",
         defaultIcon: "fa-brands fa-line"
       },
       phone: {
@@ -12769,7 +12891,7 @@
       }
 
       if (lineBtn && data.lineMsg) {
-        lineBtn.href = `https://line.me/R/ti/p/@baantaphairesort?text=${encodeURIComponent(T(data.lineMsg))}`;
+        lineBtn.href = `https://line.me/R/ti/p/@taphai?text=${encodeURIComponent(T(data.lineMsg))}`;
       }
 
       const messengerBtn = document.getElementById('actModalMessengerBtn');
@@ -13084,6 +13206,7 @@
       fetchLiveWeather(false);
 
       // ☁️ Background Cloud Data Sync (Auto-fetches latest edits made on any device)
+      applySectionVisibility();
       loadFbFeed();
       fetchCloudData(true);
       startCloudSyncLoop();
